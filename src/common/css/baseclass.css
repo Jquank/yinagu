@@ -1,0 +1,43 @@
+.router-link-active {
+  background: #9a8658;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix::before,
+.clearfix::after {
+  content: ' ';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.w-100 {
+  width: 100%;
+}
+.inline-block {
+  display: inline-block;
+}
+.border-line {
+  border-bottom: 1px solid #ccc;
+}
+.t-center {
+  text-align: center;
+}
+.c-pointer {
+  cursor: pointer;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.ml-10 {
+  margin-left: 10px;
+}
+.ml-20 {
+  margin-left: 20px;
+}
+.response-img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
