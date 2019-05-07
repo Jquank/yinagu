@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <m-header></m-header>
-    <section class="section">
+    <div class="container">
       <router-view/>
-    </section>
+    </div>
     <m-footer></m-footer>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 <style lang="less">
 #app {
   height: 100%;
-  .section {
+  .container {
     min-height: 100%;
   }
 }
