@@ -1,41 +1,50 @@
 <template>
-    <div class="m-swiper" ref="mSwiper">
-        <swiper :options="swiperOption" ref="mySwiper" v-if="swiperSlides.length">
-            <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-                <div class="slide-wrapper">
-                    <!-- 首页新品左侧文字 -->
-                    <div v-if="showLeftText" class="new-products">
-                        <div class="title">
-                            <div class="title-1">New products</div>
-                            <div class="title-2">
-                                <p>夏季</p>
-                                <p>新品</p>
-                            </div>
-                            <div>
-                                <div class="title-3">驼色/大衣</div>
-                                <div class="title-4">2019夏季新品复古蕾丝花边网纱收腰无袖连衣裙女中长款</div>
-                            </div>
-                            <div class="title-5">¥ 299</div>
-                        </div>
-                    </div>
-                    <div class="slide-img">
-                        <img @click="showGoodsDetail" class="response-img" :src="slide.src">
-                    </div>
-                </div>
-                <!-- 首页banner上面文字 -->
-                <div v-if="showUpperText" class="banner-text">
-                    <div class="title">{{slide.title}}</div>
-                    <div class="subtitle">{{slide.subtitle}}</div>
-                    <div class="detail-btn">DETAILS</div>
-                </div>
-            </swiper-slide>
-            <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
-        </swiper>
-        <template v-if="showBtn">
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
-        </template>
-    </div>
+  <div class="m-swiper" ref="mSwiper">
+    <swiper :options="swiperOption" ref="mySwiper" v-if="swiperSlides.length">
+      <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
+        <div class="slide-wrapper1">
+          <!-- 首页新品左侧文字 -->
+          <div v-if="showLeftText" class="new-products">
+            <div class="title">
+              <div class="title-1">New products</div>
+              <div class="title-2">
+                <p>夏季</p>
+                <p>新品</p>
+              </div>
+              <div>
+                <div class="title-3">驼色/大衣</div>
+                <div class="title-4">2019夏季新品复古蕾丝花边网纱收腰无袖连衣裙女中长款</div>
+              </div>
+              <div class="title-5">¥ 299</div>
+            </div>
+          </div>
+          <div class="slide-img">
+            <img @click="showGoodsDetail" class="response-img" :src="slide.src">
+            <div v-if="showImgText" class="img-text">
+              <span>YINAGU 2019气质连衣裙...</span>
+              <span>更多></span>
+            </div>
+          </div>
+        </div>
+        <!-- 首页banner上面文字 -->
+        <div v-if="showUpperText" class="banner-text">
+          <div class="title">{{slide.title}}</div>
+          <div class="subtitle">{{slide.subtitle}}</div>
+          <div class="detail-btn">DETAILS</div>
+        </div>
+      </swiper-slide>
+      <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
+    </swiper>
+    <!-- 夏季新品的分页器 -->
+    <template v-if="showLeftText">
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+    </template>
+    <!-- 多列轮播的分页器 -->
+    <template v-if="showBtn">
+      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -55,9 +64,13 @@ export default {
             type: Boolean,
             default: false
         },
+        showImgText: {
+            type: Boolean,
+            default: false
+        },
         showPagination: {
             type: Boolean,
-            default: true
+            default: false
         },
         swiperSlides: {
             type: Array,
@@ -119,7 +132,6 @@ export default {
 
 <style scoped lang="less">
 .m-swiper {
-    // padding: 0 50px;
     position: relative;
     .swiper-slide {
         text-align: center;
@@ -153,7 +165,7 @@ export default {
             margin-top: 45px;
         }
     }
-    .slide-wrapper {
+    .slide-wrapper1 {
         display: flex;
         .new-products {
             flex: 0 0 210px;
@@ -196,8 +208,26 @@ export default {
             }
         }
         .slide-img {
-            min-width: 650px;
             flex: 1;
+            .img-text {
+                display: flex;
+                justify-content: space-between;
+                height: 21px;
+                line-height: 21px;
+                padding: 8px 5px 0;
+                & > span:first-child {
+                    display: inline-block;
+                    font-size: 16px;
+                    width: 225px;
+                    text-align: start;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                & > span:last-child {
+                    color: #9a8658;
+                }
+            }
         }
     }
 }
