@@ -1,7 +1,7 @@
 <template>
   <div class="m-header">
     <div class="logo">
-      <img src="./logo.png" class="response-img">
+      <img src="./logo.png">
     </div>
     <div class="nav">
       <ul>
