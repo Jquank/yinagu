@@ -17,6 +17,9 @@
       </ul>
     </div>
     <div class="search">
+      <div>
+        <div class="search-input"></div>
+      </div>
       <img src="./search-icon.png" class="search-icon">
     </div>
   </div>
@@ -25,42 +28,44 @@
 <script>
 import navList from './config.js'
 export default {
-  data() {
-    return {
-      navList: navList
-    }
-  },
-  created() {
-    console.log(this.$route)
-  },
-  components: {}
+    data() {
+        return {
+            navList: navList
+        }
+    },
+    created() {
+        console.log(this.$route)
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="less">
 .m-header {
-  display: flex;
-  justify-content: space-between;
-  height: 60px;
-  line-height: 60px;
-  padding: 0 70px;
-  color: #2a2a2a;
-  border-bottom:1px solid rgba(216,216,216,1);
-  .nav {
-    & > ul {
-      display: flex;
-    }
-    .router-tab {
-      text-align: center;
-      cursor: pointer;
-    }
-    .router-tab-active {
-      color: #fff;
-    }
-  }
-  .search {
     display: flex;
-    align-items: center;
-  }
+    justify-content: space-between;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 70px;
+    color: #2a2a2a;
+    border-bottom: 1px solid rgba(216, 216, 216, 1);
+    .nav {
+        & > ul {
+            display: flex;
+        }
+        .router-tab {
+            text-align: center;
+            cursor: pointer;
+        }
+        .router-tab-active {
+            color: #fff;
+        }
+    }
+    .search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 220px;
+    }
 }
 </style>
