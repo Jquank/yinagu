@@ -22,10 +22,4 @@ export default {
 </script>
 
 <style lang="less">
-#app {
-  height: 100%;
-  .container {
-    min-height: 100%;
-  }
-}
 </style>

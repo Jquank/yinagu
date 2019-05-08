@@ -35,11 +35,11 @@
       </swiper-slide>
       <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
     </swiper>
-    <!-- 夏季新品的分页器 -->
+    <!-- 夏季新品的前进后退 -->
     <template v-if="showLeftText">
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
     </template>
-    <!-- 多列轮播的分页器 -->
+    <!-- 多列轮播的前进后退 -->
     <template v-if="showBtn">
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
@@ -212,6 +212,7 @@ export default {
             .img-text {
                 display: flex;
                 justify-content: space-between;
+                flex-wrap: wrap;
                 height: 21px;
                 line-height: 21px;
                 padding: 8px 5px 0;
@@ -233,6 +234,7 @@ export default {
 }
 </style>
 <style lang="less">
+// 分页器样式
 .swiper-pagination-bullets {
     bottom: 30px !important;
 }

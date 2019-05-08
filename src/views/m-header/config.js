@@ -8,20 +8,20 @@ const navList = [
   {
     ch: '品牌介绍',
     en: 'BRAND INTRODUCTION',
-    to: '/1',
+    to: '/brand',
     width: '185'
   },
   {
     ch: '商品分类',
     en: 'COMMODITY',
-    to: '/2',
+    to: '/commodity',
     width: '115'
   },
   {
     ch: '品牌商城',
     en: 'SHOPPING MALL',
     to: '/3',
-    width: '115'
+    width: '145'
   },
   {
     ch: '品牌新闻',

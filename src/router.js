@@ -13,6 +13,16 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/brand',
+      name: 'brand',
+      component: () => import('./views/brand-intro/brand-intro.vue')
+    },
+    {
+      path: '/commodity',
+      name: 'commodity',
+      component: () => import('./views/commodity/commodity.vue')
     }
   ]
 })

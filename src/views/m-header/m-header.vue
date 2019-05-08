@@ -45,6 +45,7 @@ export default {
   line-height: 60px;
   padding: 0 70px;
   color: #2a2a2a;
+  border-bottom:1px solid rgba(216,216,216,1);
   .nav {
     & > ul {
       display: flex;
