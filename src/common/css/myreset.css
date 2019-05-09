@@ -17,3 +17,13 @@ a {
   outline: none;
   color: #000000;
 }
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #9a8658;
+  color: #fff;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: #9a8658;
+}
+.el-pagination.is-background .el-pager li.active:hover {
+  color: #fff;
+}

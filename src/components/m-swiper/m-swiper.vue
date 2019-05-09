@@ -21,21 +21,21 @@
           <!-- 大banner -->
           <div v-if="generalSwiper" class="slide-img1">
             <div class="img-wrapper1">
-                <img class="response-img" :src="slide.src">
+              <img class="response-img" :src="slide.src">
             </div>
           </div>
           <!-- 新品banner -->
           <div v-if="showLeftText" class="slide-img2">
             <div class="img-wrapper2">
-                <img :src="slide.src" class="response-img">
-                <!-- 夏季新品的前进按钮 -->
-                <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
+              <img :src="slide.src" class="response-img">
+              <!-- 夏季新品的前进按钮 -->
+              <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
             </div>
           </div>
           <!-- 多列banner -->
           <div v-if="showImgText" class="slide-img3">
             <div class="img-wrapper3">
-                <img class="response-image" :src="slide.src">
+              <img class="response-image" :src="slide.src">
             </div>
             <div class="img-text">
               <span>YINAGU 2019气质连衣裙111111111111</span>
@@ -236,16 +236,16 @@ export default {
             height: 500px;
             overflow: hidden;
             .img-wrapper2 {
-                max-width: calc(~"100% - 45px");
+                max-width: calc(~'100% - 45px');
                 display: inline-block;
                 position: relative;
                 top: 50%;
                 transform: translateY(-50%);
-                img{
+                img {
                     cursor: pointer;
                     transition: all 0.6s;
                 }
-                img:hover{
+                img:hover {
                     transform: scale(1.2);
                 }
             }
@@ -256,11 +256,11 @@ export default {
             .img-wrapper3 {
                 width: 100%;
                 overflow: hidden;
-                img{
+                img {
                     cursor: pointer;
                     transition: all 0.6s;
                 }
-                img:hover{
+                img:hover {
                     transform: scale(1.2);
                 }
             }

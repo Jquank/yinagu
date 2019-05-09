@@ -1,3 +1,4 @@
+@import './variable.less';
 html,
 body {
   font-size: 14px;
@@ -19,4 +20,16 @@ a {
   text-decoration: none;
   outline: none;
   color: #000000;
+}
+
+// element-ui
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: @theme-color;
+  color: #fff;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: @theme-color;
+}
+.el-pagination.is-background .el-pager li.active:hover {
+  color: #fff;
 }

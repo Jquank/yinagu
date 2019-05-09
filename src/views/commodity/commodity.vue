@@ -1,46 +1,57 @@
 <template>
-    <div class="commodity">
-        <div class="nav">
-            <p class="all-categories">所有分类</p>
-            <ul>
-                <li v-for="item in categories" :key="item.text">
-                    <a href="#">{{item.text}}</a>
-                </li>
-            </ul>
+  <div class="commodity">
+    <div class="commodity-wrapper">
+      <div class="nav">
+        <p class="all-categories">所有分类</p>
+        <ul ref="ulItem">
+          <li @click="handleClickCategories(index,item)" v-for="(item,index) in categories" :key="item.text">
+            <a href="javascrpt:void(0)">{{item.text}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="commodity-content">
+        <div class="title">
+          <span class="all-text">全部（268件）</span>
+          <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
+            <span>排序</span>
+            <img :src="sortSrc">
+          </div>
+          <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
+            <p>
+              <i class="el-icon-sort-down"></i>
+              价格从高到低
+            </p>
+            <p>
+              <i class="el-icon-sort-up"></i>
+              价格从低到高
+            </p>
+          </div>
         </div>
-        <div class="commodity-wrapper">
-            <div class="title">
-                <span class="all-text">全部（268件）</span>
-                <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
-                    <span>排序</span>
-                    <img :src="sortSrc">
-                </div>
-                <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
-                    <p>
-                        <i class="el-icon-sort-down"></i>
-                        价格从高到低
-                    </p>
-                    <p>
-                        <i class="el-icon-sort-up"></i>
-                        价格从低到高
-                    </p>
-                </div>
+        <div class="content">
+          <div class="content-wrapper" v-insert-div:margin-left:11px>
+            <div v-for="item in list" :key="item" class="item-wrapper">
+              <div class="img-wrapper">
+                <img src="./a01.png" class="response-img" @click="routerToDetail(item)">
+              </div>
+              <p class="text-wrapper">
+                <span @click="routerToDetail(item)">YINAGU 2019气质连衣裙1111111111</span>
+                <span>¥ 299</span>
+              </p>
             </div>
-            <div class="content">
-                <div class="content-wrapper" v-insert-div:margin-left:11px>
-                    <div v-for="item in list" :key="item" class="item-wrapper">
-                        <div class="img-wrapper">
-                            <img src="./a01.png" class="response-img">
-                        </div>
-                        <p class="text-wrapper">
-                            <span>YINAGU 2019气质连衣裙...</span>
-                            <span>¥ 299</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="pagination">
+      <el-pagination
+        background
+        :page-sizes="[10, 30, 50, 100]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="100"
+      ></el-pagination>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -75,8 +86,15 @@ export default {
             sortShow: false
         }
     },
-
+    mounted() {
+        this.$refs.ulItem.children[0].className = 'li-active'
+    },
     methods: {
+        routerToDetail(item) {
+            this.$router.push({
+                path: `/goodsDetail/123`
+            })
+        },
         sortMouseEnter() {
             console.log(123)
             this.sortShow = true
@@ -86,6 +104,17 @@ export default {
             console.log(456)
             this.sortShow = false
             this.sortSrc = require('./d-sort.png')
+        },
+        handleClickCategories(index, item) {
+            let children = this.$refs.ulItem.children
+            for (let i = 0; i < children.length; i++) {
+                const li = children[i]
+                if (index === i) {
+                    li.className = 'li-active'
+                } else {
+                    li.className = ''
+                }
+            }
         }
     }
 }
@@ -95,101 +124,121 @@ export default {
     margin-left: 11px;
 }
 .commodity {
-    display: flex;
-    margin-top: 50px;
-    padding-right: 80px;
-    .nav {
-        flex: 0 0 300px;
-        width: 300px;
-        margin: 0 70px 0 100px;
-        .all-categories {
-            height: 19px;
-            line-height: 19px;
-            color: rgb(159, 159, 159);
-            padding: 0 0 0 18px;
-            height: 40px;
+    .commodity-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 50px;
+        padding-right: 80px;
+        .nav {
+            flex: 0 0 300px;
+            width: 300px;
+            margin: 0 70px 0 100px;
+            .all-categories {
+                height: 19px;
+                line-height: 19px;
+                color: rgb(159, 159, 159);
+                padding: 0 0 0 18px;
+                height: 40px;
+            }
+            li {
+                &.li-active {
+                    background: @theme-color;
+                }
+                padding-left: 18px;
+                border-bottom: 1px solid rgba(216, 216, 216, 1);
+                & > a {
+                    display: inline-block;
+                    width: 300px;
+                    height: 50px;
+                    line-height: 50px;
+                }
+            }
         }
-        li {
-            border-bottom: 1px solid rgba(216, 216, 216, 1);
-            & > a {
-                display: inline-block;
-                width: 300px;
-                height: 50px;
-                line-height: 50px;
+        .commodity-content {
+            flex: 1;
+            & > .title {
+                display: flex;
+                justify-content: space-between;
+                height: 40px;
+                color: rgb(159, 159, 159);
+                border-bottom: 1px solid rgb(216, 216, 216);
+                line-height: 19px;
+                position: relative;
+                .sort {
+                    width: 60px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    cursor: pointer;
+                }
+                .hover-wrapper {
+                    position: absolute;
+                    right: 0;
+                    bottom: -100px;
+                    z-index: 10;
+                    width: 160px;
+                    background: @theme-color;
+                    text-align: center;
+                    color: #ffffff;
+                    & > p {
+                        height: 50px;
+                        line-height: 50px;
+                        cursor: pointer;
+                    }
+                    & > p:first-child {
+                        border-bottom: 1px solid rgb(216, 216, 216);
+                    }
+                }
+            }
+            .content {
+                margin-top: 40px;
+                .content-wrapper {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    margin-left: -11px;
+                    .item-wrapper {
+                        margin-left: 11px;
+                        .img-wrapper {
+                            width: 320px;
+                            overflow: hidden;
+                            img {
+                                cursor: pointer;
+                                transition: all 0.6s;
+                            }
+                            img:hover {
+                                transform: scale(1.2);
+                            }
+                        }
+                        .text-wrapper {
+                            height: 75px;
+                            line-height: 55px;
+                            padding: 0 5px;
+                            display: flex;
+                            justify-content: space-between;
+                            & > span:first-child {
+                                cursor: pointer;
+                                width: 230px;
+                                padding-right: 8px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                font-size: 16px;
+                            }
+                            & > span:last-child {
+                                text-align: right;
+                                color: @theme-color;
+                                font-size: 20px;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    .commodity-wrapper {
-        flex: 1;
-        & > .title {
-            display: flex;
-            justify-content: space-between;
-            height: 40px;
-            color: rgb(159, 159, 159);
-            border-bottom: 1px solid rgb(216, 216, 216);
-            line-height: 19px;
-            position: relative;
-            .sort {
-                width: 60px;
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                cursor: pointer;
-            }
-            .hover-wrapper {
-                position: absolute;
-                right: 0;
-                bottom: -100px;
-                z-index: 10;
-                width: 160px;
-                background: rgba(154, 134, 88, 1);
-                text-align: center;
-                color: #ffffff;
-                & > p {
-                    height: 50px;
-                    line-height: 50px;
-                    cursor: pointer;
-                }
-                & > p:first-child {
-                    border-bottom: 1px solid rgb(216, 216, 216);
-                }
-            }
-        }
-        .content {
-            margin-top: 40px;
-            .content-wrapper {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                margin-left: -11px;
-                .item-wrapper {
-                    margin-left: 11px;
-                    .img-wrapper {
-                        width: 320px;
-                    }
-                    .text-wrapper {
-                        height: 75px;
-                        line-height: 55px;
-                        padding: 0 5px;
-                        display: flex;
-                        justify-content: space-between;
-                        & > span:first-child {
-                            flex: 1;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            font-size: 16px;
-                        }
-                        & > span:last-child {
-                            width: 80px;
-                            text-align: right;
-                            color: #9a8658;
-                            font-size: 20px;
-                        }
-                    }
-                }
-            }
-        }
+    .pagination {
+        padding: 10px 0 50px;
+        text-align: center;
     }
 }
 </style>

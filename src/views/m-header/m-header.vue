@@ -1,28 +1,43 @@
 <template>
-    <div class="m-header">
-        <div class="logo">
-            <img src="./logo.png">
-        </div>
-        <div class="nav">
-            <ul>
-                <li v-for="(item,index) in navList" :key="item.en" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)" ref="liItem">
-                    <router-link
-                        tag="div"
-                        :to="item.to"
-                        :style="{'width': item.width+'px'}"
-                        class="router-tab"
-                        :class="$route.path===item.to?'router-tab-active':''"
-                    >{{$route.path===item.to || isMouseEnter===index?item.ch:item.en}}</router-link>
-                </li>
-            </ul>
-        </div>
-        <div class="search">
-            <div>
-                <div class="search-input"></div>
-            </div>
-            <img src="./search-icon.png" class="search-icon">
-        </div>
+  <div class="m-header">
+    <div class="logo">
+      <img src="./logo.png">
     </div>
+    <div class="nav">
+      <ul>
+        <li
+          v-for="(item,index) in navList"
+          :key="item.en"
+          @mouseenter="mouseEnter(index)"
+          @mouseleave="mouseLeave(index)"
+          ref="liItem"
+        >
+          <router-link
+            tag="div"
+            :to="item.to"
+            :style="{'width': item.width+'px'}"
+            class="router-tab"
+            :class="$route.path===item.to?'router-tab-active':''"
+          >{{$route.path===item.to || isMouseEnter===index?item.ch:item.en}}</router-link>
+        </li>
+      </ul>
+    </div>
+    <div class="search">
+      <div v-if="isSearch"></div>
+      <div>
+        <div v-if="isSearch" class="search-input">
+          <el-input
+            ref="searchInput"
+            v-model="inputValue"
+            suffix-icon="el-icon-search"
+            @keydown.enter.native="search"
+            @blur="handleBlur"
+          ></el-input>
+        </div>
+      </div>
+      <img v-if="!isSearch" src="./search-icon.png" class="search-icon c-pointer" @click="handleSearchIcon">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -31,19 +46,37 @@ export default {
     data() {
         return {
             navList: navList,
-            isMouseEnter: -1
+            isMouseEnter: -1,
+            isSearch: false,
+            inputValue: ''
         }
     },
     methods: {
+        search(e) {
+            console.log(e)
+        },
         mouseEnter(index) {
-            console.log(index)
-
             this.$refs.liItem[index].setAttribute('class', 'router-tab-active')
             this.isMouseEnter = index
         },
         mouseLeave(index) {
             this.$refs.liItem[index].setAttribute('class', '')
             this.isMouseEnter = -1
+        },
+        handleSearchIcon() {
+            this.isSearch = true
+            this.$nextTick(() => {
+                this.$refs.searchInput.$el.children[0].focus()
+                this.$refs.searchInput.$el.children[1].addEventListener(
+                    'click',
+                    () => {
+                        this.search()
+                    }
+                )
+            })
+        },
+        handleBlur() {
+            this.isSearch = false
         }
     },
     components: {}
@@ -77,6 +110,19 @@ export default {
         justify-content: space-between;
         align-items: center;
         width: 220px;
+        text-align: right;
+        position: relative;
+    }
+}
+</style>
+<style lang="less">
+.m-header .search {
+    .el-input {
+        .el-input__inner {
+            border-radius: 18px;
+            width: 160px;
+            height: 36px;
+        }
     }
 }
 </style>

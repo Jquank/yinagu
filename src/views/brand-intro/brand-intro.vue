@@ -41,8 +41,21 @@ export default {
 </script>
 <style lang='less' scoped>
 .brand-intro {
+    margin-top: -1px;
+    .img-wrapper:hover {
+        & > img {
+            transform: scale(1.2);
+        }
+    }
     .img-wrapper {
         position: relative;
+        overflow: hidden;
+        & > img {
+            transition: all 0.6s;
+        }
+        & > img:hover {
+            transform: scale(1.2);
+        }
         & > img {
             min-height: 750px;
             width: 100%;
