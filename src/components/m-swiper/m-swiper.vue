@@ -6,7 +6,7 @@
           <!-- 首页新品左侧文字 -->
           <div v-if="showLeftText" class="new-products">
             <div class="title">
-              <div class="title-1">New products</div>
+              <div class="title-1">New products in summer</div>
               <div class="title-2">
                 <p>夏季</p>
                 <p>新品</p>
@@ -18,10 +18,27 @@
               <div class="title-5">¥ 299</div>
             </div>
           </div>
-          <div class="slide-img">
-            <img @click="showGoodsDetail" class="response-img" :src="slide.src">
-            <div v-if="showImgText" class="img-text">
-              <span>YINAGU 2019气质连衣裙...</span>
+          <!-- 大banner -->
+          <div v-if="generalSwiper" class="slide-img1">
+            <div class="img-wrapper1">
+                <img class="response-img" :src="slide.src">
+            </div>
+          </div>
+          <!-- 新品banner -->
+          <div v-if="showLeftText" class="slide-img2">
+            <div class="img-wrapper2">
+                <img :src="slide.src" class="response-img">
+                <!-- 夏季新品的前进按钮 -->
+                <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
+            </div>
+          </div>
+          <!-- 多列banner -->
+          <div v-if="showImgText" class="slide-img3">
+            <div class="img-wrapper3">
+                <img class="response-image" :src="slide.src">
+            </div>
+            <div class="img-text">
+              <span>YINAGU 2019气质连衣裙111111111111</span>
               <span>更多></span>
             </div>
           </div>
@@ -35,10 +52,7 @@
       </swiper-slide>
       <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
     </swiper>
-    <!-- 夏季新品的前进后退 -->
-    <template v-if="showLeftText">
-      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
-    </template>
+
     <!-- 多列轮播的前进后退 -->
     <template v-if="showBtn">
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
@@ -53,6 +67,10 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
     props: {
         showBtn: {
+            type: Boolean,
+            default: false
+        },
+        generalSwiper: {
             type: Boolean,
             default: false
         },
@@ -132,7 +150,7 @@ export default {
 
 <style scoped lang="less">
 .m-swiper {
-    position: relative;
+    // position: relative;
     .swiper-slide {
         text-align: center;
     }
@@ -146,6 +164,7 @@ export default {
         left: 300px;
         top: 240px;
         z-index: 1000;
+        text-align: left;
         .title {
             font-size: 70px;
             font-weight: bold;
@@ -168,64 +187,101 @@ export default {
     .slide-wrapper1 {
         display: flex;
         .new-products {
-            flex: 0 0 210px;
+            flex: 0 0 180px;
             display: flex;
             margin-right: 69px;
             .title {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-around;
+                // justify-content: space-around;
                 overflow: hidden;
                 text-align: start;
                 .title-1 {
-                    font-size: 24px;
+                    height: 60px;
+                    font-size: 22px;
                 }
                 .title-2 {
                     & > p {
                         font-size: 88px;
+                        line-height: 115px;
                     }
                 }
                 .title-3 {
                     font-size: 18px;
                     color: #9a8658;
                     font-weight: bold;
+                    margin-top: 30px;
                 }
                 .title-4 {
                     color: #9f9f9f;
                     margin-top: 16px;
+                    height: 78px;
+                    overflow: hidden;
                 }
                 .title-5 {
                     width: 80px;
                     height: 36px;
+                    margin-top: 20px;
                     text-align: center;
                     line-height: 36px;
                     background: rgb(154, 134, 88);
                     color: #fff;
                 }
             }
-            .show-img {
-                flex: 1;
+        }
+        .slide-img2 {
+            flex: 1;
+            // flex: 0 0 900px;
+            text-align: left;
+            height: 500px;
+            overflow: hidden;
+            .img-wrapper2 {
+                max-width: calc(~"100% - 45px");
+                display: inline-block;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                img{
+                    cursor: pointer;
+                    transition: all 0.6s;
+                }
+                img:hover{
+                    transform: scale(1.2);
+                }
             }
         }
-        .slide-img {
+        .slide-img3 {
             flex: 1;
+            max-width: 320px;
+            .img-wrapper3 {
+                width: 100%;
+                overflow: hidden;
+                img{
+                    cursor: pointer;
+                    transition: all 0.6s;
+                }
+                img:hover{
+                    transform: scale(1.2);
+                }
+            }
             .img-text {
                 display: flex;
                 justify-content: space-between;
                 flex-wrap: wrap;
-                height: 21px;
-                line-height: 21px;
-                padding: 8px 5px 0;
+                padding: 17px 5px 20px;
                 & > span:first-child {
-                    display: inline-block;
-                    font-size: 16px;
-                    width: 225px;
+                    width: 210px;
+                    padding-right: 8px;
                     text-align: start;
+                    font-size: 16px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
                 & > span:last-child {
+                    width: 45px;
+                    text-align: left;
+                    line-height: 18px;
                     color: #9a8658;
                 }
             }

@@ -33,7 +33,7 @@ const navList = [
     ch: '线下门店',
     en: 'PHYSICAL STORE',
     to: '/5',
-    width: '115'
+    width: '135'
   },
   {
     ch: '联系我们',

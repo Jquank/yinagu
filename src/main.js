@@ -8,8 +8,8 @@ import './plugins/element.js'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'common/less/index.less'
 
-// import flexSort from '@/directive/flexSort.js'
-// Vue.directive('flex-sort', flexSort)
+import insertDiv from '@/directive/insertDiv.js'
+Vue.directive('insert-div', insertDiv)
 
 Vue.config.productionTip = false
 

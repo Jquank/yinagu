@@ -1,28 +1,28 @@
 <template>
-  <div class="m-header">
-    <div class="logo">
-      <img src="./logo.png">
+    <div class="m-header">
+        <div class="logo">
+            <img src="./logo.png">
+        </div>
+        <div class="nav">
+            <ul>
+                <li v-for="(item,index) in navList" :key="item.en" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)" ref="liItem">
+                    <router-link
+                        tag="div"
+                        :to="item.to"
+                        :style="{'width': item.width+'px'}"
+                        class="router-tab"
+                        :class="$route.path===item.to?'router-tab-active':''"
+                    >{{$route.path===item.to || isMouseEnter===index?item.ch:item.en}}</router-link>
+                </li>
+            </ul>
+        </div>
+        <div class="search">
+            <div>
+                <div class="search-input"></div>
+            </div>
+            <img src="./search-icon.png" class="search-icon">
+        </div>
     </div>
-    <div class="nav">
-      <ul>
-        <li v-for="item in navList" :key="item.en">
-          <router-link
-            tag="div"
-            :to="item.to"
-            :style="{'width': item.width+'px'}"
-            class="router-tab"
-            :class="$route.path===item.to?'router-tab-active':''"
-          >{{$route.path===item.to?item.ch:item.en}}</router-link>
-        </li>
-      </ul>
-    </div>
-    <div class="search">
-      <div>
-        <div class="search-input"></div>
-      </div>
-      <img src="./search-icon.png" class="search-icon">
-    </div>
-  </div>
 </template>
 
 <script>
@@ -30,11 +30,21 @@ import navList from './config.js'
 export default {
     data() {
         return {
-            navList: navList
+            navList: navList,
+            isMouseEnter: -1
         }
     },
-    created() {
-        console.log(this.$route)
+    methods: {
+        mouseEnter(index) {
+            console.log(index)
+
+            this.$refs.liItem[index].setAttribute('class', 'router-tab-active')
+            this.isMouseEnter = index
+        },
+        mouseLeave(index) {
+            this.$refs.liItem[index].setAttribute('class', '')
+            this.isMouseEnter = -1
+        }
     },
     components: {}
 }
@@ -59,6 +69,7 @@ export default {
         }
         .router-tab-active {
             color: #fff;
+            background: rgba(154, 134, 88, 1);
         }
     }
     .search {

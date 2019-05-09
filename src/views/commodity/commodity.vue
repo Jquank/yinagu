@@ -1,46 +1,46 @@
 <template>
-  <div class="commodity">
-    <div class="nav">
-      <p class="all-categories">所有分类</p>
-      <ul>
-        <li v-for="item in categories" :key="item.text">
-          <a href="#">{{item.text}}</a>
-        </li>
-      </ul>
-    </div>
-    <div class="commodity-wrapper">
-      <div class="title">
-        <span class="all-text">全部（268件）</span>
-        <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
-          <span>排序</span>
-          <img :src="sortSrc">
+    <div class="commodity">
+        <div class="nav">
+            <p class="all-categories">所有分类</p>
+            <ul>
+                <li v-for="item in categories" :key="item.text">
+                    <a href="#">{{item.text}}</a>
+                </li>
+            </ul>
         </div>
-        <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
-          <p>
-            <i class="el-icon-sort-down"></i>
-            价格从高到低
-          </p>
-          <p>
-            <i class="el-icon-sort-up"></i>
-            价格从低到高
-          </p>
-        </div>
-      </div>
-      <div class="content">
-        <div class="content-wrapper">
-          <div v-for="item in list" :key="item" class="item-wrapper">
-            <div class="img-wrapper">
-              <img src="./a01.png" class="response-img">
+        <div class="commodity-wrapper">
+            <div class="title">
+                <span class="all-text">全部（268件）</span>
+                <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
+                    <span>排序</span>
+                    <img :src="sortSrc">
+                </div>
+                <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
+                    <p>
+                        <i class="el-icon-sort-down"></i>
+                        价格从高到低
+                    </p>
+                    <p>
+                        <i class="el-icon-sort-up"></i>
+                        价格从低到高
+                    </p>
+                </div>
             </div>
-            <p class="text-wrapper">
-              <span>YINAGU 2019气质连衣裙...</span>
-              <span>¥ 299</span>
-            </p>
-          </div>
+            <div class="content">
+                <div class="content-wrapper" v-insert-div:margin-left:11px>
+                    <div v-for="item in list" :key="item" class="item-wrapper">
+                        <div class="img-wrapper">
+                            <img src="./a01.png" class="response-img">
+                        </div>
+                        <p class="text-wrapper">
+                            <span>YINAGU 2019气质连衣裙...</span>
+                            <span>¥ 299</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -91,6 +91,9 @@ export default {
 }
 </script>
 <style lang='less' scoped>
+.item-wrapper {
+    margin-left: 11px;
+}
 .commodity {
     display: flex;
     margin-top: 50px;
