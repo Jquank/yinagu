@@ -127,8 +127,7 @@ export default {
     .commodity-wrapper {
         display: flex;
         flex-wrap: wrap;
-        margin-top: 50px;
-        padding-right: 80px;
+        padding: 50px 80px 0 0;
         .nav {
             flex: 0 0 300px;
             width: 300px;

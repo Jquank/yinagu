@@ -1,43 +1,31 @@
 <template>
-  <div class="m-header">
-    <div class="logo">
-      <img src="./logo.png">
-    </div>
-    <div class="nav">
-      <ul>
-        <li
-          v-for="(item,index) in navList"
-          :key="item.en"
-          @mouseenter="mouseEnter(index)"
-          @mouseleave="mouseLeave(index)"
-          ref="liItem"
-        >
-          <router-link
-            tag="div"
-            :to="item.to"
-            :style="{'width': item.width+'px'}"
-            class="router-tab"
-            :class="$route.path===item.to?'router-tab-active':''"
-          >{{$route.path===item.to || isMouseEnter===index?item.ch:item.en}}</router-link>
-        </li>
-      </ul>
-    </div>
-    <div class="search">
-      <div v-if="isSearch"></div>
-      <div>
-        <div v-if="isSearch" class="search-input">
-          <el-input
-            ref="searchInput"
-            v-model="inputValue"
-            suffix-icon="el-icon-search"
-            @keydown.enter.native="search"
-            @blur="handleBlur"
-          ></el-input>
+    <div class="m-header">
+        <div class="logo">
+            <img src="./logo.png">
         </div>
-      </div>
-      <img v-if="!isSearch" src="./search-icon.png" class="search-icon c-pointer" @click="handleSearchIcon">
+        <div class="nav">
+            <ul>
+                <li v-for="(item,index) in navList" :key="item.en" @mouseenter="mouseEnter(index)" @mouseleave="mouseLeave(index)" ref="liItem">
+                    <router-link
+                        tag="div"
+                        :to="item.to"
+                        :style="{'width': item.width+'px'}"
+                        class="router-tab"
+                        :class="$route.path===item.to?'router-tab-active':''"
+                    >{{$route.path===item.to || isMouseEnter===index?item.en:item.ch}}</router-link>
+                </li>
+            </ul>
+        </div>
+        <div class="search">
+            <div v-if="isSearch"></div>
+            <div>
+                <div v-if="isSearch" class="search-input">
+                    <el-input ref="searchInput" v-model="inputValue" suffix-icon="el-icon-search" @keydown.enter.native="search" @blur="handleBlur"></el-input>
+                </div>
+            </div>
+            <img v-if="!isSearch" src="./search-icon.png" class="search-icon c-pointer" @click="handleSearchIcon">
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -89,9 +77,19 @@ export default {
     justify-content: space-between;
     height: 60px;
     line-height: 60px;
-    padding: 0 70px;
+    // 加paddin后，width超出了body？
+    // padding: 0 70px;
     color: #2a2a2a;
-    border-bottom: 1px solid rgba(216, 216, 216, 1);
+    border-bottom: 1px solid rgb(216, 216, 216);
+    background-color: #fff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    .logo {
+        padding-left: 70px;
+    }
     .nav {
         & > ul {
             display: flex;
@@ -106,6 +104,7 @@ export default {
         }
     }
     .search {
+        padding-right: 70px;
         display: flex;
         justify-content: space-between;
         align-items: center;

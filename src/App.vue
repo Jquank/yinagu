@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <m-header></m-header>
-    <div>
+    <div class="router-wrapper">
       <router-view></router-view>
     </div>
     <m-footer></m-footer>
@@ -22,4 +22,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#app{
+    .router-wrapper {
+        margin-top: 60px;
+    }
+}
 </style>
