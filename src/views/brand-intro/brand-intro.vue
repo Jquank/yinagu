@@ -62,8 +62,8 @@ export default {
         }
         .intro-text {
             position: absolute;
-            top: 18%;
-            left: 15%;
+            top: 21%;
+            left: 15.6%;
             color: rgb(255, 255, 255);
             padding-right: 50px;
             width: calc(~'100% - 350px');
@@ -81,16 +81,17 @@ export default {
             .text {
                 display: flex;
                 margin-top: 60px;
-                line-height: 19px;
+                line-height: 24px;
                 .left {
                     margin-right: 100px;
                     max-width: 560px;
-                    height: 250px;
+                    height: 310px;
                     overflow: hidden;
                 }
                 .right {
                     max-width: 560px;
                     height: 250px;
+                    line-height: 24px;
                     overflow: hidden;
                 }
             }

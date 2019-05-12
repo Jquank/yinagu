@@ -1,64 +1,64 @@
 <template>
-    <div class="m-swiper" ref="mSwiper">
-        <swiper :options="swiperOption" ref="mySwiper" v-if="swiperSlides.length">
-            <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-                <div class="slide-wrapper1">
-                    <!-- 首页新品左侧文字 -->
-                    <div v-if="showLeftText" class="new-products">
-                        <div class="title">
-                            <div class="title-1">New products in summer</div>
-                            <div class="title-2">
-                                <p>夏季</p>
-                                <p>新品</p>
-                            </div>
-                            <div>
-                                <div class="title-3">驼色/大衣</div>
-                                <div class="title-4">2019夏季新品复古蕾丝花边网纱收腰无袖连衣裙女中长款</div>
-                            </div>
-                            <div class="title-5">¥ 299</div>
-                        </div>
-                    </div>
-                    <!-- 大屏banner -->
-                    <div v-if="generalSwiper" class="slide-img1">
-                        <div class="img-wrapper1">
-                            <img class="response-img" :src="slide.src">
-                        </div>
-                    </div>
-                    <!-- 新品banner -->
-                    <div v-if="showLeftText" class="slide-img2">
-                        <div class="img-wrapper2">
-                            <img :src="slide.src" class="response-img">
-                            <!-- 夏季新品的前进按钮 -->
-                            <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
-                        </div>
-                    </div>
-                    <!-- 多列banner -->
-                    <div v-if="showImgText" class="slide-img3">
-                        <div class="img-wrapper3">
-                            <img class="response-image" :src="slide.src">
-                        </div>
-                        <div class="img-text">
-                            <span>YINAGU 2019气质连衣裙111111111111</span>
-                            <span>更多></span>
-                        </div>
-                    </div>
-                </div>
-                <!-- 首页banner上面文字 -->
-                <div v-if="showUpperText" class="banner-text">
-                    <div class="title">{{slide.title}}</div>
-                    <div class="subtitle">{{slide.subtitle}}</div>
-                    <div class="detail-btn">DETAILS</div>
-                </div>
-            </swiper-slide>
-            <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
-        </swiper>
+  <div class="m-swiper" ref="mSwiper">
+    <swiper :options="swiperOption" ref="mySwiper" v-if="swiperSlides.length">
+      <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
+        <div class="slide-wrapper1">
+          <!-- 首页新品左侧文字 -->
+          <div v-if="showLeftText" class="new-products">
+            <div class="title">
+              <div class="title-1">New products in summer</div>
+              <div class="title-2">
+                <p>夏季</p>
+                <p>新品</p>
+              </div>
+              <div>
+                <div class="title-3">驼色/大衣</div>
+                <div class="title-4">2019夏季新品复古蕾丝花边网纱收腰无袖连衣裙女中长款</div>
+              </div>
+              <div class="title-5">¥ 299</div>
+            </div>
+          </div>
+          <!-- 大屏banner -->
+          <div v-if="generalSwiper" class="slide-img1">
+            <div class="img-wrapper1">
+              <img class="response-img" :src="slide.src">
+            </div>
+          </div>
+          <!-- 新品banner -->
+          <div v-if="showLeftText" class="slide-img2">
+            <div class="img-wrapper2">
+              <img :src="slide.src" class="response-img">
+              <!-- 夏季新品的前进按钮 -->
+              <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
+            </div>
+          </div>
+          <!-- 多列banner -->
+          <div v-if="showImgText" class="slide-img3">
+            <div class="img-wrapper3">
+              <img class="response-image" :src="slide.src" @click="routerTo">
+            </div>
+            <div class="img-text">
+              <span>YINAGU 2019气质连衣裙111111111111</span>
+              <span>更多></span>
+            </div>
+          </div>
+        </div>
+        <!-- 首页banner上面文字 -->
+        <div v-if="showUpperText" class="banner-text">
+          <div class="title">{{slide.title}}</div>
+          <div class="subtitle">{{slide.subtitle}}</div>
+          <div class="detail-btn">DETAILS</div>
+        </div>
+      </swiper-slide>
+      <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
+    </swiper>
 
-        <!-- 多列轮播的前进后退 -->
-        <template v-if="showBtn">
-            <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
-            <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
-        </template>
-    </div>
+    <!-- 多列轮播的前进后退 -->
+    <template v-if="showBtn">
+      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -113,36 +113,14 @@ export default {
         }
     },
     data() {
-        return {
-            //   swiperOption: {
-            // navigation: {
-            //   nextEl: '.swiper-button-next',
-            //   prevEl: '.swiper-button-prev'
-            // },
-            // loop: true,
-            // slidesPerView: 3,
-            // autoHeight: true
-            // spaceBetween: 30
-            // pagination: {
-            //   el: '.swiper-pagination'
-            // }
-            //   }
-        }
+        return {}
     },
     mounted() {},
     methods: {
-        showGoodsDetail() {},
-        setSlideNum() {
-            let width = this.$refs.mSwiper.clientWidth - 100
-            if (width > 1000) {
-                return 4
-            } else if (width > 750) {
-                return 3
-            } else if (width > 500) {
-                return 2
-            } else {
-                return 1
-            }
+        routerTo() {
+            this.$router.push({
+                path: `/goodsDetail/123`
+            })
         }
     },
     components: {

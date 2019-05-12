@@ -1,4 +1,5 @@
 // flex的space-between布局中最后补位空div，用法：v-insert-div:margin-left:11px
+// 此指令在news页出现卡浏览器bug，待查找
 export default {
     inserted(el, binding, vnode) {
         let item = el.children[0]

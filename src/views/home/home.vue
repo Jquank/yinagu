@@ -132,7 +132,7 @@ export default {
                 // slidesPerGroup: 1,
                 // loopFillGroupWithBlank: true,
                 slidesPerView: 1,
-                spaceBetween: 100,
+                spaceBetween: 180,
                 loop: true,
                 speed: 800,
                 navigation: {
@@ -239,8 +239,9 @@ export default {
     position: relative;
     margin-top: -1px;
     .home-section {
-        padding: 0 290px;
-        margin-top: 70px;
+        width: 1340px;
+        // padding: 0 15%;
+        margin: 70px auto 0;
         .more-news {
             margin-top: 70px;
             .more-text {
@@ -280,7 +281,7 @@ export default {
             display: flex;
             justify-content: space-between;
             line-height: 19px;
-            padding: 0 290px;
+            padding: 0 15%;
             .left {
                 margin-right: 100px;
                 overflow: hidden;
@@ -292,15 +293,20 @@ export default {
             }
         }
     }
+    @media (max-width: 1580px) {
+        .home-news {
+            flex-wrap: wrap;
+        }
+    }
     .home-news {
         display: flex;
         justify-content: space-between;
-        padding-top: 20px;
         .news-wrapper {
             display: flex;
+            padding-top: 20px;
             .img-wrapper {
-                margin-right: 50px;
-                flex: 48;
+                flex: 1;
+                max-width: 480px;
                 overflow: hidden;
                 img {
                     cursor: pointer;
@@ -311,14 +317,17 @@ export default {
                 }
             }
             .text-wrapper {
-                flex: 38;
+                flex: 1;
                 display: flex;
                 flex-direction: column;
-                margin: 0 50px 0 0;
+                justify-content: center;
+                padding: 0 50px;
+                background: rgb(243, 243, 243);
+                // max-height: 480px;
                 .date {
                     color: rgb(159, 159, 159);
                     font-size: 18px;
-                    margin-top: 12%;
+                    margin-top: 40px;
                 }
                 .title {
                     font-size: 20px;
@@ -329,9 +338,11 @@ export default {
                 }
                 .subtitle {
                     font-size: 16px;
+                    line-height: 20px;
                     color: rgb(159, 159, 159);
-                    max-height: 126px;
-                    margin-top: 10%;
+                    max-height: 100px;
+                    min-height: 80px;
+                    margin-top: 30px;
                     overflow: hidden;
                 }
                 .read-more {
@@ -341,7 +352,7 @@ export default {
                     color: rgb(154, 134, 88);
                     text-align: center;
                     line-height: 50px;
-                    margin-top: 8%;
+                    margin-top: 20px;
                 }
             }
         }
@@ -350,12 +361,13 @@ export default {
 </style>
 <style lang="less">
 .swiper-slides1 {
-    .slide-img img {
+    .slide-img1,
+    .slide-img1 img {
         width: 100%;
     }
 }
 .swiper-slides2 {
-    .slide-img img {
+    .slide-img2 img {
         width: 100%;
     }
     // 前进按钮样式

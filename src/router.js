@@ -28,6 +28,43 @@ export default new Router({
             path: '/goodsDetail/:id',
             name: 'goodsDetail',
             component: () => import('./views/goods-detail/goods-detail.vue')
+        },
+        {
+            path: '/mall',
+            name: 'mall',
+            component: () => import('./views/mall/mall.vue')
+        },
+        {
+            path: '/brandNews',
+            name: 'brandNews',
+            component: () => import('./views/news/news.vue')
+        },
+        {
+            path: '/newsDetail/:id',
+            name: 'newsDetail',
+            component: () => import('./views/news-detail/news-detail.vue')
+        },
+        {
+            path: '/store',
+            name: 'store',
+            component: () => import('./views/store/store.vue')
+        },
+        {
+            path: '/recruitment',
+            name: 'recruitment',
+            component: () => import('./views/recruitment/recruitment.vue')
+        },
+        {
+            path: '/contact',
+            name: 'contact',
+            component: () => import('./views/contact-us/contact-us.vue')
         }
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })
