@@ -38,7 +38,34 @@
             <div>black</div>
           </div>
         </div>
-        <div class="detail-info"></div>
+        <div class="detail-info">
+          <div class="info-wrapper">
+            <p>商品编号：41741408227</p>
+            <p>店铺： 诗萌旗舰店商品</p>
+            <p>毛重：1.0kg</p>
+            <p>货号：9181276</p>
+            <p>腰型：高腰组合</p>
+            <p>规格：单件</p>
+            <p>风格：休闲，文艺，通勤</p>
+            <p>主要材质：聚酯纤维</p>
+          </div>
+          <div class="info-wrapper">
+            <p>领型：圆领</p>
+            <p>流行元素：不规则</p>
+            <p>廓形：A型</p>
+            <p>面料：其它</p>
+            <p>袖长：长袖衣</p>
+            <p>门襟：套头</p>
+            <p>适用年龄：25-29周岁</p>
+          </div>
+          <div class="info-wrapper">
+            <p>图案：纯色</p>
+            <p>裙长：中长裙</p>
+            <p>裙型：百褶裙</p>
+            <p>袖型：常规</p>
+            <p>上市时间：2019春季</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="recommend-wrapper">
@@ -46,7 +73,7 @@
       <p class="r-subtitle">Maybe You Would Like</p>
       <div class="content">
         <div class="content-wrapper">
-          <div v-for="(item, index) in recommendList" :key="index" class="item-wrapper">
+          <div @click="routerTo" v-for="(item, index) in recommendList" :key="index" class="item-wrapper">
             <img src="./detail.png" class="response-img">
             <p>
               <span>YINAGU 2019气质连衣裙1111111</span>
@@ -102,6 +129,11 @@ export default {
     },
     mounted() {},
     methods: {
+        routerTo() {
+            this.$router.push({
+                path: '/goodsDetail/456'
+            })
+        },
         mouseEnterThumbnail(index, item) {
             let children = this.$refs.thumbnailWrapper
             for (let i = 0; i < children.length; i++) {
@@ -226,8 +258,19 @@ export default {
             }
             .detail-info {
                 height: 220px;
+                box-sizing: border-box;
                 margin-top: 20px;
                 background: #f1f1f1;
+                padding: 20px;
+                display: flex;
+                .info-wrapper {
+                    margin-right: 150px;
+                    p {
+                        font-size: 12px;
+                        line-height: 23px;
+                        color: rgb(43, 43, 43);
+                    }
+                }
             }
         }
     }

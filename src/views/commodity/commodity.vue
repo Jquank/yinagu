@@ -31,7 +31,7 @@
           <div class="content-wrapper" v-insert-div:margin-left:11px>
             <div v-for="item in list" :key="item" class="item-wrapper">
               <div class="img-wrapper">
-                <img src="./a01.png" class="response-img" @click="routerToDetail(item)">
+                <img :src="item.src" class="response-img" @click="routerToDetail(item)">
               </div>
               <p class="text-wrapper">
                 <span @click="routerToDetail(item)">YINAGU 2019气质连衣裙1111111111</span>
@@ -81,7 +81,16 @@ export default {
                     text: '羽绒服'
                 }
             ],
-            list: 10,
+            list: [
+                { src: require('./more_products-1.png') },
+                { src: require('./more_products0101.png') },
+                { src: require('./more_products0102.png') },
+                { src: require('./more_products0103.png') },
+                { src: require('./more_products0104.png') },
+                { src: require('./more_products0105.png') },
+                { src: require('./more_products0106.png') },
+                { src: require('./more_products0107.png') }
+            ],
             sortSrc: require('./d-sort.png'),
             sortShow: false
         }

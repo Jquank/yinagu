@@ -28,9 +28,9 @@
           <div v-if="showLeftText" class="slide-img2">
             <div class="img-wrapper2">
               <img :src="slide.src" class="response-img">
-              <!-- 夏季新品的前进按钮 -->
-              <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
             </div>
+            <!-- 夏季新品的前进按钮 -->
+            <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
           </div>
           <!-- 多列banner -->
           <div v-if="showImgText" class="slide-img3">
@@ -39,7 +39,7 @@
             </div>
             <div class="img-text">
               <span>YINAGU 2019气质连衣裙111111111111</span>
-              <span>更多></span>
+              <span @click="handleMore">更多></span>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="title">{{slide.title}}</div>
           <div class="subtitle">{{slide.subtitle}}</div>
           <div class="detail-btn">DETAILS</div>
-        </div> -->
+        </div>-->
       </swiper-slide>
       <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -212,23 +212,28 @@ export default {
             }
         }
         .slide-img2 {
-            flex: 1;
-            // flex: 0 0 900px;
+            flex: 0 0 900px;
             text-align: left;
             height: 500px;
-            overflow: hidden;
+            position: relative;
+            .img-wrapper2:hover {
+                img {
+                    transform: scale(1.2);
+                }
+                .swiper-button-next {
+                    right: -130px !important;
+                }
+            }
             .img-wrapper2 {
-                max-width: calc(~'100% - 45px');
+                width: 900px;
                 display: inline-block;
                 position: relative;
                 top: 50%;
                 transform: translateY(-50%);
+                overflow: hidden;
                 img {
                     cursor: pointer;
                     transition: all 0.6s;
-                }
-                img:hover {
-                    transform: scale(1.2);
                 }
             }
         }
@@ -260,11 +265,14 @@ export default {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
+                & > span:last-child:hover {
+                    color: @theme-color;
+                }
                 & > span:last-child {
                     width: 45px;
                     text-align: left;
                     line-height: 18px;
-                    color: #9a8658;
+                    cursor: pointer;
                 }
             }
         }

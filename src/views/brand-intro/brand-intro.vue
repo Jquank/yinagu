@@ -1,8 +1,8 @@
 <template>
   <div class="brand-intro">
     <div class="img-wrapper">
-      <img src="./bg-brand.png" class="response-img">
-      <div class="intro-text">
+      <img @load="loadImg" src="./bg-brand.png" class="response-img">
+      <div class="intro-text" ref="introText">
         <p class="en-title">Brand introduction</p>
         <p class="t-title">伊那古</p>
         <p class="b-title">品牌介绍</p>
@@ -24,7 +24,6 @@
             <p>YINAGU伊那古公司本着不断壮大，紧跟潮流的理念，不断引进人才，为公司注入新的血液，活力。以真诚的合作，共同发展为宗旨，实现所有合作伙伴的互利共赢。在此，诚邀有志之士携手步入新的未来！</p>
           </div>
         </div>
-        <div class="line"></div>
       </div>
     </div>
   </div>
@@ -35,8 +34,13 @@ export default {
     data() {
         return {}
     },
-
-    methods: {}
+    methods: {
+        loadImg() {
+            setTimeout(() => {
+                this.$refs.introText.style.top = '12%'
+            }, 500)
+        }
+    }
 }
 </script>
 <style lang='less' scoped>
@@ -62,11 +66,15 @@ export default {
         }
         .intro-text {
             position: absolute;
-            top: 21%;
-            left: 15.6%;
+            top: -100%;
+            right: 0;
+            left: 0;
+            bottom: 0;
             color: rgb(255, 255, 255);
             padding-right: 50px;
-            width: calc(~'100% - 350px');
+            width: 1340px;
+            margin: auto;
+            transition: all 0.8s cubic-bezier(0.3, 0.5, 0.8, 1.35);
             .en-title {
                 height: 60px;
                 font-size: 24px;
@@ -82,24 +90,40 @@ export default {
                 display: flex;
                 margin-top: 60px;
                 line-height: 24px;
+                background: rgba(0, 0, 0, 0.4);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                padding: 0 30px 30px 0;
+                box-sizing: border-box;
+                b {
+                    font-size: 24px;
+                    overflow: hidden;
+                    display: inline-block;
+                    padding: 20px 0 5px;
+                }
+                b::before {
+                    content: '.';
+                    display: inline-block;
+                    width: 8px;
+                    height: 25px;
+                    color: #fff;
+                    background-color: #fff;
+                    margin: 2px 10px 0 0;
+                }
                 .left {
                     margin-right: 100px;
-                    max-width: 560px;
-                    height: 310px;
-                    overflow: hidden;
+                    width: 50%;
+                    padding: 0 30px;
+                    p:first-child {
+                        padding-top: 20px;
+                    }
                 }
                 .right {
-                    max-width: 560px;
-                    height: 250px;
-                    line-height: 24px;
-                    overflow: hidden;
+                    width: 50%;
+                    padding-left: 30px;
+                    b:first-child {
+                        padding-top: 20px;
+                    }
                 }
-            }
-            .line {
-                width: 111px;
-                height: 0px;
-                border: 4px solid rgba(255, 255, 255, 1);
-                margin-top: 40px;
             }
         }
     }

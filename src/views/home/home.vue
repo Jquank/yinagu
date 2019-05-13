@@ -22,7 +22,7 @@
       <!-- 更多新品 -->
       <div class="more-news">
         <section-title title="更多新品" subtitle="More new products">
-          <div slot="more" class="more-text">more ></div>
+          <div @click="moreNewProducts" slot="more" class="more-text">more ></div>
         </section-title>
         <m-swiper
           class="swiper-slides3"
@@ -72,13 +72,13 @@
     <div class="home-news">
       <div v-for="item in newsList" :key="item.title" class="news-wrapper">
         <div class="img-wrapper">
-          <img :src="item.src" class="response-img">
+          <img @click="routerTo('/newsDetail/123')" :src="item.src" class="response-img">
         </div>
         <div class="text-wrapper">
           <p class="date">{{item.date}}</p>
-          <p class="title">{{item.title}}</p>
+          <p @click="routerTo('/newsDetail/123')" class="title">{{item.title}}</p>
           <p class="subtitle">{{item.subtitle}}</p>
-          <div class="read-more">Read more</div>
+          <div @click="routerTo('/brandNews')" class="read-more">Read more</div>
         </div>
       </div>
     </div>
@@ -221,6 +221,18 @@ export default {
             ]
         }
     },
+    methods: {
+        routerTo(value) {
+            this.$router.push({
+                path: value
+            })
+        },
+        moreNewProducts() {
+            this.$router.push({
+                path: '/commodity'
+            })
+        }
+    },
     components: {
         MSwiper,
         SectionTitle
@@ -243,6 +255,7 @@ export default {
                 bottom: 0;
                 right: 0;
                 font-size: 16px;
+                cursor: pointer;
             }
         }
         .more-categories {
@@ -329,6 +342,7 @@ export default {
                     margin-top: 20px;
                     max-height: 48px;
                     overflow: hidden;
+                    cursor: pointer;
                 }
                 .subtitle {
                     font-size: 16px;
@@ -347,6 +361,7 @@ export default {
                     text-align: center;
                     line-height: 50px;
                     margin-top: 20px;
+                    cursor: pointer;
                 }
             }
         }

@@ -17,12 +17,12 @@ const navList = [
         to: '/commodity',
         width: '115'
     },
-    {
-        ch: '品牌商城',
-        en: 'MALL',
-        to: '/mall',
-        width: '115'
-    },
+    // {
+    //     ch: '品牌商城',
+    //     en: 'MALL',
+    //     to: '/mall',
+    //     width: '115'
+    // },
     {
         ch: '品牌新闻',
         en: 'NEWS',
