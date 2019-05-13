@@ -101,12 +101,7 @@ export default {
                     subtitle: 'New Light and Luxury Products in Summer'
                 },
                 {
-                    src: require('./banner01.png'),
-                    title: '夏季换新 轻奢新品',
-                    subtitle: 'New Light and Luxury Products in Summer'
-                },
-                {
-                    src: require('./banner01.png'),
+                    src: require('./banner03.png'),
                     title: '夏季换新 轻奢新品',
                     subtitle: 'New Light and Luxury Products in Summer'
                 }
@@ -124,9 +119,8 @@ export default {
                 }
             },
             swiperSlides2: [
-                { src: require('./banner02.png') },
-                { src: require('./banner02.png') },
-                { src: require('./banner02.png') }
+                { src: require('./new_summer02.png') },
+                { src: require('./new_summer03.png') }
             ],
             swiperOption2: {
                 // slidesPerGroup: 1,
@@ -141,22 +135,22 @@ export default {
                 }
             },
             swiperSlides3: [
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') },
-                { src: require('./new01.png') }
-                // { src: require('./new01.png') },
-                // { src: require('./new01.png') },
-                // { src: require('./new01.png') },
-                // { src: require('./new01.png') }
+                { src: require('./more_products0201.png') },
+                { src: require('./more_products0202.png') },
+                { src: require('./more_products0203.png') },
+                { src: require('./more_products0204.png') },
+                { src: require('./more_products0205.png') },
+                { src: require('./more_products0206.png') },
+                { src: require('./more_products0207.png') },
+                { src: require('./more_products0208.png') },
+                { src: require('./more_products0301.png') },
+                { src: require('./more_products0302.png') },
+                { src: require('./more_products0303.png') },
+                { src: require('./more_products0304.png') },
+                { src: require('./more_products0305.png') },
+                { src: require('./more_products0306.png') },
+                { src: require('./more_products0307.png') },
+                { src: require('./more_products0308.png') }
             ],
             swiperOption3: {
                 slidesPerView: 4,
@@ -179,37 +173,37 @@ export default {
             },
             categories: [
                 {
-                    src: require('./kind01.png'),
+                    src: require('./more_categories01.png'),
                     text: '上衣/Jacket'
                 },
                 {
-                    src: require('./kind01.png'),
+                    src: require('./more_categories02.png'),
                     text: '连衣裙/套装/Dress'
                 },
                 {
-                    src: require('./kind01.png'),
-                    text: '上衣/Jacket'
+                    src: require('./more_categories03.png'),
+                    text: '单群/Skirt'
                 },
                 {
-                    src: require('./kind01.png'),
-                    text: '上衣/Jacket'
+                    src: require('./more_categories04.png'),
+                    text: '单裤/Trousers'
                 },
                 {
-                    src: require('./kind01.png'),
-                    text: '上衣/Jacket'
+                    src: require('./more_categories05.png'),
+                    text: '外套/Coat'
                 },
                 {
-                    src: require('./kind01.png'),
-                    text: '上衣/Jacket'
+                    src: require('./more_categories06.png'),
+                    text: '呢外套/Woolen coat'
                 },
                 {
-                    src: require('./kind01.png'),
-                    text: '上衣/Jacket'
+                    src: require('./more_categories07.png'),
+                    text: '羽绒服/Down Jackets'
                 }
             ],
             newsList: [
                 {
-                    src: require('./news01.png'),
+                    src: require('../news/brand_new03.png'),
                     date: '2019/04/25',
                     title:
                         '引跑中国女装，伊芙丽用1111女装全渠道第四名奏响新销售赞歌',
@@ -217,7 +211,7 @@ export default {
                         '2017年双11刚落下帷幕，在新鲜出炉的榜单中，中国知名服装品牌EIFINI伊芙丽以黑马之姿闯进全网女装TOP5，排名第四，领跑中国女装品牌。集团三品牌EIFINI伊芙丽、SEIFINI诗凡黎、MM麦檬在当天全网销售最终突破2.83亿元，同比增长78%，伊芙丽单品牌突破2.34亿元，同比增长96.6%，毛呢大衣品类位居天猫TOP1。'
                 },
                 {
-                    src: require('./news01.png'),
+                    src: require('../news/brand_new04.png'),
                     date: '2019/04/25',
                     title:
                         '引跑中国女装，伊芙丽用1111女装全渠道第四名奏响新销售赞歌',
@@ -293,7 +287,7 @@ export default {
             }
         }
     }
-    @media (max-width: 1580px) {
+    @media (max-width: 1480px) {
         .home-news {
             flex-wrap: wrap;
         }
@@ -305,8 +299,7 @@ export default {
             display: flex;
             padding-top: 20px;
             .img-wrapper {
-                flex: 1;
-                max-width: 480px;
+                max-height: 480px;
                 overflow: hidden;
                 img {
                     cursor: pointer;
@@ -327,13 +320,14 @@ export default {
                 .date {
                     color: rgb(159, 159, 159);
                     font-size: 18px;
-                    margin-top: 40px;
+                    margin-top: 30px;
                 }
                 .title {
                     font-size: 20px;
+                    line-height: 24px;
                     font-weight: bold;
-                    margin-top: 6%;
-                    max-height: 80px;
+                    margin-top: 20px;
+                    max-height: 48px;
                     overflow: hidden;
                 }
                 .subtitle {

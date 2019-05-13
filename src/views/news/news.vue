@@ -25,7 +25,7 @@
           <div class="content-wrapper">
             <div v-for="item in list" :key="item" class="item-wrapper">
               <div class="img-wrapper">
-                <img src="./a01.png" class="response-img" @click="routerToDetail(item)">
+                <img :src="item.src" class="response-img" @click="routerToDetail(item)">
               </div>
               <div class="text-wrapper">
                 <p>2019/04/25</p>
@@ -70,7 +70,14 @@ export default {
                     text: '2019年1月'
                 }
             ],
-            list: 10,
+            list: [
+                { src: require('./brand_new03.png') },
+                { src: require('./brand_new04.png') },
+                { src: require('./brand_new05.png') },
+                { src: require('./brand_new06.png') },
+                { src: require('./brand_new07.png') },
+                { src: require('./brand_new08.png') }
+            ],
             sortSrc: require('./d-sort.png'),
             sortShow: false
         }

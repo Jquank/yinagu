@@ -44,11 +44,11 @@
           </div>
         </div>
         <!-- 首页banner上面文字 -->
-        <div v-if="showUpperText" class="banner-text">
+        <!-- <div v-if="showUpperText" class="banner-text">
           <div class="title">{{slide.title}}</div>
           <div class="subtitle">{{slide.subtitle}}</div>
           <div class="detail-btn">DETAILS</div>
-        </div>
+        </div> -->
       </swiper-slide>
       <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
     </swiper>
