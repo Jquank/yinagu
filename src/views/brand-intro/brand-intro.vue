@@ -37,7 +37,7 @@ export default {
     methods: {
         loadImg() {
             setTimeout(() => {
-                this.$refs.introText.style.top = '12%'
+                // this.$refs.introText.style.top = '12%'
             }, 500)
         }
     }
@@ -66,7 +66,7 @@ export default {
         }
         .intro-text {
             position: absolute;
-            top: -100%;
+            top: 12%;
             right: 0;
             left: 0;
             bottom: 0;
@@ -94,6 +94,7 @@ export default {
                 border: 2px solid rgba(255, 255, 255, 0.3);
                 padding: 0 30px 30px 0;
                 box-sizing: border-box;
+                // position: absolute;
                 b {
                     font-size: 24px;
                     overflow: hidden;

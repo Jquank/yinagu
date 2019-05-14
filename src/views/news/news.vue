@@ -132,6 +132,9 @@ export default {
             li {
                 &.li-active {
                     background: @theme-color;
+                    a {
+                        color: #fff;
+                    }
                 }
                 padding-left: 18px;
                 border-bottom: 1px solid rgba(216, 216, 216, 1);

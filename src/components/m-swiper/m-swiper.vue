@@ -35,11 +35,11 @@
           <!-- 多列banner -->
           <div v-if="showImgText" class="slide-img3">
             <div class="img-wrapper3">
-              <img class="response-image" :src="slide.src" @click="routerTo">
+              <img class="response-image" :src="slide.src" @click="routerTo('/goodsDetail/123')">
             </div>
             <div class="img-text">
               <span>YINAGU 2019气质连衣裙111111111111</span>
-              <span @click="handleMore">更多></span>
+              <span @click="routerTo('/commodity')">更多></span>
             </div>
           </div>
         </div>
@@ -117,9 +117,9 @@ export default {
     },
     mounted() {},
     methods: {
-        routerTo() {
+        routerTo(value) {
             this.$router.push({
-                path: `/goodsDetail/123`
+                path: value
             })
         }
     },

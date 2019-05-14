@@ -1,57 +1,51 @@
 <template>
-  <div class="commodity">
-    <div class="commodity-wrapper">
-      <div class="nav">
-        <p class="all-categories">所有分类</p>
-        <ul ref="ulItem">
-          <li @click="handleClickCategories(index,item)" v-for="(item,index) in categories" :key="item.text">
-            <a href="javascrpt:void(0)">{{item.text}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="commodity-content">
-        <div class="title">
-          <span class="all-text">全部（268件）</span>
-          <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
-            <span>排序</span>
-            <img :src="sortSrc">
-          </div>
-          <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
-            <p>
-              <i class="el-icon-sort-down"></i>
-              价格从高到低
-            </p>
-            <p>
-              <i class="el-icon-sort-up"></i>
-              价格从低到高
-            </p>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-wrapper" v-insert-div:margin-left:11px>
-            <div v-for="item in list" :key="item" class="item-wrapper">
-              <div class="img-wrapper">
-                <img :src="item.src" class="response-img" @click="routerToDetail(item)">
-              </div>
-              <p class="text-wrapper">
-                <span @click="routerToDetail(item)">YINAGU 2019气质连衣裙1111111111</span>
-                <span>¥ 299</span>
-              </p>
+    <div class="commodity">
+        <div class="commodity-wrapper">
+            <div class="nav">
+                <p class="all-categories">所有分类</p>
+                <ul ref="ulItem">
+                    <li @click="handleClickCategories(index,item)" v-for="(item,index) in categories" :key="item.text">
+                        <a href="javascrpt:void(0)">{{item.text}}</a>
+                    </li>
+                </ul>
             </div>
-          </div>
+            <div class="commodity-content">
+                <div class="title">
+                    <span class="all-text">全部（268件）</span>
+                    <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
+                        <span>排序</span>
+                        <img :src="sortSrc">
+                    </div>
+                    <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
+                        <p>
+                            <i class="el-icon-sort-down"></i>
+                            价格从高到低
+                        </p>
+                        <p>
+                            <i class="el-icon-sort-up"></i>
+                            价格从低到高
+                        </p>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-wrapper" v-insert-div:margin-left:11px>
+                        <div v-for="item in list" :key="item" class="item-wrapper">
+                            <div class="img-wrapper">
+                                <img :src="item.src" class="response-img" @click="routerToDetail(item)">
+                            </div>
+                            <p class="text-wrapper">
+                                <span @click="routerToDetail(item)">YINAGU 2019气质连衣裙1111111111</span>
+                                <span>¥ 299</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="pagination">
+            <el-pagination background :page-sizes="[10, 30, 50, 100]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="100"></el-pagination>
+        </div>
     </div>
-    <div class="pagination">
-      <el-pagination
-        background
-        :page-sizes="[10, 30, 50, 100]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="100"
-      ></el-pagination>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -96,7 +90,9 @@ export default {
         }
     },
     mounted() {
-        this.$refs.ulItem.children[0].className = 'li-active'
+        this.$nextTick(() => {
+            this.$refs.ulItem.children[0].className = 'li-active'
+        })
     },
     methods: {
         routerToDetail(item) {
@@ -151,6 +147,9 @@ export default {
             li {
                 &.li-active {
                     background: @theme-color;
+                    a {
+                        color: #fff;
+                    }
                 }
                 padding-left: 18px;
                 border-bottom: 1px solid rgba(216, 216, 216, 1);
