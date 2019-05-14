@@ -1,30 +1,31 @@
 <template>
-    <div class="footer">
-        <div class="f-logo">
-            <img src="./footer.png">
-        </div>
-        <div class="f-nav">
-            <ul>
-                <li v-for="item in navList" :key="item.ch">
-                    <a href="#">{{item.ch}}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="f-info">
-            <p>公司电话: 0731-89600627</p>
-            <p>合作邮箱：124817821qq.com</p>
-            <p>地址：湖南省长沙市开福区新河街道湘江北路三段1500号北辰时代广场</p>
-        </div>
-        <div class="f-copyright">
-            <div>
-                <p>版权所有</p>
-                <p>杭州意芙实业有限公司</p>
-                <p>© Copyright 2008 - 2013.EIFINI伊芙丽.</p>
-                <p>All Rights Reserved.</p>
-                <p>浙ICP备12014589号</p>
-            </div>
-        </div>
+  <div class="footer">
+    <div class="f-logo">
+      <img src="./footer.png">
     </div>
+    <div class="f-nav">
+      <ul>
+        <li v-for="item in navList" :key="item.ch">
+          <!-- <a href="javascrip:void(0)">{{item.ch}}</a> -->
+          <router-link :to="item.to">{{item.ch}}</router-link>
+        </li>
+      </ul>
+    </div>
+    <div class="f-info">
+      <p>公司电话: 0731-89600627</p>
+      <p>合作邮箱：124817821qq.com</p>
+      <p>地址：湖南省长沙市开福区新河街道湘江北路三段1500号北辰时代广场</p>
+    </div>
+    <div class="f-copyright">
+      <div>
+        <p>版权所有</p>
+        <p>杭州意芙实业有限公司</p>
+        <p>© Copyright 2008 - 2013.EIFINI伊芙丽.</p>
+        <p>All Rights Reserved.</p>
+        <p>浙ICP备12014589号</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -60,6 +61,7 @@ export default {
                     height: 19px;
                     line-height: 19px;
                     color: rgb(216, 216, 216);
+                    padding: 0 3px;
                 }
             }
         }
@@ -76,7 +78,7 @@ export default {
     }
     .f-copyright {
         margin-top: 50px;
-        border-top:1px solid rgb(78,78,78);
+        border-top: 1px solid rgb(78, 78, 78);
         & > div {
             display: flex;
             justify-content: space-between;

@@ -264,7 +264,7 @@ export default {
                 padding: 20px;
                 display: flex;
                 .info-wrapper {
-                    margin-right: 150px;
+                    margin-right: 110px;
                     p {
                         font-size: 12px;
                         line-height: 23px;
@@ -293,6 +293,16 @@ export default {
             .content-wrapper {
                 display: flex;
                 margin-left: -20px;
+                // .item-wrapper {
+                //     overflow: hidden;
+                //     img {
+                //         cursor: pointer;
+                //         transition: all 0.6s;
+                //     }
+                //     img:hover {
+                //         transform: scale(1.2);
+                //     }
+                // }
             }
             .item-wrapper {
                 max-width: 320px;

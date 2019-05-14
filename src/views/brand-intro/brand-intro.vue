@@ -2,11 +2,11 @@
   <div class="brand-intro">
     <div class="img-wrapper">
       <img @load="loadImg" src="./bg-brand.png" class="response-img">
-      <div class="intro-text" ref="introText">
+      <div class="intro-text">
         <p class="en-title">Brand introduction</p>
         <p class="t-title">伊那古</p>
         <p class="b-title">品牌介绍</p>
-        <div class="text">
+        <div class="text" ref="introText">
           <div class="left">
             <p class="mb-10">YINAGU伊那古，品牌成立于2017年3月1日，总部坐落于美丽的“娱乐之城”长沙，公司目前拥有广州、杭州两大服装研发与生产基地。</p>
             <b>公司历史</b>
@@ -37,7 +37,7 @@ export default {
     methods: {
         loadImg() {
             setTimeout(() => {
-                // this.$refs.introText.style.top = '12%'
+                this.$refs.introText.style.top = '231px'
             }, 500)
         }
     }
@@ -66,7 +66,7 @@ export default {
         }
         .intro-text {
             position: absolute;
-            top: 12%;
+            top: 130px;
             right: 0;
             left: 0;
             bottom: 0;
@@ -74,7 +74,6 @@ export default {
             padding-right: 50px;
             width: 1340px;
             margin: auto;
-            transition: all 0.8s cubic-bezier(0.3, 0.5, 0.8, 1.35);
             .en-title {
                 height: 60px;
                 font-size: 24px;
@@ -94,7 +93,10 @@ export default {
                 border: 2px solid rgba(255, 255, 255, 0.3);
                 padding: 0 30px 30px 0;
                 box-sizing: border-box;
-                // position: absolute;
+                position: absolute;
+                top: calc(~'-100% - 190px');
+                left: 0;
+                transition: all 0.8s cubic-bezier(0.3, 0.5, 0.8, 1.35);
                 b {
                     font-size: 24px;
                     overflow: hidden;
