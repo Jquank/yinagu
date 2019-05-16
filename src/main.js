@@ -8,6 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'common/less/index.less'
 
 import insertDiv from '@/directive/insertDiv.js'
+
+import { $jsonp } from '@/api/http'
+Vue.prototype.$jsonp = $jsonp
 Vue.directive('insert-div', insertDiv)
 
 Vue.config.productionTip = false
