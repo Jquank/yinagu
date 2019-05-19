@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#app{
+#app {
     .router-wrapper {
         margin-top: 60px;
     }

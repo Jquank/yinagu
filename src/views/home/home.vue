@@ -1,86 +1,93 @@
 <template>
-    <div class="home">
-        <!-- banner -->
+  <div class="home">
+    <!-- banner -->
+    <m-swiper
+      class="swiper-slides1"
+      :key="skey1"
+      :swiperSlides="swiperSlides1"
+      :swiperOption="swiperOption1"
+      :showUpperText="true"
+      :showPagination="true"
+      :generalSwiper="true"
+      @click.native="routerTo('/commodity')"
+    ></m-swiper>
+    <section class="home-section">
+      <!-- 新品展示 -->
+      <m-swiper
+        class="swiper-slides2"
+        :key="skey2"
+        :swiperSlides="swiperSlides2"
+        :swiperOption="swiperOption2"
+        :showLeftText="true"
+      ></m-swiper>
+      <!-- 更多新品 -->
+      <div class="more-news">
+        <section-title title="更多新品" subtitle="More new products">
+          <div @click="moreNewProducts" slot="more" class="more-text">more ></div>
+        </section-title>
         <m-swiper
-            class="swiper-slides1"
-            :key="skey1"
-            :swiperSlides="swiperSlides1"
-            :swiperOption="swiperOption1"
-            :showUpperText="true"
-            :showPagination="true"
-            :generalSwiper="true"
-            @click.native="routerTo('/commodity')"
+          class="swiper-slides3"
+          :key="skey3"
+          :swiperSlides="swiperSlides3"
+          :swiperOption="swiperOption3"
+          :showImgText="true"
+          :showBtn="true"
         ></m-swiper>
-        <section class="home-section">
-            <!-- 新品展示 -->
-            <m-swiper class="swiper-slides2" :key="skey2" :swiperSlides="swiperSlides2" :swiperOption="swiperOption2" :showLeftText="true"></m-swiper>
-            <!-- 更多新品 -->
-            <div class="more-news">
-                <section-title title="更多新品" subtitle="More new products">
-                    <div @click="moreNewProducts" slot="more" class="more-text">more ></div>
-                </section-title>
-                <m-swiper
-                    class="swiper-slides3"
-                    :key="skey3"
-                    :swiperSlides="swiperSlides3"
-                    :swiperOption="swiperOption3"
-                    :showImgText="true"
-                    :showBtn="true"
-                ></m-swiper>
+      </div>
+      <!-- 更多分类 -->
+      <div class="more-categories">
+        <section-title title="更多分类" subtitle="More categories"></section-title>
+        <div class="categories" ref="categories">
+          <div v-for="item in categories" :key="item.id" class="categories-item-wrapper">
+            <div class="categories-item">
+              <img :src="'http://'+item.photo_path" @click="routerTo('/commodity')" class="response-image">
             </div>
-            <!-- 更多分类 -->
-            <div class="more-categories">
-                <section-title title="更多分类" subtitle="More categories"></section-title>
-                <div class="categories" v-insert-div:margin-left:30px>
-                    <div v-for="item in categories" :key="item.id" class="categories-item-wrapper">
-                        <div class="categories-item">
-                            <img :src="item.photo_path" @click="routerTo('/commodity')" class="response-image">
-                        </div>
-                        <p>{{item.name}}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- 品牌介绍 -->
-        <div class="brand-intro">
-            <section-title title="品牌介绍" subtitle="Brand introduction"></section-title>
-            <div class="brand-wrapper">
-                <div class="left">
-                    <p class="mb-10">YINAGU伊那古，品牌成立于2017年3月1日，总部坐落于美丽的“娱乐之城”长沙，公司目前拥有广州、杭州两大服装研发与生产基地。</p>
-                    <b>公司历史</b>
-                    <p class="mb-10">YINAGU伊那古女装品牌仅一年的时间，便在各省市主流商圈突破100家分店，现已发展成为一个集研发、生产、品牌销售于一体的服装企业。</p>
-                    <b>品牌理念</b>
-                    <p>YINAGU伊那古女装品牌一直致力于对时尚的不断追求，秉承着突破传统，精益求精的原则，力求在产品采购、研发上追求“快”节奏的同事，也让每一位女性消费者从视听至感受都享受到“时尚与舒适”伊那古女装为18-40岁时尚女性找到了适合她们的品牌服饰，东西方元素完全相融的设计，精挑细选的布料，细致入微的做工，为每一件产品都赋予了生命的灵魂。</p>
-                </div>
-                <div class="right">
-                    <b>品牌风格</b>
-                    <p class="mb-10">
-                        YINAGU伊那古品牌设计师团队长期以来与香港时尚设计师团队紧密合作，拥有灵敏的时尚嗅觉，演绎自信、优雅的时尚品味。
-                        坚持设计应该给予服装足够的搭配空间来满足现代都市女性注重独立的人格，追求品质的生活，关注新鲜与时尚的事物，在简约中表现积极向上的生活方式。主要的风格类型有：都市风情、怀旧复古、田园浪漫型。
-                    </p>
-                    <b>品牌推广</b>
-                    <p>YINAGU伊那古公司本着不断壮大，紧跟潮流的理念，不断引进人才，为公司注入新的血液，活力。以真诚的合作，共同发展为宗旨，实现所有合作伙伴的互利共赢。在此，诚邀有志之士携手步入新的未来！</p>
-                </div>
-            </div>
+            <p>{{item.name}}</p>
+          </div>
+          <div v-for="n in len" :key="n" class="categories-item-wrapper"></div>
         </div>
-        <!-- 首页新闻 -->
-        <div class="home-news">
-            <div v-for="item in newsList" :key="item.title" class="news-wrapper">
-                <div class="img-wrapper">
-                    <img @click="routerTo('/newsDetail/123')" :src="item.src" class="response-img">
-                </div>
-                <div class="text-wrapper">
-                    <p class="date">{{item.date}}</p>
-                    <p @click="routerTo('/newsDetail/123')" class="title">{{item.title}}</p>
-                    <p class="subtitle">{{item.subtitle}}</p>
-                    <div @click="routerTo('/brandNews')" class="more-wrapper">
-                        <div class="read-more">Read more</div>
-                        <div class="read-more">Read more</div>
-                    </div>
-                </div>
-            </div>
+      </div>
+    </section>
+    <!-- 品牌介绍 -->
+    <div class="brand-intro">
+      <section-title title="品牌介绍" subtitle="Brand introduction"></section-title>
+      <div class="brand-wrapper">
+        <div class="left">
+          <p class="mb-10">YINAGU伊那古，品牌成立于2017年3月1日，总部坐落于美丽的“娱乐之城”长沙，公司目前拥有广州、杭州两大服装研发与生产基地。</p>
+          <b>公司历史</b>
+          <p class="mb-10">YINAGU伊那古女装品牌仅一年的时间，便在各省市主流商圈突破100家分店，现已发展成为一个集研发、生产、品牌销售于一体的服装企业。</p>
+          <b>品牌理念</b>
+          <p>YINAGU伊那古女装品牌一直致力于对时尚的不断追求，秉承着突破传统，精益求精的原则，力求在产品采购、研发上追求“快”节奏的同事，也让每一位女性消费者从视听至感受都享受到“时尚与舒适”伊那古女装为18-40岁时尚女性找到了适合她们的品牌服饰，东西方元素完全相融的设计，精挑细选的布料，细致入微的做工，为每一件产品都赋予了生命的灵魂。</p>
         </div>
+        <div class="right">
+          <b>品牌风格</b>
+          <p class="mb-10">
+            YINAGU伊那古品牌设计师团队长期以来与香港时尚设计师团队紧密合作，拥有灵敏的时尚嗅觉，演绎自信、优雅的时尚品味。
+            坚持设计应该给予服装足够的搭配空间来满足现代都市女性注重独立的人格，追求品质的生活，关注新鲜与时尚的事物，在简约中表现积极向上的生活方式。主要的风格类型有：都市风情、怀旧复古、田园浪漫型。
+          </p>
+          <b>品牌推广</b>
+          <p>YINAGU伊那古公司本着不断壮大，紧跟潮流的理念，不断引进人才，为公司注入新的血液，活力。以真诚的合作，共同发展为宗旨，实现所有合作伙伴的互利共赢。在此，诚邀有志之士携手步入新的未来！</p>
+        </div>
+      </div>
     </div>
+    <!-- 首页新闻 -->
+    <div class="home-news">
+      <div v-for="item in newsList" :key="item.id" class="news-wrapper">
+        <div class="img-wrapper">
+          <img @click="routerTo('/newsDetail/123')" :src="'http://'+item.photo_path" class="response-img">
+        </div>
+        <div class="text-wrapper">
+          <p class="date">{{item.time}}</p>
+          <p @click="routerTo('/newsDetail/123')" class="title">{{item.title}}</p>
+          <p class="subtitle">{{item.remark}}</p>
+          <div @click="routerTo('/brandNews')" class="more-wrapper">
+            <div class="read-more">Read more</div>
+            <div class="read-more">Read more</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -92,18 +99,7 @@ export default {
             skey1: '1',
             skey2: '2',
             skey3: '3',
-            swiperSlides1: [
-                {
-                    src: require('./banner01.png'),
-                    title: '夏季换新 轻奢新品',
-                    subtitle: 'New Light and Luxury Products in Summer'
-                },
-                {
-                    src: require('./banner03.png'),
-                    title: '夏季换新 轻奢新品',
-                    subtitle: 'New Light and Luxury Products in Summer'
-                }
-            ],
+            swiperSlides1: [],
             swiperOption1: {
                 loop: true,
                 speed: 800,
@@ -116,15 +112,10 @@ export default {
                     el: '.swiper-slides1 .swiper-pagination'
                 }
             },
-            swiperSlides2: [
-                { src: require('./new_summer02.png') },
-                { src: require('./new_summer03.png') }
-            ],
+            swiperSlides2: [],
             swiperOption2: {
-                // slidesPerGroup: 1,
-                // loopFillGroupWithBlank: true,
                 slidesPerView: 1,
-                spaceBetween: 180,
+                spaceBetween: 250,
                 loop: true,
                 speed: 800,
                 navigation: {
@@ -132,24 +123,7 @@ export default {
                     prevEl: '.swiper-slides2 .swiper-button-prev'
                 }
             },
-            swiperSlides3: [
-                { src: require('./more_products0201.png') },
-                { src: require('./more_products0202.png') },
-                { src: require('./more_products0203.png') },
-                { src: require('./more_products0204.png') },
-                { src: require('./more_products0205.png') },
-                { src: require('./more_products0206.png') },
-                { src: require('./more_products0207.png') },
-                { src: require('./more_products0208.png') },
-                { src: require('./more_products0301.png') },
-                { src: require('./more_products0302.png') },
-                { src: require('./more_products0303.png') },
-                { src: require('./more_products0304.png') },
-                { src: require('./more_products0305.png') },
-                { src: require('./more_products0306.png') },
-                { src: require('./more_products0307.png') },
-                { src: require('./more_products0308.png') }
-            ],
+            swiperSlides3: [],
             swiperOption3: {
                 slidesPerView: 4,
                 slidesPerColumn: 2,
@@ -169,73 +143,39 @@ export default {
                     }
                 }
             },
-            categories: [
-                {
-                    src: require('./more_categories01.png'),
-                    text: '上衣/Jacket'
-                },
-                {
-                    src: require('./more_categories02.png'),
-                    text: '连衣裙/套装/Dress'
-                },
-                {
-                    src: require('./more_categories03.png'),
-                    text: '单群/Skirt'
-                },
-                {
-                    src: require('./more_categories04.png'),
-                    text: '单裤/Trousers'
-                },
-                {
-                    src: require('./more_categories05.png'),
-                    text: '外套/Coat'
-                },
-                {
-                    src: require('./more_categories06.png'),
-                    text: '呢外套/Woolen coat'
-                },
-                {
-                    src: require('./more_categories07.png'),
-                    text: '羽绒服/Down Jackets'
-                }
-            ],
-            newsList: [
-                {
-                    src: require('../news/brand_new03.png'),
-                    date: '2019/04/25',
-                    title:
-                        '引跑中国女装，伊芙丽用1111女装全渠道第四名奏响新销售赞歌',
-                    subtitle:
-                        '2017年双11刚落下帷幕，在新鲜出炉的榜单中，中国知名服装品牌EIFINI伊芙丽以黑马之姿闯进全网女装TOP5，排名第四，领跑中国女装品牌。集团三品牌EIFINI伊芙丽、SEIFINI诗凡黎、MM麦檬在当天全网销售最终突破2.83亿元，同比增长78%，伊芙丽单品牌突破2.34亿元，同比增长96.6%，毛呢大衣品类位居天猫TOP1。'
-                },
-                {
-                    src: require('../news/brand_new04.png'),
-                    date: '2019/04/25',
-                    title:
-                        '引跑中国女装，伊芙丽用1111女装全渠道第四名奏响新销售赞歌',
-                    subtitle:
-                        '2017年双11刚落下帷幕，在新鲜出炉的榜单中，中国知名服装品牌EIFINI伊芙丽以黑马之姿闯进全网女装TOP5，排名第四，领跑中国女装品牌。集团三品牌EIFINI伊芙丽、SEIFINI诗凡黎、MM麦檬在当天全网销售最终突破2.83亿元，同比增长78%，伊芙丽单品牌突破2.34亿元，同比增长96.6%，毛呢大衣品类位居天猫TOP1。'
-                }
-            ]
+            categories: [],
+            newsList: [],
+            len: 0
         }
     },
     created() {
-        this.$jsonp(
-            '/home/index', {},
-            function(err, data) {
-                if (err) return err
-                console.log(data.datas.cateList)
-                this.categories = data.datas.cateList
-                // this.categories.forEach((val) => {
-                //     val.photo_path = require(val.photo_path)
-                // })
-            }
-        )
+        this.$jsonp('/home/index', function(err, data) {
+            if (err) return err
+            this.swiperSlides1 = data.datas.rTopBanner
+            this.swiperSlides2 = data.datas.rCenterBanner
+            this.swiperSlides3 = data.datas.rAllGoodsList
+            this.categories = data.datas.cateList
+            this.newsList = data.datas.rArtList
+        })
+    },
+    mounted() {
+        this.$nextTick(() => {
+            // let wrapper = this.$refs.categories
+            // let length = wrapper.length
+            // let firsrEl = wrapper.children[0]
+            // let secondEl = wrapper.children[1]
+            // console.log(wrapper.children)
+            // // let width = firsrEl.width
+            // // 两个item的间隙
+            // let clearance =
+            //     secondEl.getBoundingClientRect().right - firsrEl.getBoundingClientRect().right - secondEl.clientWidth
+            // // 算出一行有多少个item
+            // let everyItemNum = Math.floor((wrapper.clientWidth + clearance) / (firsrEl.clientWidth + clearance))
+            // this.len = everyItemNum - (length % everyItemNum)
+            // console.log(this.len)
+        })
     },
     methods: {
-        callback(res) {
-            console.log(res)
-        },
         routerTo(value) {
             this.$router.push({
                 path: value
@@ -277,6 +217,10 @@ export default {
         }
         .more-categories {
             padding-top: 70px;
+            .categories::after {
+                content: '';
+                flex: auto;
+            }
             .categories {
                 display: flex;
                 justify-content: space-between;
@@ -326,6 +270,7 @@ export default {
         display: flex;
         justify-content: space-between;
         .news-wrapper {
+            flex: 1;
             display: flex;
             padding-top: 20px;
             .img-wrapper {
@@ -357,7 +302,7 @@ export default {
                 .date {
                     color: rgb(159, 159, 159);
                     font-size: 18px;
-                    margin-top: 30px;
+                    margin-top: 20px;
                 }
                 .title {
                     font-size: 20px;
@@ -386,7 +331,7 @@ export default {
                         color: rgb(159, 159, 159);
                         text-align: center;
                         line-height: 50px;
-                        margin-top: 20px;
+                        margin-top: 30px;
                         cursor: pointer;
                         box-sizing: border-box;
                     }

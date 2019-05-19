@@ -2,35 +2,40 @@
   <div class="news">
     <div class="news-wrapper">
       <div class="nav">
-        <p class="all-categories">全部新闻</p>
+        <p class="all-news">全部新闻</p>
         <ul ref="ulItem">
-          <li @click="handleClickDate(index,item)" v-for="(item,index) in categories" :key="item.text">
-            <a href="javascrpt:void(0)">{{item.text}}</a>
+          <li
+            :class="index===0?'li-active':''"
+            @click="handleClickDate(index,item)"
+            v-for="(item,index) in timesList"
+            :key="item"
+          >
+            <a href="javascrpt:void(0)">{{item}}</a>
           </li>
         </ul>
       </div>
       <div class="news-content">
         <div class="title">
-          <span class="all-text">全部（268条）</span>
+          <span class="all-text">全部（{{allCount}}条）</span>
           <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
             <span>排序</span>
             <img :src="sortSrc">
           </div>
           <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
-            <p>最近一周</p>
-            <p>最近一个月</p>
+            <p @click="sort(1)">最近一周</p>
+            <p @click="sort(2)">最近一个月</p>
           </div>
         </div>
         <div class="content">
           <div class="content-wrapper">
-            <div v-for="item in list" :key="item" class="item-wrapper">
+            <div v-for="item in list" :key="item.id" class="item-wrapper">
               <div class="img-wrapper">
-                <img :src="item.src" class="response-img" @click="routerToDetail(item)">
+                <img :src="'http://'+item.photo_path" class="response-img" @click="routerToDetail(item)">
               </div>
               <div class="text-wrapper">
-                <p>2019/04/25</p>
-                <p @click="routerToDetail(item)">引跑中国女装，伊那古用1111女装全渠道第四名奏响新销售赞歌</p>
-                <p>2017年双11刚落下帷幕，在新鲜出炉的榜单中，中国知名服装品牌EIFINI伊芙丽以黑马之姿闯进全网女装TOP5，排名第四，领跑中国女装品牌。集团三品牌EIFINI伊芙丽、SEIFINI诗凡黎、MM麦檬在当天全网销售最终突破2.83亿元，同比增长78%，伊芙丽单品牌突破2.34亿元，同比增长96.6%，毛呢大衣品类位居天猫TOP1。</p>
+                <p>{{item.time}}</p>
+                <p @click="routerToDetail(item)">{{item.title}}</p>
+                <p @click="routerToDetail(item)">{{item.remark}}</p>
               </div>
             </div>
           </div>
@@ -40,55 +45,69 @@
     <div class="pagination">
       <el-pagination
         background
-        :page-sizes="[10, 30, 50, 100]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="100"
+        :page-sizes="[8, 30, 50, 100]"
+        :page-size="8"
+        layout="total, prev, pager, next, jumper"
+        :total="allCount"
+        @current-change="handleCurrentChange"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import { addClass, removeClass } from 'common/js/dom/dom.js'
+const ALLTIME = '全部时间'
 export default {
     data() {
         return {
-            categories: [
-                {
-                    text: '2019年5月'
-                },
-                {
-                    text: '2019年4月'
-                },
-                {
-                    text: '2019年3月'
-                },
-                {
-                    text: '2019年2月'
-                },
-                {
-                    text: '2019年1月'
-                }
-            ],
-            list: [
-                { src: require('./brand_new03.png') },
-                { src: require('./brand_new04.png') },
-                { src: require('./brand_new05.png') },
-                { src: require('./brand_new06.png') },
-                { src: require('./brand_new07.png') },
-                { src: require('./brand_new08.png') }
-            ],
+            timesList: [],
+            list: [],
             sortSrc: require('./d-sort.png'),
-            sortShow: false
+            sortShow: false,
+            allCount: 0,
+            dateTime: '',
+            rulesType: 2
         }
     },
-    mounted() {
-        this.$refs.ulItem.children[0].className = 'li-active'
+    created() {
+        this.timesList = window.location.href.split('/').pop()
+        this._getTimesList()
+        this._getNewsList()
     },
     methods: {
+        handleCurrentChange(val) {
+            this._getNewsList(this.dateTime, val, this.rulesType)
+        },
+        sort(val) {
+            this.rulesType = val
+            this._getNewsList(this.dateTime, 1, val)
+        },
+        _getTimesList() {
+            this.$jsonp('/home/allArticleTimeList', function(err, data) {
+                if (err) return err
+                this.timesList = data.datas
+                this.timesList.push(ALLTIME)
+                this.dateTime = this.timesList[0]
+            })
+        },
+        _getNewsList(dateTime, page, rulesType) {
+            dateTime = dateTime || ''
+            page = page || 1
+            rulesType = rulesType || 2
+            this.$jsonp(
+                `/home/getArticleList?dateTime=${dateTime}&page=${page}&rulesType=${rulesType}`,
+                { name: 'callback1' },
+                function(err, data) {
+                    if (err) return err
+                    this.list = data.datas.artList
+                    this.allCount = data.datas.allCount
+                }
+            )
+        },
         routerToDetail(item) {
             this.$router.push({
-                path: `/newsDetail/123`
+                path: `/newsDetail/${item.id}`
             })
         },
         sortMouseEnter() {
@@ -101,12 +120,21 @@ export default {
         },
         handleClickDate(index, item) {
             let children = this.$refs.ulItem.children
+            this._activeToggleClass(children, 'li-active', index)
+            this._getNewsList(item === ALLTIME ? '' : item)
+        },
+        _activeToggleClass(children, className, activeIndex) {
             for (let i = 0; i < children.length; i++) {
-                const li = children[i]
-                if (index === i) {
-                    li.className = 'li-active'
+                const child = children[i]
+                // if (activeIndex === 0) {
+                //     removeClass(child, className)
+                // }
+                if (activeIndex === i) {
+                    addClass(child, className)
                 } else {
-                    li.className = ''
+                    console.log(i)
+
+                    removeClass(child, className)
                 }
             }
         }
@@ -122,7 +150,7 @@ export default {
             flex: 0 0 300px;
             width: 300px;
             margin: 0 70px 0 100px;
-            .all-categories {
+            .all-news {
                 height: 19px;
                 line-height: 19px;
                 color: rgb(159, 159, 159);
@@ -189,14 +217,19 @@ export default {
                     flex-wrap: wrap;
                     justify-content: space-between;
                     margin-left: -20px;
+                    @media (max-width: 1900px) {
+                        .item-wrapper {
+                            width: 100% !important;
+                        }
+                    }
                     .item-wrapper {
                         margin-left: 20px;
                         margin-top: 20px;
-                        // min-width: 620px;
+                        width: calc(~'50% - 20px');
                         display: flex;
                         .img-wrapper {
                             width: 330px;
-                            height: 330px;
+                            max-height: 330px;
                             overflow: hidden;
                             img {
                                 cursor: pointer;
@@ -206,32 +239,29 @@ export default {
                                 transform: scale(1.2);
                             }
                         }
-                        @media (max-width: 1900px) {
-                            .text-wrapper {
-                                width: calc(~'100% - 370px') !important;
-                            }
-                        }
                         .text-wrapper {
-                            width: 288px;
+                            max-height: 330px;
+                            flex: 1;
                             padding: 30px 20px;
                             background: rgb(243, 243, 243);
                             display: flex;
                             flex-direction: column;
-                            justify-content: space-between;
                             & > p:first-child {
                                 color: rgb(159, 159, 159);
                             }
                             & > p:nth-child(2) {
+                                margin-top: 20px;
                                 font-size: 20px;
                                 font-weight: bold;
                                 line-height: 26px;
                                 cursor: pointer;
                             }
                             & > p:last-child {
+                                margin-top: 15px;
                                 line-height: 21px;
                                 font-size: 16px;
                                 color: rgb(159, 159, 159);
-                                height: 105px;
+                                height: 126px;
                                 overflow: hidden;
                             }
                         }

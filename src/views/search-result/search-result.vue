@@ -1,36 +1,9 @@
 <template>
-  <div class="commodity">
+  <div class="search-result">
     <div class="commodity-wrapper">
-      <div class="nav">
-        <p class="all-categories">所有分类</p>
-        <ul ref="ulItem">
-          <li
-            :class="index===0?'li-active':''"
-            @click="handleClickCategories(index,item)"
-            v-for="(item,index) in categories"
-            :key="item.id"
-          >
-            <a href="javascrpt:void(0)">{{item.name}}</a>
-          </li>
-        </ul>
-      </div>
       <div class="commodity-content">
         <div class="title">
-          <span class="all-text">{{'全部（'+allCount+'件）'}}</span>
-          <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
-            <span>排序</span>
-            <img :src="sortSrc">
-          </div>
-          <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
-            <p @click="sort(1)">
-              <i class="el-icon-sort-down"></i>
-              价格从高到低
-            </p>
-            <p @click="sort(2)">
-              <i class="el-icon-sort-up"></i>
-              价格从低到高
-            </p>
-          </div>
+          <span class="all-text">{{'"'+keyWord||$keyWord+'"'}} 的搜索结果</span>
         </div>
         <div class="content">
           <div class="content-wrapper">
@@ -68,77 +41,34 @@ export default {
             allCount: 0,
             categories: [],
             list: [],
-            sortSrc: require('./d-sort.png'),
+            sortSrc: '',
             sortShow: false,
             goodsKind: '',
-            sortValue: ''
+            sortValue: '',
+            keyWord: '',
+            page: 1
         }
     },
     created() {
-        this._getAllCateList().then(res => {
-            this.goodsKind = res[0].id
-            this._getGoodsList(res[0].id)
-        })
+        this.keyWord = this.$route.query.keyWord
+        this._getSearchData(this.keyWord)
     },
     methods: {
-        handleCurrentChange(val) {
-            this._getGoodsList(this.goodsKind, this.sortValue, val)
-        },
-        sort(val) {
-            this.sortValue = val
-            this._getGoodsList(this.goodsKind, val)
-        },
-        _getGoodsList(cateId, sort, page = 1) {
-            cateId = cateId || ''
-            sort = sort || ''
-            page = page || 1
-            this.$jsonp(
-                `/home/getGoodsList?cateId=${cateId}&sort=${sort}&page=${page}`,
-                { name: 'callback1' },
-                function(err, data) {
-                    if (err) return err
-                    this.list = data.datas.rAllGoodsList
-                    this.allCount = data.datas.allCount
-                }
-            )
-        },
-        _getAllCateList() {
-            return new Promise((resolve, reject) => {
-                this.$jsonp('/home/allCateList', function(err, data) {
-                    if (err) return err
-                    this.categories = data.datas
-                    this.categories.push({ id: '', name: '全部' })
-                    resolve(this.categories)
-                })
+        _getSearchData(value, page = 1) {
+            this.$jsonp('/home/searchGoodsList?key=' + value + '&page=' + page, function(err, data) {
+                if (err) return err
+                this.list = data.datas.rAllGoodsList
+                this.allCount = data.datas.allCount
             })
+        },
+        handleCurrentChange(val) {
+            this.page = val
+            this._getSearchData(this.keyWord, val)
         },
         routerToDetail(item) {
             this.$router.push({
                 path: `/goodsDetail/${item.id}`
             })
-        },
-        sortMouseEnter() {
-            console.log(123)
-            this.sortShow = true
-            this.sortSrc = require('./sort.png')
-        },
-        sortMouseLeave() {
-            console.log(456)
-            this.sortShow = false
-            this.sortSrc = require('./d-sort.png')
-        },
-        handleClickCategories(index, item) {
-            this.goodsKind = item.id
-            let children = this.$refs.ulItem.children
-            for (let i = 0; i < children.length; i++) {
-                const li = children[i]
-                if (index === i) {
-                    li.className = 'li-active'
-                } else {
-                    li.className = ''
-                }
-            }
-            this._getGoodsList(this.goodsKind, this.sortValue)
         }
     }
 }
@@ -147,41 +77,13 @@ export default {
 .item-wrapper {
     margin-left: 11px;
 }
-.commodity {
+.search-result {
     .commodity-wrapper {
-        display: flex;
         flex-wrap: wrap;
-        padding: 50px 80px 0 0;
-        .nav {
-            flex: 0 0 300px;
-            width: 300px;
-            margin: 0 70px 0 100px;
-            .all-categories {
-                height: 19px;
-                line-height: 19px;
-                color: rgb(159, 159, 159);
-                padding: 0 0 0 18px;
-                height: 40px;
-            }
-            li {
-                &.li-active {
-                    background: @theme-color;
-                    a {
-                        color: #fff;
-                    }
-                }
-                padding-left: 18px;
-                border-bottom: 1px solid rgba(216, 216, 216, 1);
-                & > a {
-                    display: inline-block;
-                    width: 300px;
-                    height: 50px;
-                    line-height: 50px;
-                }
-            }
-        }
+        padding: 50px 80px;
+        min-height: 500px;
         .commodity-content {
-            flex: 1;
+            // padding: 20px 70px;
             & > .title {
                 display: flex;
                 justify-content: space-between;
