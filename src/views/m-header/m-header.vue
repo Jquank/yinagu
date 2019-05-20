@@ -44,6 +44,8 @@
 
 <script>
 import navList from './config.js'
+import { eventBus } from '@/main.js'
+import { setTimeout } from 'timers'
 export default {
     data() {
         return {
@@ -61,9 +63,9 @@ export default {
     },
     methods: {
         search() {
-            // 待处理
-            if (this.$route.name === 'search') {
-            }
+            setTimeout(() => {
+                eventBus.$emit('getSearch', this.inputValue)
+            }, 500)
             this.$router.push({
                 path: `/search`,
                 query: { keyWord: this.inputValue }
