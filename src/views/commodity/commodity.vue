@@ -107,7 +107,7 @@ export default {
                 this.$jsonp('/home/allCateList', function(err, data) {
                     if (err) return err
                     this.categories = data.datas
-                    this.categories.push({ id: '', name: '全部' })
+                    this.categories.unshift({ id: '', name: '全部' })
                     resolve(this.categories)
                 })
             })

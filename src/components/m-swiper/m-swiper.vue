@@ -19,7 +19,7 @@
           </div>
           <!-- 大屏banner -->
           <div v-if="generalSwiper" class="slide-img1">
-            <div class="img-wrapper1">
+            <div class="img-wrapper1" @click="routerTo('/commodity')">
               <img class="response-img" :src="'http://'+slide.photo_path">
             </div>
           </div>
@@ -246,6 +246,7 @@ export default {
                 img {
                     cursor: pointer;
                     transition: all 0.6s;
+                    max-height: 450px;
                 }
                 img:hover {
                     transform: scale(1.2);
@@ -286,7 +287,7 @@ export default {
 }
 .swiper-pagination-bullet {
     width: 60px;
-    height: 3px;
+    height: 5px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 0;
     opacity: 1;

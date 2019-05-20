@@ -13,10 +13,10 @@
           </el-select>
         </div>
         <div class="store-list">
-          <template v-if="storeList.length">
+          <template v-if="pid">
             <div class="store-info" v-for="item in storeList" :key="item.id">
               <div class="img-wrapper">
-                <img :src="'http://'+item.photo_path">
+                <img :src="'http://'+item.photo_path" class="response-img">
               </div>
               <div class="text-wrapper">
                 <p>{{item.title}}</p>
@@ -25,14 +25,14 @@
               </div>
             </div>
           </template>
-          <template v-if="!storeList.length">
+          <template v-if="!pid">
             <div class="store-info1">
-              <p>万家丽广场伊那古专柜</p>
-              <p>长沙市芙蓉区万家丽广场</p>
-              <p>0731-89600627</p>
+              <p>{{storeList[0].title}}</p>
+              <p>{{storeList[0].address}}</p>
+              <p>{{storeList[0].phone}}</p>
             </div>
             <div class="store-img">
-              <img src="./store02.png" class="response-img">
+              <img :src="'http://'+storeList[0].photo_path" class="response-img">
             </div>
           </template>
         </div>
@@ -55,6 +55,7 @@ export default {
     },
     created() {
         this._getProvince()
+        this._getStoreList()
     },
     methods: {
         cityChange(cid) {
@@ -65,12 +66,16 @@ export default {
             this._getCity(pid)
         },
         _getStoreList(pid, cid) {
+            pid = pid || ''
+            cid = cid || ''
+            this.pid = pid
             this.$jsonp(`/home/getStoresList?province_id=${pid}&city_id=${cid}`, { name: 'callback2' }, function(
                 err,
                 data
             ) {
                 if (err) return err
                 this.storeList = data.datas
+                console.log(data)
             })
         },
         _getProvince() {
@@ -96,7 +101,7 @@ export default {
     //         transform: scale(1.2);
     //     }
     // }
-    .img-wrapper {
+    &>.img-wrapper {
         position: relative;
         overflow: hidden;
         // & > img {

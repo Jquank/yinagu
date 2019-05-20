@@ -87,7 +87,7 @@ export default {
             this.$jsonp('/home/allArticleTimeList', function(err, data) {
                 if (err) return err
                 this.timesList = data.datas
-                this.timesList.push(ALLTIME)
+                this.timesList.unshift(ALLTIME)
                 this.dateTime = this.timesList[0]
             })
         },

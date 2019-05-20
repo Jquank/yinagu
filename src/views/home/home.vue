@@ -9,7 +9,6 @@
       :showUpperText="true"
       :showPagination="true"
       :generalSwiper="true"
-      @click.native="routerTo('/commodity')"
     ></m-swiper>
     <section class="home-section">
       <!-- 新品展示 -->
@@ -231,6 +230,8 @@ export default {
                     .categories-item {
                         border: 1px solid rgba(154, 134, 88, 1);
                         width: 200px;
+                        height: 200px;
+                        overflow: hidden;
                     }
                     & > p {
                         padding: 20px 0 40px;
