@@ -13,7 +13,8 @@
           </el-select>
         </div>
         <div class="store-list">
-          <template v-if="pid">
+          <template v-if="cid">
+            <div v-if="!storeList.length" class="store-info">暂无相关门店</div>
             <div class="store-info" v-for="item in storeList" :key="item.id">
               <div class="img-wrapper">
                 <img :src="'http://'+item.photo_path" class="response-img">
@@ -25,7 +26,7 @@
               </div>
             </div>
           </template>
-          <template v-if="!pid">
+          <template v-if="!cid">
             <div class="store-info1">
               <p>{{storeList[0].title}}</p>
               <p>{{storeList[0].address}}</p>
@@ -50,7 +51,8 @@ export default {
             city: '',
             cityList: '',
             storeList: [],
-            pid: ''
+            pid: '',
+            cid: ''
         }
     },
     created() {
@@ -59,6 +61,7 @@ export default {
     },
     methods: {
         cityChange(cid) {
+            this.cid = cid
             this._getStoreList(this.pid, cid)
         },
         provinceChange(pid) {
@@ -101,7 +104,7 @@ export default {
     //         transform: scale(1.2);
     //     }
     // }
-    &>.img-wrapper {
+    & > .img-wrapper {
         position: relative;
         overflow: hidden;
         // & > img {

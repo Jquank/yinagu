@@ -1,37 +1,37 @@
 <template>
-    <div class="search-result">
-        <div class="commodity-wrapper">
-            <div class="commodity-content">
-                <div class="title">
-                    <span class="all-text">{{'"'+keyWord||$keyWord+'"'}} 的搜索结果</span>
-                </div>
-                <div class="content">
-                    <div class="content-wrapper">
-                        <p v-if="!list.length" class="w-100 t-center">暂无数据 ...</p>
-                        <div v-for="(item,index) in list" :key="item.id +index" class="item-wrapper">
-                            <div class="img-wrapper">
-                                <img :src="'http://'+item.photo_path" class="response-img" @click="routerToDetail(item)">
-                            </div>
-                            <p class="text-wrapper">
-                                <span @click="routerToDetail(item)">{{item.goods_name}}</span>
-                                <span>{{'¥ '+ item.price}}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+  <div class="search-result">
+    <div class="commodity-wrapper">
+      <div class="commodity-content">
+        <div class="title">
+          <span class="all-text">{{keyWord?keyWord+' 的搜索结果':'为您推荐'}}</span>
+        </div>
+        <div class="content">
+          <div class="content-wrapper">
+            <p v-if="!list.length" class="w-100 t-center">暂无数据 ...</p>
+            <div v-for="(item,index) in list" :key="item.id +index" class="item-wrapper">
+              <div class="img-wrapper">
+                <img :src="'http://'+item.photo_path" class="response-img" @click="routerToDetail(item)">
+              </div>
+              <p class="text-wrapper">
+                <span @click="routerToDetail(item)">{{item.goods_name}}</span>
+                <span>{{'¥ '+ item.price}}</span>
+              </p>
             </div>
+          </div>
         </div>
-        <div class="pagination">
-            <el-pagination
-                background
-                :page-sizes="[20, 30, 50]"
-                :page-size="8"
-                layout="total, prev, pager, next, jumper"
-                :total="allCount"
-                @current-change="handleCurrentChange"
-            ></el-pagination>
-        </div>
+      </div>
     </div>
+    <div class="pagination">
+      <el-pagination
+        background
+        :page-sizes="[20, 30, 50]"
+        :page-size="8"
+        layout="total, prev, pager, next, jumper"
+        :total="allCount"
+        @current-change="handleCurrentChange"
+      ></el-pagination>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -58,14 +58,11 @@ export default {
     },
     methods: {
         _getSearchData(value, page = 1) {
-            this.$jsonp(
-                '/home/searchGoodsList?key=' + value + '&page=' + page,
-                function(err, data) {
-                    if (err) return err
-                    this.list = data.datas.rAllGoodsList
-                    this.allCount = data.datas.allCount
-                }
-            )
+            this.$jsonp('/home/searchGoodsList?key=' + value + '&page=' + page, function(err, data) {
+                if (err) return err
+                this.list = data.datas.rAllGoodsList
+                this.allCount = data.datas.allCount
+            })
         },
         handleCurrentChange(val) {
             this.page = val

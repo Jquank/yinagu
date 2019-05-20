@@ -48,17 +48,17 @@
           </div>
         </div>
         <div class="detail-info">
-          <div class="info-wrapper">
-            <p>商品编号：41741408227</p>
+          <div class="info-wrapper" v-for="p in goodsDetailData.content" :key="p" v-html="p">
+            <!-- <p>商品编号：41741408227</p>
             <p>店铺： 诗萌旗舰店商品</p>
             <p>毛重：1.0kg</p>
             <p>货号：9181276</p>
             <p>腰型：高腰组合</p>
             <p>规格：单件</p>
             <p>风格：休闲，文艺，通勤</p>
-            <p>主要材质：聚酯纤维</p>
+            <p>主要材质：聚酯纤维</p>-->
           </div>
-          <div class="info-wrapper">
+          <!-- <div class="info-wrapper">
             <p>领型：圆领</p>
             <p>流行元素：不规则</p>
             <p>廓形：A型</p>
@@ -73,7 +73,7 @@
             <p>裙型：百褶裙</p>
             <p>袖型：常规</p>
             <p>上市时间：2019春季</p>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -132,20 +132,47 @@ export default {
             this._activeToggleClass(children, 'border-active', index)
         },
         _getGoodsDetail() {
-            this.$jsonp(
-                '/home/getGoodsDetails?goodsId=' + this.goodsId,
-                function(err, data) {
-                    if (err) return err
-                    this.goodsDetailData = data.datas
-                    this.goodsDetailData.rColorList.forEach(val => {
-                        val.rgb = '#000000'
-                    })
-                    this.recommendList = this.goodsDetailData.rMayGoodsList
-                    this.swiperSlides = this.goodsDetailData.rColorList[0].imgs
-                    this.bigImgSrc = this.swiperSlides[0]
-                    console.log(this.goodsDetailData)
+            this.$jsonp('/home/getGoodsDetails?goodsId=' + this.goodsId, function(err, data) {
+                if (err) return err
+                this.goodsDetailData = data.datas
+                this.goodsDetailData.content = this.goodsDetailData.content.split('</p>').map(val => val + '</p>')
+                let arr = []
+                let len = this.goodsDetailData.content.length
+                for (let i = 0, str = ''; i < len; i++) {
+                    const el = this.goodsDetailData.content[i]
+                    str += el
+                    if (len < 9) {
+                        arr.push(str)
+                        str = ''
+                    } else if (len < 17) {
+                        if (i === 7) {
+                            arr.push(str)
+                            str = ''
+                        }
+                        if (i === 15) {
+                            arr.push(str)
+                        }
+                    } else if (len < 25) {
+                        if (i === 7) {
+                            arr.push(str)
+                            str = ''
+                        }
+                        if (i === 15) {
+                            arr.push(str)
+                            str = ''
+                        }
+                        if (i === 23) {
+                            arr.push(str)
+                        }
+                    }
                 }
-            )
+                this.goodsDetailData.content = arr
+
+                this.recommendList = this.goodsDetailData.rMayGoodsList
+                this.swiperSlides = this.goodsDetailData.rColorList[0].imgs
+                this.bigImgSrc = this.swiperSlides[0]
+                console.log(this.goodsDetailData)
+            })
         },
         routerTo() {
             this.$router.push({

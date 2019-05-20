@@ -1,86 +1,92 @@
 <template>
-    <div class="home">
-        <!-- banner -->
+  <div class="home">
+    <!-- banner -->
+    <m-swiper
+      class="swiper-slides1"
+      :key="skey1"
+      :swiperSlides="swiperSlides1"
+      :swiperOption="swiperOption1"
+      :showUpperText="true"
+      :showPagination="true"
+      :generalSwiper="true"
+    ></m-swiper>
+    <section class="home-section">
+      <!-- 新品展示 -->
+      <m-swiper
+        class="swiper-slides2"
+        :key="skey2"
+        :swiperSlides="swiperSlides2"
+        :swiperOption="swiperOption2"
+        :showLeftText="true"
+      ></m-swiper>
+      <!-- 更多新品 -->
+      <div class="more-news">
+        <section-title title="更多新品" subtitle="More new products">
+          <div @click="moreNewProducts" slot="more" class="more-text">more ></div>
+        </section-title>
         <m-swiper
-            class="swiper-slides1"
-            :key="skey1"
-            :swiperSlides="swiperSlides1"
-            :swiperOption="swiperOption1"
-            :showUpperText="true"
-            :showPagination="true"
-            :generalSwiper="true"
+          class="swiper-slides3"
+          :key="skey3"
+          :swiperSlides="swiperSlides3"
+          :swiperOption="swiperOption3"
+          :showImgText="true"
+          :showBtn="true"
         ></m-swiper>
-        <section class="home-section">
-            <!-- 新品展示 -->
-            <m-swiper class="swiper-slides2" :key="skey2" :swiperSlides="swiperSlides2" :swiperOption="swiperOption2" :showLeftText="true"></m-swiper>
-            <!-- 更多新品 -->
-            <div class="more-news">
-                <section-title title="更多新品" subtitle="More new products">
-                    <div @click="moreNewProducts" slot="more" class="more-text">more ></div>
-                </section-title>
-                <m-swiper
-                    class="swiper-slides3"
-                    :key="skey3"
-                    :swiperSlides="swiperSlides3"
-                    :swiperOption="swiperOption3"
-                    :showImgText="true"
-                    :showBtn="true"
-                ></m-swiper>
+      </div>
+      <!-- 更多分类 -->
+      <div class="more-categories">
+        <section-title title="更多分类" subtitle="More categories"></section-title>
+        <div id="categories" class="categories" ref="categories">
+          <div v-for="item in categories" :key="item.id" class="categories-item-wrapper">
+            <div class="categories-item">
+              <img :src="'http://'+item.photo_path" @click="routerTo('/commodity')" class="response-image">
             </div>
-            <!-- 更多分类 -->
-            <div class="more-categories">
-                <section-title title="更多分类" subtitle="More categories"></section-title>
-                <div id="categories" class="categories" ref="categories">
-                    <div v-for="item in categories" :key="item.id" class="categories-item-wrapper">
-                        <div class="categories-item">
-                            <img :src="'http://'+item.photo_path" @click="routerTo('/commodity')" class="response-image">
-                        </div>
-                        <p>{{item.name}}</p>
-                    </div>
-                    <div v-for="n in len" :key="n" :style="'width:'+itemWidth+'px;'+'margin-left:30px'"></div>
-                </div>
-            </div>
-        </section>
-        <!-- 品牌介绍 -->
-        <div class="brand-intro">
-            <section-title title="品牌介绍" subtitle="Brand introduction"></section-title>
-            <div class="brand-wrapper">
-                <div class="left">
-                    <p class="mb-10">YINAGU伊那古，品牌成立于2017年3月1日，总部坐落于美丽的“娱乐之城”长沙，公司目前拥有广州、杭州两大服装研发与生产基地。</p>
-                    <b>公司历史</b>
-                    <p class="mb-10">YINAGU伊那古女装品牌仅一年的时间，便在各省市主流商圈突破100家分店，现已发展成为一个集研发、生产、品牌销售于一体的服装企业。</p>
-                    <b>品牌理念</b>
-                    <p>YINAGU伊那古女装品牌一直致力于对时尚的不断追求，秉承着突破传统，精益求精的原则，力求在产品采购、研发上追求“快”节奏的同事，也让每一位女性消费者从视听至感受都享受到“时尚与舒适”伊那古女装为18-40岁时尚女性找到了适合她们的品牌服饰，东西方元素完全相融的设计，精挑细选的布料，细致入微的做工，为每一件产品都赋予了生命的灵魂。</p>
-                </div>
-                <div class="right">
-                    <b>品牌风格</b>
-                    <p class="mb-10">
-                        YINAGU伊那古品牌设计师团队长期以来与香港时尚设计师团队紧密合作，拥有灵敏的时尚嗅觉，演绎自信、优雅的时尚品味。
-                        坚持设计应该给予服装足够的搭配空间来满足现代都市女性注重独立的人格，追求品质的生活，关注新鲜与时尚的事物，在简约中表现积极向上的生活方式。主要的风格类型有：都市风情、怀旧复古、田园浪漫型。
-                    </p>
-                    <b>品牌推广</b>
-                    <p>YINAGU伊那古公司本着不断壮大，紧跟潮流的理念，不断引进人才，为公司注入新的血液，活力。以真诚的合作，共同发展为宗旨，实现所有合作伙伴的互利共赢。在此，诚邀有志之士携手步入新的未来！</p>
-                </div>
-            </div>
+            <p>{{item.name}}</p>
+          </div>
+          <div v-for="n in len" :key="n" :style="'width:'+itemWidth+'px;'+'margin-left:30px'"></div>
         </div>
-        <!-- 首页新闻 -->
-        <div class="home-news">
-            <div v-for="item in newsList" :key="item.id" class="news-wrapper">
-                <div class="img-wrapper">
-                    <img @click="routerTo('/newsDetail/123')" :src="'http://'+item.photo_path" class="response-img">
-                </div>
-                <div class="text-wrapper">
-                    <p class="date">{{item.time}}</p>
-                    <p @click="routerTo('/newsDetail/123')" class="title">{{item.title}}</p>
-                    <p class="subtitle">{{item.remark}}</p>
-                    <div @click="routerTo('/brandNews')" class="more-wrapper">
-                        <div class="read-more">Read more</div>
-                        <div class="read-more">Read more</div>
-                    </div>
-                </div>
-            </div>
+      </div>
+    </section>
+    <!-- 品牌介绍 -->
+    <div class="brand-intro">
+      <section-title title="品牌介绍" subtitle="Brand introduction"></section-title>
+      <div class="brand-wrapper">
+        <div class="left">
+          <p class="mb-10">YINAGU伊那古，品牌成立于2017年3月1日，总部坐落于美丽的“娱乐之城”长沙，公司目前拥有广州、杭州两大服装研发与生产基地。</p>
+          <b>公司历史</b>
+          <p class="mb-10">YINAGU伊那古女装品牌仅一年的时间，便在各省市主流商圈突破100家分店，现已发展成为一个集研发、生产、品牌销售于一体的服装企业。</p>
+          <b>品牌理念</b>
+          <p>YINAGU伊那古女装品牌一直致力于对时尚的不断追求，秉承着突破传统，精益求精的原则，力求在产品采购、研发上追求“快”节奏的同时，也让每一位女性消费者从视听至感受都享受到“时尚与舒适”伊那古女装为18-40岁时尚女性找到了适合她们的品牌服饰，东西方元素完全相融的设计，精挑细选的布料，细致入微的做工，为每一件产品都赋予了生命的灵魂。</p>
         </div>
+        <div class="right">
+          <b>品牌风格</b>
+          <p class="mb-10">
+            YINAGU伊那古品牌设计师团队长期以来与香港时尚设计师团队紧密合作，拥有灵敏的时尚嗅觉，演绎自信、优雅的时尚品味。
+            坚持设计应该给予服装足够的搭配空间来满足现代都市女性注重独立的人格，追求品质的生活，关注新鲜与时尚的事物，在简约中表现积极向上的生活方式。主要的风格类型有：都市风情、怀旧复古、田园浪漫型。
+          </p>
+          <b>品牌推广</b>
+          <p>YINAGU伊那古公司本着不断壮大，紧跟潮流的理念，不断引进人才，为公司注入新的血液，活力。以真诚的合作，共同发展为宗旨，实现所有合作伙伴的互利共赢。在此，诚邀有志之士携手步入新的未来！</p>
+        </div>
+      </div>
     </div>
+    <!-- 首页新闻 -->
+    <div class="home-news">
+      <div v-for="item in newsList" :key="item.id" class="news-wrapper">
+        <div class="img-wrapper">
+          <img @click="routerTo('/newsDetail/123')" :src="'http://'+item.photo_path" class="response-img">
+        </div>
+        <div class="text-wrapper">
+          <p class="date">{{item.time}}</p>
+          <p @click="routerTo('/newsDetail/123')" class="title">{{item.title}}</p>
+          <p class="subtitle">{{item.remark}}</p>
+          <div @click="routerTo('/brandNews')" class="more-wrapper">
+            <div class="read-more">Read more</div>
+            <div class="read-more">Read more</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -102,7 +108,8 @@ export default {
                     disableOnInteraction: true
                 },
                 pagination: {
-                    el: '.swiper-slides1 .swiper-pagination'
+                    el: '.swiper-slides1 .swiper-pagination',
+                    clickable: true
                 }
             },
             swiperSlides2: [],
@@ -163,14 +170,9 @@ export default {
             let secondEl = wrapper.children[1]
             // 两个item的间隙
             let clearance =
-                secondEl.getBoundingClientRect().right -
-                firsrEl.getBoundingClientRect().right -
-                secondEl.clientWidth
+                secondEl.getBoundingClientRect().right - firsrEl.getBoundingClientRect().right - secondEl.clientWidth
             // 算出一行有多少个item
-            let everyItemNum = Math.floor(
-                (wrapper.clientWidth + clearance) /
-                    (firsrEl.clientWidth + clearance)
-            )
+            let everyItemNum = Math.floor((wrapper.clientWidth + clearance) / (firsrEl.clientWidth + clearance))
             this.len = everyItemNum - (length % everyItemNum)
             this.itemWidth = firsrEl.clientWidth
             console.log(this.itemWidth)
@@ -238,24 +240,19 @@ export default {
         }
     }
     .brand-intro {
-        height: 500px;
-        padding-top: 80px;
+        padding: 60px 0;
         background-image: url('./brand.png');
         background-size: 100% 100%;
         .brand-wrapper {
             display: flex;
             justify-content: space-between;
             line-height: 19px;
-            padding: 0 15%;
+            padding: 0 5%;
             .left {
                 margin-right: 100px;
-                overflow: hidden;
-                max-height: 350px;
             }
-            .right {
-                max-height: 350px;
-                overflow: hidden;
-            }
+            // .right {
+            // }
         }
     }
     @media (max-width: 1480px) {

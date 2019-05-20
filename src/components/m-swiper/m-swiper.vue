@@ -34,7 +34,9 @@
           <!-- 多列banner -->
           <div v-if="showImgText" class="slide-img3">
             <div class="img-wrapper3">
-                <div class="hidden-model"></div>
+              <div class="hidden-model">
+                <div></div>
+              </div>
               <img class="response-image" :src="'http://'+slide.photo_path" @click="routerTo('/goodsDetail/123')">
             </div>
             <div class="img-text">
@@ -242,9 +244,13 @@ export default {
             flex: 1;
             max-width: 320px;
             .img-wrapper3:hover {
-                .hidden-model{
-                        top: 0;
-                    }
+                .hidden-model {
+                    z-index: 10;
+                    top: 0;
+                }
+                img {
+                    transform: scale(1.2);
+                }
             }
             .img-wrapper3 {
                 position: relative;
@@ -256,18 +262,27 @@ export default {
                     height: 450px;
                     width: 320px;
                 }
-                img:hover {
-                    transform: scale(1.2);
-                }
+                // img:hover {
+                //     transform: scale(1.2);
+                // }
                 .hidden-model {
                     position: absolute;
                     left: 0;
                     top: -100%;
-                    width: 100%;
+                    width: 320px;
                     height: 450px;
                     background-color: #000;
-                    opacity: 0.5;
-                    transition: all .6s;
+                    opacity: 0.2;
+                    z-index: -1;
+                    transition: all 0.9s;
+                    & > div {
+                        width: 300px;
+                        height: 430px;
+                        border: 2px solid #fff;
+                        box-sizing: border-box;
+                        margin: 10px;
+                        background: url('./model-logo.png') no-repeat center center;
+                    }
                 }
             }
             .img-text {
@@ -276,7 +291,7 @@ export default {
                 flex-wrap: wrap;
                 padding: 17px 5px 20px;
                 & > span:first-child {
-                    width: 210px;
+                    width: 230px;
                     padding-right: 8px;
                     text-align: start;
                     font-size: 16px;
@@ -303,11 +318,18 @@ export default {
 .swiper-pagination-bullets {
     bottom: 30px !important;
 }
+.swiper-pagination-bullet::before {
+    position: relative;
+    top: -10px;
+    content: ' ';
+    display: block;
+    height: 28px;
+}
 .swiper-pagination-bullet {
     width: 60px;
-    height: 5px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.3);
-    border-radius: 0;
+    border-radius: 8px;
     opacity: 1;
 }
 .swiper-pagination-bullet-active {
