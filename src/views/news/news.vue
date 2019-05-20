@@ -10,7 +10,7 @@
             v-for="(item,index) in timesList"
             :key="item"
           >
-            <a href="javascrpt:void(0)">{{item}}</a>
+            <a href="javascript:void(0)">{{item}}</a>
           </li>
         </ul>
       </div>

@@ -10,7 +10,7 @@
             v-for="(item,index) in categories"
             :key="item.id"
           >
-            <a href="javascrpt:void(0)">{{item.name}}</a>
+            <a href="javascript:void(0)">{{item.name}}</a>
           </li>
         </ul>
       </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="content">
-          <div class="content-wrapper">
+          <div class="content-wrapper" ref="contentWrapper">
             <p v-if="!list.length" class="w-100 t-center">暂无数据 ...</p>
             <div v-for="(item,index) in list" :key="item.id +index" class="item-wrapper">
               <div class="img-wrapper">
@@ -218,22 +218,20 @@ export default {
             }
             .content {
                 margin-top: 40px;
-                .content-wrapper::after {
-                    content: '';
-                    flex: auto;
-                }
                 .content-wrapper {
                     display: flex;
                     flex-wrap: wrap;
-                    justify-content: space-between;
-                    margin-left: -11px;
+                    // justify-content: space-between;
+                    margin-left: -20px;
                     .item-wrapper {
-                        margin-left: 11px;
+                        margin-left: 20px;
                         .img-wrapper {
                             width: 320px;
                             max-height: 450px;
                             overflow: hidden;
                             img {
+                                width: 320px;
+                                height: 450px;
                                 cursor: pointer;
                                 transition: all 0.6s;
                             }

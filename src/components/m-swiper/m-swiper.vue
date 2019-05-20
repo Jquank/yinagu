@@ -34,6 +34,7 @@
           <!-- 多列banner -->
           <div v-if="showImgText" class="slide-img3">
             <div class="img-wrapper3">
+                <div class="hidden-model"></div>
               <img class="response-image" :src="'http://'+slide.photo_path" @click="routerTo('/goodsDetail/123')">
             </div>
             <div class="img-text">
@@ -240,16 +241,33 @@ export default {
         .slide-img3 {
             flex: 1;
             max-width: 320px;
+            .img-wrapper3:hover {
+                .hidden-model{
+                        top: 0;
+                    }
+            }
             .img-wrapper3 {
+                position: relative;
                 width: 100%;
                 overflow: hidden;
                 img {
                     cursor: pointer;
                     transition: all 0.6s;
-                    max-height: 450px;
+                    height: 450px;
+                    width: 320px;
                 }
                 img:hover {
                     transform: scale(1.2);
+                }
+                .hidden-model {
+                    position: absolute;
+                    left: 0;
+                    top: -100%;
+                    width: 100%;
+                    height: 450px;
+                    background-color: #000;
+                    opacity: 0.5;
+                    transition: all .6s;
                 }
             }
             .img-text {
