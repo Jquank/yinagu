@@ -33,7 +33,6 @@
             v-model="inputValue"
             suffix-icon="el-icon-search"
             @keydown.enter.native="search"
-            @blur="handleBlur"
             placeholder="请输入搜索内容"
           ></el-input>
         </div>
@@ -45,6 +44,8 @@
 
 <script>
 import navList from './config.js'
+import { eventBus } from '@/main.js'
+import { setTimeout } from 'timers'
 export default {
     data() {
         return {
@@ -54,9 +55,21 @@ export default {
             inputValue: ''
         }
     },
+    mounted() {
+        let el = document.querySelector('.el-icon-search')
+        el.addEventListener('click', () => {
+            this.search()
+        })
+    },
     methods: {
-        search(e) {
-            console.log(e)
+        search() {
+            setTimeout(() => {
+                eventBus.$emit('getSearch', this.inputValue)
+            }, 500)
+            this.$router.push({
+                path: `/search`,
+                query: { keyWord: this.inputValue }
+            })
         },
         mouseEnter(index) {
             this.$refs.liItem[index].setAttribute('class', 'router-tab-active')
@@ -70,16 +83,10 @@ export default {
             // this.isSearch = true
             this.$nextTick(() => {
                 this.$refs.searchInput.$el.children[0].focus()
-                this.$refs.searchInput.$el.children[1].addEventListener(
-                    'click',
-                    () => {
-                        this.search()
-                    }
-                )
+                this.$refs.searchInput.$el.children[1].addEventListener('click', () => {
+                    this.search()
+                })
             })
-        },
-        handleBlur() {
-            // this.isSearch = false
         }
     },
     components: {}
@@ -146,6 +153,9 @@ export default {
         .el-input__inner:focus {
             border-color: @theme-color;
             outline: 0;
+        }
+        .el-input__icon .el-icon-search {
+            cursor: pointer !important;
         }
     }
 }

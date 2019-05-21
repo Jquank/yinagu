@@ -1,33 +1,32 @@
 <template>
   <div class="m-swiper" ref="mSwiper">
     <swiper :options="swiperOption" ref="mySwiper" v-if="swiperSlides.length">
-      <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
+      <swiper-slide v-for="slide in swiperSlides" :key="slide.id">
         <div class="slide-wrapper1">
           <!-- 首页新品左侧文字 -->
           <div v-if="showLeftText" class="new-products">
             <div class="title">
-              <div class="title-1">New products in summer</div>
+              <div class="title-1">{{slide.e_title}}</div>
               <div class="title-2">
-                <p>夏季</p>
-                <p>新品</p>
+                <p>{{slide.title}}</p>
               </div>
               <div>
-                <div class="title-3">驼色/大衣</div>
-                <div class="title-4">2019夏季新品复古蕾丝花边网纱收腰无袖连衣裙女中长款</div>
+                <div class="title-3">{{slide.color}}</div>
+                <div class="title-4">{{slide.describe}}</div>
               </div>
-              <div class="title-5">¥ 299</div>
+              <div class="title-5">{{'¥ '+slide.piece}}</div>
             </div>
           </div>
           <!-- 大屏banner -->
           <div v-if="generalSwiper" class="slide-img1">
-            <div class="img-wrapper1">
-              <img class="response-img" :src="slide.src">
+            <div class="img-wrapper1" @click="routerTo('/commodity')">
+              <img class="response-img" :src="'http://'+slide.photo_path">
             </div>
           </div>
           <!-- 新品banner -->
           <div v-if="showLeftText" class="slide-img2">
-            <div class="img-wrapper2">
-              <img :src="slide.src" class="response-img">
+            <div class="img-wrapper2" @click="routerTo('/commodity')">
+              <img :src="'http://'+slide.photo_path" class="response-img">
             </div>
             <!-- 夏季新品的前进按钮 -->
             <div v-if="showLeftText" class="swiper-button-next swiper-button-white" slot="button-next"></div>
@@ -35,10 +34,13 @@
           <!-- 多列banner -->
           <div v-if="showImgText" class="slide-img3">
             <div class="img-wrapper3">
-              <img class="response-image" :src="slide.src" @click="routerTo('/goodsDetail/123')">
+              <div class="hidden-model">
+                <div></div>
+              </div>
+              <img class="response-image" :src="'http://'+slide.photo_path" @click="routerTo('/goodsDetail/123')">
             </div>
             <div class="img-text">
-              <span>YINAGU 2019气质连衣裙111111111111</span>
+              <span>{{slide.goods_name}}</span>
               <span @click="routerTo('/commodity')">更多></span>
             </div>
           </div>
@@ -184,6 +186,7 @@ export default {
                 }
                 .title-2 {
                     & > p {
+                        width: 180px;
                         font-size: 88px;
                         line-height: 115px;
                     }
@@ -240,15 +243,46 @@ export default {
         .slide-img3 {
             flex: 1;
             max-width: 320px;
+            .img-wrapper3:hover {
+                .hidden-model {
+                    z-index: 10;
+                    top: 0;
+                }
+                img {
+                    transform: scale(1.2);
+                }
+            }
             .img-wrapper3 {
+                position: relative;
                 width: 100%;
                 overflow: hidden;
                 img {
                     cursor: pointer;
                     transition: all 0.6s;
+                    height: 450px;
+                    width: 320px;
                 }
-                img:hover {
-                    transform: scale(1.2);
+                // img:hover {
+                //     transform: scale(1.2);
+                // }
+                .hidden-model {
+                    position: absolute;
+                    left: 0;
+                    top: -100%;
+                    width: 320px;
+                    height: 450px;
+                    background-color: #000;
+                    opacity: 0.2;
+                    z-index: -1;
+                    transition: all 0.9s;
+                    & > div {
+                        width: 300px;
+                        height: 430px;
+                        border: 2px solid #fff;
+                        box-sizing: border-box;
+                        margin: 10px;
+                        background: url('./model-logo.png') no-repeat center center;
+                    }
                 }
             }
             .img-text {
@@ -257,7 +291,7 @@ export default {
                 flex-wrap: wrap;
                 padding: 17px 5px 20px;
                 & > span:first-child {
-                    width: 210px;
+                    width: 230px;
                     padding-right: 8px;
                     text-align: start;
                     font-size: 16px;
@@ -284,11 +318,18 @@ export default {
 .swiper-pagination-bullets {
     bottom: 30px !important;
 }
+.swiper-pagination-bullet::before {
+    position: relative;
+    top: -10px;
+    content: ' ';
+    display: block;
+    height: 28px;
+}
 .swiper-pagination-bullet {
     width: 60px;
-    height: 3px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.3);
-    border-radius: 0;
+    border-radius: 8px;
     opacity: 1;
 }
 .swiper-pagination-bullet-active {

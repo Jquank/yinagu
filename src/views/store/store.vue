@@ -5,33 +5,35 @@
       <div class="store-wrapper">
         <p class="title">STORES</p>
         <div class="sel-city">
-          <el-select v-model="province" placeholder="选择省份">
-            <el-option label="广东省" value="1"></el-option>
-            <el-option label="湖北省" value="2"></el-option>
-            <el-option label="湖南省" value="3"></el-option>
+          <el-select v-model="province" placeholder="选择省份" @change="provinceChange">
+            <el-option v-for="p in provinceList" :key="p.id" :label="p.region_name" :value="p.id"></el-option>
           </el-select>
-          <el-select v-model="city" placeholder="选择城市">
-            <el-option label="广东省" value="1"></el-option>
-            <el-option label="湖北省" value="2"></el-option>
-            <el-option label="湖南省" value="3"></el-option>
+          <el-select v-model="city" placeholder="选择城市" @change="cityChange">
+            <el-option v-for="p in cityList" :key="p.id" :label="p.region_name" :value="p.id"></el-option>
           </el-select>
         </div>
         <div class="store-list">
-          <template v-if="storeList.length">
-            <div class="store-info" v-for="item in storeList" :key="item">
-              <p>万家丽广场伊那古专柜</p>
-              <p>长沙市芙蓉区万家丽广场</p>
-              <p>0731-89600627</p>
+          <template v-if="cid">
+            <div v-if="!storeList.length" class="store-info">暂无相关门店</div>
+            <div class="store-info" v-for="item in storeList" :key="item.id">
+              <div class="img-wrapper">
+                <img :src="'http://'+item.photo_path" class="response-img">
+              </div>
+              <div class="text-wrapper">
+                <p>{{item.title}}</p>
+                <p>{{item.address}}</p>
+                <p>{{item.phone}}</p>
+              </div>
             </div>
           </template>
-          <template v-if="!storeList.length">
-            <div class="store-info">
-              <p>万家丽广场伊那古专柜</p>
-              <p>长沙市芙蓉区万家丽广场</p>
-              <p>0731-89600627</p>
+          <template v-if="!cid">
+            <div class="store-info1">
+              <p>{{storeList[0].title}}</p>
+              <p>{{storeList[0].address}}</p>
+              <p>{{storeList[0].phone}}</p>
             </div>
             <div class="store-img">
-              <img src="./store02.png" class="response-img">
+              <img :src="'http://'+storeList[0].photo_path" class="response-img">
             </div>
           </template>
         </div>
@@ -45,31 +47,72 @@ export default {
     data() {
         return {
             province: '',
+            provinceList: '',
             city: '',
-            storeList: []
+            cityList: '',
+            storeList: [],
+            pid: '',
+            cid: ''
         }
     },
-
-    methods: {}
+    created() {
+        this._getProvince()
+        this._getStoreList()
+    },
+    methods: {
+        cityChange(cid) {
+            this.cid = cid
+            this._getStoreList(this.pid, cid)
+        },
+        provinceChange(pid) {
+            this.pid = pid
+            this._getCity(pid)
+        },
+        _getStoreList(pid, cid) {
+            pid = pid || ''
+            cid = cid || ''
+            this.pid = pid
+            this.$jsonp(`/home/getStoresList?province_id=${pid}&city_id=${cid}`, { name: 'callback2' }, function(
+                err,
+                data
+            ) {
+                if (err) return err
+                this.storeList = data.datas
+                console.log(data)
+            })
+        },
+        _getProvince() {
+            this.$jsonp('/home/getProvinceList', function(err, data) {
+                if (err) return err
+                this.provinceList = data.datas
+            })
+        },
+        _getCity(pid) {
+            this.$jsonp('/home/getCityList?province_id=' + pid, { name: 'callback1' }, function(err, data) {
+                if (err) return err
+                this.cityList = data.datas
+            })
+        }
+    }
 }
 </script>
 <style lang='less' scoped>
 .store {
     margin-top: -1px;
-    .img-wrapper:hover {
-        & > img {
-            transform: scale(1.2);
-        }
-    }
-    .img-wrapper {
+    // .img-wrapper:hover {
+    //     & > img {
+    //         transform: scale(1.2);
+    //     }
+    // }
+    & > .img-wrapper {
         position: relative;
         overflow: hidden;
-        & > img {
-            transition: all 0.6s;
-        }
-        & > img:hover {
-            transform: scale(1.2);
-        }
+        // & > img {
+        //     transition: all 0.6s;
+        // }
+        // & > img:hover {
+        //     transform: scale(1.2);
+        // }
         & > img {
             min-height: 882px;
             width: 100%;
@@ -97,12 +140,42 @@ export default {
                 overflow: auto;
                 background-color: #fff;
                 margin-top: 80px;
-                text-align: center;
                 .store-info:not(:last-child) {
                     border-bottom: 1px solid rgb(216, 216, 216);
                 }
                 .store-info {
-                    padding: 30px 0;
+                    padding: 30px 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .img-wrapper {
+                        width: 100px;
+                        height: 80px;
+                        overflow: hidden;
+                        margin-right: 20px;
+                    }
+                    .text-wrapper {
+                        // flex: 1;
+                        text-align: left;
+                        & > p:first-child {
+                            font-size: 24px;
+                            font-weight: bold;
+                            line-height: 30px;
+                        }
+                        & > p:nth-child(2) {
+                            line-height: 24px;
+                            color: rgb(159, 159, 159);
+                        }
+                        & > p:last-child {
+                            line-height: 24px;
+                            color: rgb(159, 159, 159);
+                        }
+                    }
+                }
+                .store-info1 {
+                    padding: 30px 20px;
+                    text-align: center;
+                    border-bottom: 1px solid rgb(216, 216, 216);
                     & > p:first-child {
                         font-size: 24px;
                         font-weight: bold;
@@ -118,7 +191,8 @@ export default {
                     }
                 }
                 .store-img {
-                    height: 310px;
+                    max-width: 480px;
+                    max-height: 310px;
                     overflow: hidden;
                     padding: 20px;
                 }

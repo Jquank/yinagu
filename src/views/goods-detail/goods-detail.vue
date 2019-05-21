@@ -5,10 +5,10 @@
     </div>
     <div class="gallery">
       <div class="left">
-        <swiper :options="swiperOption" v-if="swiperSlides.length">
+        <swiper :options="swiperOption">
           <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-            <div ref="thumbnailWrapper" class="img-wrapper">
-              <img class="response-img" @mouseenter="mouseEnterThumbnail(index,slide)" :src="slide.src">
+            <div ref="thumbnailWrapper" :class="['img-wrapper',index===0?'hover-img':'']">
+              <img class="response-img" @mouseenter="mouseEnterThumbnail(index,swiperSlides)" :src="'http://'+slide">
             </div>
           </swiper-slide>
         </swiper>
@@ -16,40 +16,49 @@
         <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       </div>
       <div class="center">
-        <img ref="smallImg" @mousemove="mousemove" @mouseleave="mouseleave" class="response-img" src="./detail.png">
+        <img
+          ref="smallImg"
+          @mousemove="mousemove"
+          @mouseleave="mouseleave"
+          class="response-img"
+          :src="'http://'+bigImgSrc"
+        >
       </div>
       <div class="right">
         <div ref="bigImgWrapper" class="big-img" v-show="showBigImg">
-          <img ref="bigImg" src="./detail.png">
+          <img ref="bigImg" :src="'http://'+bigImgSrc">
         </div>
-        <p class="title">MAXRIENY 2019夏季新品气质V领无袖连衣裙女蕾丝边收腰中长群显瘦</p>
-        <p class="price">促销价：&nbsp;&nbsp;¥&nbsp;299.00</p>
+        <p class="title">{{goodsDetailData.goodsName}}</p>
+        <p class="price">促销价：&nbsp;&nbsp;¥&nbsp;{{price | priceFormat}}</p>
         <div class="infomation">
-          <p>重量：888 g</p>
-          <p>尺码：155/80A/S</p>
-          <p>未含税价格：¥ 8888.00</p>
-          <p>库存：500 件</p>
+          <p>重量：{{goodsDetailData.weight}}g</p>
+          <p>尺码：{{goodsDetailData.goods_size}}</p>
+          <p>未含税价格：¥ {{goodsDetailData.no_tax_price | priceFormat}}</p>
+          <p>库存：{{goodsDetailData.inventory}} 件</p>
         </div>
         <div class="color">
           <span>颜色：</span>
-          <div class="color-wrapper">
-            <div>red</div>
-            <div>white</div>
-            <div>black</div>
+          <div
+            ref="colorWrapper"
+            class="color-wrapper"
+            v-for="(color, index) in goodsDetailData.rColorList"
+            :key="color.id"
+          >
+            <div @click="handleClickColor(index)" :class="index===0?'border-active':''">{{color.colorName}}</div>
           </div>
         </div>
         <div class="detail-info">
-          <div class="info-wrapper">
-            <p>商品编号：41741408227</p>
+          <div class="info-wrapper" v-for="p in goodsDetailData.content" :key="p" v-html="p">
+            <!-- <p>商品编号：41741408227</p>
             <p>店铺： 诗萌旗舰店商品</p>
             <p>毛重：1.0kg</p>
             <p>货号：9181276</p>
             <p>腰型：高腰组合</p>
             <p>规格：单件</p>
             <p>风格：休闲，文艺，通勤</p>
-            <p>主要材质：聚酯纤维</p>
+            <p>主要材质：聚酯纤维</p>-->
           </div>
-          <div class="info-wrapper">
+          <!-- <div class="info-wrapper">
             <p>领型：圆领</p>
             <p>流行元素：不规则</p>
             <p>廓形：A型</p>
@@ -64,7 +73,7 @@
             <p>裙型：百褶裙</p>
             <p>袖型：常规</p>
             <p>上市时间：2019春季</p>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -73,11 +82,11 @@
       <p class="r-subtitle">Maybe You Would Like</p>
       <div class="content">
         <div class="content-wrapper">
-          <div @click="routerTo" v-for="(item, index) in recommendList" :key="index" class="item-wrapper">
-            <img src="./detail.png" class="response-img">
+          <div @click="routerTo" v-for="item in recommendList" :key="item.id" class="item-wrapper">
+            <img :src="'http://'+ item.photo_path" class="response-img">
             <p>
-              <span>YINAGU 2019气质连衣裙1111111</span>
-              <span>¥ 299</span>
+              <span>{{item.goods_name}}</span>
+              <span>¥ {{item.price}}</span>
             </p>
           </div>
         </div>
@@ -94,28 +103,9 @@ export default {
     data() {
         return {
             price: 1100,
-            recommendList: [1, 2, 3, 4, 5],
+            recommendList: [],
             showBigImg: false,
-            swiperSlides: [
-                {
-                    src: require('./detail.png')
-                },
-                {
-                    src: require('./detail.png')
-                },
-                {
-                    src: require('./detail.png')
-                },
-                {
-                    src: require('./detail.png')
-                },
-                {
-                    src: require('./detail.png')
-                },
-                {
-                    src: require('./detail.png')
-                }
-            ],
+            swiperSlides: [],
             swiperOption: {
                 direction: 'vertical',
                 spaceBetween: 20,
@@ -124,11 +114,66 @@ export default {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev'
                 }
-            }
+            },
+            goodsId: '',
+            goodsDetailData: {},
+            bigImgSrc: ''
         }
     },
-    mounted() {},
+    created() {
+        this.goodsId = window.location.href.split('/').pop()
+        this._getGoodsDetail()
+    },
     methods: {
+        handleClickColor(index) {
+            this.swiperSlides = this.goodsDetailData.rColorList[index].imgs
+            this.bigImgSrc = this.swiperSlides[0]
+            let children = this.$refs.colorWrapper
+            this._activeToggleClass(children, 'border-active', index)
+        },
+        _getGoodsDetail() {
+            this.$jsonp('/home/getGoodsDetails?goodsId=' + this.goodsId, function(err, data) {
+                if (err) return err
+                this.goodsDetailData = data.datas
+                this.goodsDetailData.content = this.goodsDetailData.content.split('</p>').map(val => val + '</p>')
+                let arr = []
+                let len = this.goodsDetailData.content.length
+                for (let i = 0, str = ''; i < len; i++) {
+                    const el = this.goodsDetailData.content[i]
+                    str += el
+                    if (len < 9) {
+                        arr.push(str)
+                        str = ''
+                    } else if (len < 17) {
+                        if (i === 7) {
+                            arr.push(str)
+                            str = ''
+                        }
+                        if (i === 15) {
+                            arr.push(str)
+                        }
+                    } else if (len < 25) {
+                        if (i === 7) {
+                            arr.push(str)
+                            str = ''
+                        }
+                        if (i === 15) {
+                            arr.push(str)
+                            str = ''
+                        }
+                        if (i === 23) {
+                            arr.push(str)
+                        }
+                    }
+                }
+                this.goodsDetailData.content = arr
+
+                this.recommendList = this.goodsDetailData.rMayGoodsList
+                this.swiperSlides = this.goodsDetailData.rColorList[0].imgs
+                this.bigImgSrc = this.swiperSlides[0]
+                console.log(this.goodsDetailData)
+            })
+        },
         routerTo() {
             this.$router.push({
                 path: '/goodsDetail/456'
@@ -136,12 +181,21 @@ export default {
         },
         mouseEnterThumbnail(index, item) {
             let children = this.$refs.thumbnailWrapper
+            this._activeToggleClass(children, 'hover-img', index)
+            this.bigImgSrc = this.swiperSlides[index]
+        },
+        _activeToggleClass(children, className, activeIndex) {
             for (let i = 0; i < children.length; i++) {
                 const child = children[i]
-                if (index === i) {
-                    addClass(child, 'hover-img')
+                // if (activeIndex === 0) {
+                //     removeClass(child, className)
+                // }
+                if (activeIndex === i) {
+                    addClass(child, className)
                 } else {
-                    removeClass(child, 'hover-img')
+                    console.log(i)
+
+                    removeClass(child, className)
                 }
             }
         },
@@ -199,6 +253,9 @@ export default {
             height: 540px;
             overflow: hidden;
             margin-right: 100px;
+            img:hover {
+                cursor: move;
+            }
         }
         .right {
             flex: 1;
@@ -246,13 +303,18 @@ export default {
                 .color-wrapper {
                     display: flex;
                     padding-left: 10px;
+                    & > div.border-active {
+                        border: 2px solid rgb(216, 216, 216);
+                        box-shadow: 0 0 3px #000;
+                    }
                     & > div {
                         margin-right: 8px;
                         width: 70px;
                         height: 42px;
                         text-align: center;
                         line-height: 42px;
-                        background: red;
+                        cursor: pointer;
+                        box-sizing: border-box;
                     }
                 }
             }

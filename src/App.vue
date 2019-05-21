@@ -2,7 +2,9 @@
   <div id="app">
     <m-header></m-header>
     <div class="router-wrapper">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
     <m-footer></m-footer>
   </div>
@@ -22,7 +24,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#app{
+#app {
     .router-wrapper {
         margin-top: 60px;
     }

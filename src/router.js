@@ -58,6 +58,11 @@ export default new Router({
             path: '/contact',
             name: 'contact',
             component: () => import('./views/contact-us/contact-us.vue')
+        },
+        {
+            path: '/search',
+            name: 'search',
+            component: () => import('./views/search-result/search-result.vue')
         }
     ],
     scrollBehavior(to, from, savedPosition) {
