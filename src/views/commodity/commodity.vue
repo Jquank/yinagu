@@ -39,10 +39,10 @@
               <div class="img-wrapper">
                 <img :src="'http://'+item.photo_path" class="response-img" @click="routerToDetail(item)">
               </div>
-              <p class="text-wrapper">
-                <span @click="routerToDetail(item)">{{item.goods_name}}</span>
-                <span>{{'¥ '+ item.price}}</span>
-              </p>
+              <div class="text-wrapper">
+                <p @click="routerToDetail(item)">{{item.goods_name}}</p>
+                <p>¥ {{item.price | priceFormat}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
         background
         :page-sizes="[20, 30, 50]"
         :page-size="8"
-        layout="total, prev, pager, next, jumper"
+        layout="total, prev, pager, next"
         :total="allCount"
         @current-change="handleCurrentChange"
       ></el-pagination>
@@ -87,6 +87,8 @@ export default {
         sort(val) {
             this.sortValue = val
             this._getGoodsList(this.goodsKind, val)
+            this.sortShow = false
+            this.sortSrc = require('./d-sort.png')
         },
         _getGoodsList(cateId, sort, page = 1) {
             cateId = cateId || ''
@@ -123,7 +125,6 @@ export default {
             this.sortSrc = require('./sort.png')
         },
         sortMouseLeave() {
-            console.log(456)
             this.sortShow = false
             this.sortSrc = require('./d-sort.png')
         },
@@ -149,43 +150,45 @@ export default {
 }
 .commodity {
     .commodity-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 50px 80px 0 0;
         .nav {
-            flex: 0 0 300px;
-            width: 300px;
-            margin: 0 70px 0 100px;
             .all-categories {
-                height: 19px;
-                line-height: 19px;
-                color: rgb(159, 159, 159);
-                padding: 0 0 0 18px;
-                height: 40px;
+                line-height: 44px;
+                color: #fff;
+                background: @theme-color;
+                padding-left: 15px;
+            }
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+                padding: 15px;
             }
             li {
+                height: 36px;
+                line-height: 36px;
+                padding: 0 15px;
+                margin: 10px 10px 0 0;
+                border: 1px solid rgba(204, 194, 171, 1);
+                border-radius: 22px;
+                text-align: center;
+                a {
+                    font-family: Microsoft YaHei;
+                }
                 &.li-active {
                     background: @theme-color;
                     a {
                         color: #fff;
                     }
                 }
-                padding-left: 18px;
-                border-bottom: 1px solid rgba(216, 216, 216, 1);
-                & > a {
-                    display: inline-block;
-                    width: 300px;
-                    height: 50px;
-                    line-height: 50px;
-                }
             }
         }
         .commodity-content {
-            flex: 1;
+            margin-top: 15px;
             & > .title {
+                box-sizing: border-box;
+                padding: 0 15px;
                 display: flex;
                 justify-content: space-between;
-                height: 40px;
+                height: 30px;
                 color: rgb(159, 159, 159);
                 border-bottom: 1px solid rgb(216, 216, 216);
                 line-height: 19px;
@@ -217,47 +220,32 @@ export default {
                 }
             }
             .content {
-                margin-top: 40px;
+                padding: 15px;
                 .content-wrapper {
                     display: flex;
                     flex-wrap: wrap;
-                    // justify-content: space-between;
-                    margin-left: -20px;
+                    margin-left: -15px;
                     .item-wrapper {
-                        margin-left: 20px;
+                        margin-left: 15px;
+                        width: calc(~'50% - 15px');
                         .img-wrapper {
-                            width: 320px;
-                            max-height: 450px;
                             overflow: hidden;
                             img {
-                                width: 320px;
-                                height: 450px;
-                                cursor: pointer;
-                                transition: all 0.6s;
-                            }
-                            img:hover {
-                                transform: scale(1.2);
+                                height: 230px;
                             }
                         }
                         .text-wrapper {
-                            height: 75px;
-                            line-height: 55px;
-                            padding: 0 5px;
-                            display: flex;
-                            justify-content: space-between;
-                            & > span:first-child {
-                                cursor: pointer;
-                                width: 230px;
-                                padding-right: 8px;
+                            padding: 10px 5px 20px;
+                            font-size: 12px;
+                            font-family: Microsoft YaHei;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            p {
+                                padding: 5px 0;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
-                                font-size: 16px;
-                            }
-                            & > span:last-child {
-                                text-align: right;
-                                color: @theme-color;
-                                font-size: 20px;
                             }
                         }
                     }
@@ -266,7 +254,7 @@ export default {
         }
     }
     .pagination {
-        padding: 10px 0 50px;
+        padding: 0 0 30px;
         text-align: center;
     }
 }

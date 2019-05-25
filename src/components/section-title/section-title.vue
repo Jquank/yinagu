@@ -3,10 +3,12 @@
     <div class="more-title-box">
       <div class="title-wrapper">
         <p class="subtitle">{{subtitle}}</p>
-        <p class="title">{{title}}</p>
+        <div class="title">
+          <p>{{title}}</p>
+          <slot name="more"></slot>
+        </div>
       </div>
     </div>
-    <slot name="more"></slot>
     <!-- <div class="more-text">more ></div> -->
   </div>
 </template>
@@ -31,25 +33,21 @@ export default {
 
 <style scoped lang="less">
 .more-title-wrapper {
-    position: relative;
-    margin-bottom: 60px;
+    margin: 30px 0 8px;
+    padding-left: 15px;
     .more-title-box {
-        width: 180px;
-        height: 80px;
-        border: 2px solid rgb(112, 112, 112);
-        text-align: center;
-        margin: auto;
         .title-wrapper {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
             .subtitle {
-                line-height: 19px;
+                font-size: 22px;
+                line-height: 30px;
             }
             .title {
-                font-size: 30px;
-                font-weight: 400;
-                line-height: 40px;
+                display: flex;
+                justify-content: space-between;
+                padding-right: 15px;
+                p {
+                    line-height: 20px;
+                }
             }
         }
     }

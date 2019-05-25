@@ -1,5 +1,5 @@
-.router-link-active {
-  background: #9a8658;
+.router-active-class {
+  background: rgba(116, 96, 51, 0.8);
 }
 .clearfix {
   *zoom: 1;
@@ -51,4 +51,8 @@
   max-width: 100%;
   height: auto;
   display: inline-block;
+}
+.separate-line {
+  height: 10px;
+  background: #f3f3f3;
 }

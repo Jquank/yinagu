@@ -2,9 +2,9 @@
   <div class="recruitment">
     <div class="img-wrapper">
       <img src="./r01.png" class="response-img">
+      <p class="r-title">RECRUIT</p>
     </div>
     <div class="r-wrapper">
-      <p class="r-title">RECRUIT</p>
       <div class="jobs">
         <ul>
           <li v-for="item in jobList" :key="item">
@@ -13,6 +13,7 @@
           </li>
         </ul>
       </div>
+      <div class="separate-line"></div>
       <div class="content">
         <p class="c-title">人才招聘</p>
         <p class="c-subtitle">CAMPUS RECRUITMENT</p>
@@ -27,12 +28,11 @@
         <p class="c-title">招聘流程</p>
         <p class="c-subtitle">RECRUITMENT PROCESS</p>
         <div class="interview-process">
-          <div v-for="(pro, index) in processList" :key="pro.text" class="pro-wrapper">
+          <div v-for="pro in processList" :key="pro.text" class="pro-wrapper">
             <div>
               <img :src="pro.src">
               <p>{{pro.text}}</p>
             </div>
-            <div v-if="index !== processList.length-1" class="rung"></div>
           </div>
         </div>
         <div class="website">
@@ -54,15 +54,7 @@
 export default {
     data() {
         return {
-            jobList: [
-                '区域经理',
-                '督导',
-                '店长',
-                '店助',
-                '导购',
-                '商品专员',
-                '统计'
-            ],
+            jobList: ['督导', '店长', '店助', '商品专员', '区域经理', '导购', '统计'],
             processList: [
                 {
                     src: require('./pro01.png'),
@@ -96,106 +88,97 @@ export default {
 
 <style scoped lang="less">
 .recruitment {
-    position: relative;
     & > .img-wrapper {
-        height: 1354px;
+        position: relative;
         & > img {
             width: 100%;
         }
-    }
-    .r-wrapper {
-        position: absolute;
-        top: 165px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1340px;
-        text-align: center;
-        .r-title {
-            font-size: 68px;
-            line-height: 90px;
+        & > .r-title {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            text-align: center;
+            font-size: 36px;
             color: rgb(255, 255, 255);
         }
+    }
+    .r-wrapper {
+        text-align: center;
         .jobs {
-            width: 906px;
-            margin: 80px auto;
+            padding: 20px 15px;
             & > ul {
                 display: flex;
-                justify-content: space-between;
+                flex-wrap: wrap;
                 & > li {
                     display: flex;
                     align-items: center;
-                    height: 40px;
+                    height: 36px;
                     background: rgba(255, 255, 255, 1);
+                    border: 1px solid rgba(204, 194, 171, 1);
+                    opacity: 1;
                     border-radius: 20px;
-                    padding: 0 20px 0 15px;
+                    padding: 5px 15px;
+                    margin: 10px 10px 0 0;
                     span {
-                        margin-left: 10px;
+                        margin-left: 8px;
                     }
                 }
             }
         }
         .content {
             background-color: #fff;
+            padding: 0 15px 20px;
             .c-title {
-                padding-top: 60px;
-                font-size: 24px;
-                font-weight: bold;
-                line-height: 30px;
-            }
-            .c-subtitle {
                 font-size: 18px;
                 font-weight: bold;
-                line-height: 24px;
+                margin-top: 20px;
+            }
+            .c-subtitle {
+                font-weight: bold;
                 color: rgb(204, 194, 171);
-                margin: 10px 0 60px;
+                margin-top: 10px;
             }
             .welcome,
             .send-email {
-                width: 728px;
-                margin: 0 auto;
                 line-height: 24px;
                 color: #9f9f9f;
+                font-family: Microsoft YaHei;
+                margin-top: 15px;
             }
             .send-email {
                 margin-top: 20px;
             }
             .interview-process {
+                display: flex;
+                flex-wrap: wrap;
                 text-align: center;
                 color: @theme-color;
-                padding: 0 115px;
                 .pro-wrapper {
-                    display: inline-block;
-                    & > div {
-                        display: inline-block;
+                    margin-top: 20px;
+                    width: 33.3%;
+                    img {
+                        width: 74px;
+                        height: 74px;
                     }
                     p {
-                        font-size: 18px;
                         font-weight: bold;
-                        margin-top: 24px;
-                    }
-                    .rung {
-                        width: 55px;
-                        border-top: 2px dashed @theme-color;
-                        padding-top: 105px;
-                        margin: 0 8px;
+                        margin-top: 10px;
                     }
                 }
             }
             .website {
-                width: 364px;
-                margin: 0 auto;
-                padding: 80px 0 140px;
-                & > div:hover {
-                    .hidden-div {
-                        width: 150px;
-                        color: #fff;
-                        background-color: @theme-color;
-                    }
-                }
+                display: flex;
+                justify-content: space-around;
+                margin: 30px auto 10px;
+                // & > div:hover {
+                //     .hidden-div {
+                //         width: 120px;
+                //         color: #fff;
+                //         background-color: @theme-color;
+                //     }
+                // }
                 & > div {
-                    margin-right: 30px;
-                    display: inline-block;
-                    position: relative;
                     .hidden-div {
                         position: absolute;
                         top: 0;
@@ -210,8 +193,8 @@ export default {
                     }
                     .f-div {
                         display: inline-block;
-                        width: 150px;
                         height: 50px;
+                        width: 120px;
                         box-sizing: border-box;
                         line-height: 50px;
                         border: 1px solid rgba(204, 194, 171, 1);

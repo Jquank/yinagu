@@ -1,33 +1,22 @@
 <template>
   <div class="goods-detail">
-    <div class="bread-title">
-      <p>所有分类 > MAXRIENY 2019夏季新...</p>
-    </div>
     <div class="gallery">
+      <div class="center">
+        <img ref="smallImg" class="response-img" :src="'http://'+bigImgSrc">
+      </div>
       <div class="left">
         <swiper :options="swiperOption">
           <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
             <div ref="thumbnailWrapper" :class="['img-wrapper',index===0?'hover-img':'']">
-              <img class="response-img" @mouseenter="mouseEnterThumbnail(index,swiperSlides)" :src="'http://'+slide">
+              <img class="response-image" @mouseenter="mouseEnterThumbnail(index,swiperSlides)" :src="'http://'+slide">
             </div>
           </swiper-slide>
         </swiper>
         <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
         <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       </div>
-      <div class="center">
-        <img
-          ref="smallImg"
-          @mousemove="mousemove"
-          @mouseleave="mouseleave"
-          class="response-img"
-          :src="'http://'+bigImgSrc"
-        >
-      </div>
+      <div class="separate-line"></div>
       <div class="right">
-        <div ref="bigImgWrapper" class="big-img" v-show="showBigImg">
-          <img ref="bigImg" :src="'http://'+bigImgSrc">
-        </div>
         <p class="title">{{goodsDetailData.goodsName}}</p>
         <p class="price">促销价：&nbsp;&nbsp;¥&nbsp;{{price | priceFormat}}</p>
         <div class="infomation">
@@ -48,47 +37,7 @@
           </div>
         </div>
         <div class="detail-info">
-          <div class="info-wrapper" v-for="p in goodsDetailData.content" :key="p" v-html="p">
-            <!-- <p>商品编号：41741408227</p>
-            <p>店铺： 诗萌旗舰店商品</p>
-            <p>毛重：1.0kg</p>
-            <p>货号：9181276</p>
-            <p>腰型：高腰组合</p>
-            <p>规格：单件</p>
-            <p>风格：休闲，文艺，通勤</p>
-            <p>主要材质：聚酯纤维</p>-->
-          </div>
-          <!-- <div class="info-wrapper">
-            <p>领型：圆领</p>
-            <p>流行元素：不规则</p>
-            <p>廓形：A型</p>
-            <p>面料：其它</p>
-            <p>袖长：长袖衣</p>
-            <p>门襟：套头</p>
-            <p>适用年龄：25-29周岁</p>
-          </div>
-          <div class="info-wrapper">
-            <p>图案：纯色</p>
-            <p>裙长：中长裙</p>
-            <p>裙型：百褶裙</p>
-            <p>袖型：常规</p>
-            <p>上市时间：2019春季</p>
-          </div>-->
-        </div>
-      </div>
-    </div>
-    <div class="recommend-wrapper">
-      <p class="r-title">您可能还会喜欢</p>
-      <p class="r-subtitle">Maybe You Would Like</p>
-      <div class="content">
-        <div class="content-wrapper">
-          <div @click="routerTo" v-for="item in recommendList" :key="item.id" class="item-wrapper">
-            <img :src="'http://'+ item.photo_path" class="response-img">
-            <p>
-              <span>{{item.goods_name}}</span>
-              <span>¥ {{item.price}}</span>
-            </p>
-          </div>
+          <div class="info-wrapper" v-html="goodsDetailData.content"></div>
         </div>
       </div>
     </div>
@@ -100,16 +49,14 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { addClass, removeClass } from 'common/js/dom/dom.js'
 export default {
+    name: 'goodsDetail',
     data() {
         return {
             price: 1100,
-            recommendList: [],
-            showBigImg: false,
             swiperSlides: [],
             swiperOption: {
-                direction: 'vertical',
                 spaceBetween: 20,
-                slidesPerView: 4,
+                slidesPerView: 3,
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev'
@@ -127,7 +74,6 @@ export default {
     methods: {
         handleClickColor(index) {
             this.swiperSlides = this.goodsDetailData.rColorList[index].imgs
-            this.bigImgSrc = this.swiperSlides[0]
             let children = this.$refs.colorWrapper
             this._activeToggleClass(children, 'border-active', index)
         },
@@ -135,48 +81,13 @@ export default {
             this.$jsonp('/home/getGoodsDetails?goodsId=' + this.goodsId, function(err, data) {
                 if (err) return err
                 this.goodsDetailData = data.datas
-                this.goodsDetailData.content = this.goodsDetailData.content.split('</p>').map(val => val + '</p>')
-                let arr = []
-                let len = this.goodsDetailData.content.length
-                for (let i = 0, str = ''; i < len; i++) {
-                    const el = this.goodsDetailData.content[i]
-                    str += el
-                    if (len < 9) {
-                        arr.push(str)
-                        str = ''
-                    } else if (len < 17) {
-                        if (i === 7) {
-                            arr.push(str)
-                            str = ''
-                        }
-                        if (i === 15) {
-                            arr.push(str)
-                        }
-                    } else if (len < 25) {
-                        if (i === 7) {
-                            arr.push(str)
-                            str = ''
-                        }
-                        if (i === 15) {
-                            arr.push(str)
-                            str = ''
-                        }
-                        if (i === 23) {
-                            arr.push(str)
-                        }
-                    }
-                }
-                this.goodsDetailData.content = arr
-
-                this.recommendList = this.goodsDetailData.rMayGoodsList
                 this.swiperSlides = this.goodsDetailData.rColorList[0].imgs
                 this.bigImgSrc = this.swiperSlides[0]
-                console.log(this.goodsDetailData)
             })
         },
-        routerTo() {
+        routerTo(id) {
             this.$router.push({
-                path: '/goodsDetail/456'
+                path: `/goodsDetail/${id}`
             })
         },
         mouseEnterThumbnail(index, item) {
@@ -193,23 +104,9 @@ export default {
                 if (activeIndex === i) {
                     addClass(child, className)
                 } else {
-                    console.log(i)
-
                     removeClass(child, className)
                 }
             }
-        },
-        mousemove(e) {
-            this.showBigImg = true
-            let x = e.clientX - this.$refs.smallImg.getBoundingClientRect().left
-            let y = e.clientY - this.$refs.smallImg.getBoundingClientRect().top
-            if (x < 0) x = 0
-            if (y < 0) y = 0
-            this.$refs.bigImg.style.left = -x + 'px'
-            this.$refs.bigImg.style.top = -y + 'px'
-        },
-        mouseleave() {
-            this.showBigImg = false
         }
     },
     components: {
@@ -221,27 +118,22 @@ export default {
 
 <style scoped lang="less">
 .goods-detail {
-    padding: 0 100px;
-    .bread-title {
-        padding: 50px 0 20px 17px;
-        border-bottom: 1px solid rgb(216, 216, 216);
-        color: #9f9f9f;
-    }
     .gallery {
-        display: flex;
-        margin-top: 60px;
         .left {
-            flex: 0 0 80px;
-            margin-right: 100px;
-            padding: 23px 0;
-            height: 494px;
+            padding: 0 22px;
+            margin: 15px 0;
             .swiper-container {
-                height: 494px;
+                width: 100%;
+                overflow: hidden;
                 .img-wrapper {
-                    max-width: 80px;
-                    max-height: 110px;
-                    overflow: hidden;
+                    max-height: 80px;
                     box-sizing: border-box;
+                    overflow: hidden;
+                    img {
+                        width: 100%;
+                        max-height: 80px;
+                        box-sizing: border-box;
+                    }
                 }
                 .hover-img {
                     border: 2px solid @theme-color;
@@ -249,44 +141,31 @@ export default {
             }
         }
         .center {
-            flex: 0 0 384px;
-            height: 540px;
-            overflow: hidden;
-            margin-right: 100px;
-            img:hover {
-                cursor: move;
+            img {
+                width: 100%;
+                max-height: 300px;
             }
         }
+        .separate-line {
+            height: 10px;
+            background: rgba(243, 243, 243, 1);
+        }
         .right {
-            flex: 1;
-            position: relative;
-            .big-img {
-                position: absolute;
-                width: 384px;
-                height: 540px;
-                overflow: hidden;
-                & > img {
-                    width: 768px;
-                    height: auto;
-                    display: inline-block;
-                    position: relative;
-                }
-            }
+            padding: 20px 15px;
             .title {
                 font-size: 18px;
                 font-weight: bold;
             }
             .price {
                 margin-top: 10px;
-                padding-bottom: 20px;
-                border-bottom: 1px solid rgb(216, 216, 216);
-                font-size: 18px;
+                font-size: 16px;
                 color: @theme-color;
             }
             .infomation {
-                margin: 20px 0;
-                padding: 5px 0 5px 16px;
+                margin: 15px 0;
+                padding: 5px 0 5px 10px;
                 background: #f1f1f1;
+                border-top: 1px solid rgb(216, 216, 216);
                 p {
                     color: #2b2b2b;
                     line-height: 24px;
@@ -298,8 +177,8 @@ export default {
             .color {
                 display: flex;
                 align-items: center;
-                padding: 0 0 15px 16px;
-                border-bottom: 1px solid rgb(216, 216, 216);
+                margin: 15px 0 0;
+                padding-left: 10px;
                 .color-wrapper {
                     display: flex;
                     padding-left: 10px;
@@ -309,88 +188,25 @@ export default {
                     }
                     & > div {
                         margin-right: 8px;
-                        width: 70px;
-                        height: 42px;
+                        padding: 0 10px;
+                        height: 32px;
                         text-align: center;
-                        line-height: 42px;
-                        cursor: pointer;
+                        line-height: 32px;
                         box-sizing: border-box;
+                        font-size: 12px;
                     }
                 }
             }
             .detail-info {
-                height: 220px;
-                box-sizing: border-box;
                 margin-top: 20px;
+                box-sizing: border-box;
                 background: #f1f1f1;
-                padding: 20px;
-                display: flex;
+                padding: 15px;
                 .info-wrapper {
-                    margin-right: 110px;
                     p {
                         font-size: 12px;
                         line-height: 23px;
                         color: rgb(43, 43, 43);
-                    }
-                }
-            }
-        }
-    }
-    .recommend-wrapper {
-        margin: 60px 0;
-        .r-title {
-            font-size: 30px;
-            font-weight: 400;
-            text-align: center;
-        }
-        .r-subtitle {
-            text-align: center;
-            color: rgb(159, 159, 159);
-            padding-top: 5px;
-        }
-        .content {
-            padding: 22px 22px 40px;
-            margin-top: 50px;
-            background: rgb(241, 241, 241);
-            .content-wrapper {
-                display: flex;
-                margin-left: -20px;
-                // .item-wrapper {
-                //     overflow: hidden;
-                //     img {
-                //         cursor: pointer;
-                //         transition: all 0.6s;
-                //     }
-                //     img:hover {
-                //         transform: scale(1.2);
-                //     }
-                // }
-            }
-            .item-wrapper {
-                max-width: 320px;
-                // max-height: 450px;
-                overflow: hidden;
-                margin-left: 20px;
-                & > p {
-                    padding-top: 10px;
-                    display: flex;
-                    justify-content: space-between;
-                    & > span:first-child {
-                        font-size: 16px;
-                        line-height: 24px;
-                        width: calc(~'100% - 90px');
-                        padding-left: 5px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                    }
-                    & > span:last-child {
-                        font-size: 20px;
-                        line-height: 24px;
-                        color: @theme-color;
-                        width: 70px;
-                        text-align: right;
-                        padding-right: 5px;
                     }
                 }
             }
@@ -406,20 +222,18 @@ export default {
         .swiper-button-prev,
         .swiper-button-next {
             margin-top: 0;
-            width: 20px;
+            width: 15px;
             height: 80px;
-            background-size: 20px 80px;
+            background-size: 15px 80px;
             background-color: #9a8658;
             outline: none;
-            transform: rotate(90deg);
+            top: 0;
         }
         .swiper-button-prev {
-            top: -30px;
-            left: calc(~'50% - 10px');
+            left: 5px;
         }
         .swiper-button-next {
-            top: calc(~'100% - 50px');
-            left: calc(~'50% - 10px');
+            right: 5px;
         }
         .swiper-button-prev.swiper-button-disabled,
         .swiper-button-next.swiper-button-disabled {

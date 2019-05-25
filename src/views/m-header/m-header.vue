@@ -4,7 +4,10 @@
       <img src="./logo.png">
     </div>
     <div class="nav">
-      <ul>
+      <div class="nav-icon" @click="navShow">
+        <img src="./nav-icon1.png">
+      </div>
+      <ul v-if="isNavShow">
         <li
           v-for="(item,index) in navList"
           :key="item.en"
@@ -13,63 +16,43 @@
           ref="liItem"
         >
           <router-link
+            @click.native="routerlinkjump"
             tag="div"
             :to="item.to"
-            :style="{'width': item.width+'px'}"
             class="router-tab"
             :class="$route.path===item.to?'router-tab-active':''"
           >{{$route.path===item.to || isMouseEnter===index?item.en:item.ch}}</router-link>
         </li>
       </ul>
     </div>
-    <div class="search">
-      <div v-if="isSearch"></div>
-      <div>
-        <div v-if="isSearch" class="search-input">
-          <!-- <img src="./search-icon.png" alt>
-          <input type="text" placeholder="请输入搜索内容">-->
-          <el-input
-            ref="searchInput"
-            v-model="inputValue"
-            suffix-icon="el-icon-search"
-            @keydown.enter.native="search"
-            placeholder="请输入搜索内容"
-          ></el-input>
-        </div>
-      </div>
-      <img v-if="!isSearch" src="./search-icon.png" class="search-icon c-pointer" @click="handleSearchIcon">
-    </div>
   </div>
 </template>
 
 <script>
 import navList from './config.js'
-import { eventBus } from '@/main.js'
-import { setTimeout } from 'timers'
 export default {
+    watch: {
+        $route() {
+            this.isNavShow = false
+        }
+    },
     data() {
         return {
             navList: navList,
             isMouseEnter: -1,
             isSearch: true,
-            inputValue: ''
+            inputValue: '',
+            count: 0,
+            isNavShow: false
         }
     },
-    mounted() {
-        let el = document.querySelector('.el-icon-search')
-        el.addEventListener('click', () => {
-            this.search()
-        })
-    },
     methods: {
-        search() {
-            setTimeout(() => {
-                eventBus.$emit('getSearch', this.inputValue)
-            }, 500)
-            this.$router.push({
-                path: `/search`,
-                query: { keyWord: this.inputValue }
-            })
+        routerlinkjump() {
+            this.count++
+        },
+        navShow() {
+            this.count++
+            this.count % 2 === 1 ? (this.isNavShow = true) : (this.isNavShow = false)
         },
         mouseEnter(index) {
             this.$refs.liItem[index].setAttribute('class', 'router-tab-active')
@@ -78,15 +61,6 @@ export default {
         mouseLeave(index) {
             this.$refs.liItem[index].setAttribute('class', '')
             this.isMouseEnter = -1
-        },
-        handleSearchIcon() {
-            // this.isSearch = true
-            this.$nextTick(() => {
-                this.$refs.searchInput.$el.children[0].focus()
-                this.$refs.searchInput.$el.children[1].addEventListener('click', () => {
-                    this.search()
-                })
-            })
         }
     },
     components: {}
@@ -100,44 +74,39 @@ export default {
     height: 60px;
     line-height: 60px;
     color: #2a2a2a;
-    border-bottom: 1px solid rgb(216, 216, 216);
+    // border-bottom: 1px solid rgb(216, 216, 216);
     background-color: #fff;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
-    .logo {
-        padding-left: 70px;
-    }
     .nav {
-        & > ul {
-            display: flex;
-        }
-        .router-tab {
-            text-align: center;
-            cursor: pointer;
-        }
-        .router-tab-active {
-            color: #fff;
-            background: rgba(154, 134, 88, 1);
-        }
-    }
-    .search {
-        padding-right: 70px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 220px;
-        text-align: right;
         position: relative;
-        // .search-input {
-        //     input {
-        //         height: 36px;
-        //         border-radius: 18px;
-        //         outline: none;
-        //     }
-        // }
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            & > img {
+                margin-top: 15px;
+            }
+        }
+        & > ul {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 145px;
+            color: #fff;
+            .router-tab {
+                width: 100%;
+                text-align: center;
+                cursor: pointer;
+                background: @theme-color;
+            }
+            .router-tab-active {
+                background: rgba(116, 96, 51, 0.9);
+            }
+        }
     }
 }
 </style>

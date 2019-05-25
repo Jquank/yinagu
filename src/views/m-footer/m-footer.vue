@@ -1,93 +1,133 @@
 <template>
   <div class="footer">
-    <div class="f-logo">
-      <img src="./footer.png">
+    <div class="text-wrapper">
+      <p>
+        <span>版权所有</span>
+        <span>杭州意芙实业有限公司</span>
+        <span>© Copyright 2008 -</span>
+      </p>
+      <p>
+        <span>2013.EIFINI伊芙丽</span>
+        <span>All Rights Reserved</span>
+      </p>
+      <p>
+        <span>浙ICP备12014589号</span>
+      </p>
     </div>
-    <div class="f-nav">
-      <ul>
-        <li v-for="item in navList" :key="item.ch">
-          <!-- <a href="javascrip:void(0)">{{item.ch}}</a> -->
-          <router-link :to="item.to">{{item.ch}}</router-link>
-        </li>
-      </ul>
+    <div class="phone-wrapper">
+      <p class="phone" @click="handleClickPhone">
+        <img src="./phone.png">&nbsp;&nbsp;电话
+      </p>
+      <p class="add">
+        <img src="./add.png">&nbsp;&nbsp;加盟
+      </p>
     </div>
-    <div class="f-info">
-      <p>公司电话: 0731-89600627</p>
-      <p>合作邮箱：124817821qq.com</p>
-      <p>地址：湖南省长沙市开福区新河街道湘江北路三段1500号北辰时代广场</p>
-    </div>
-    <div class="f-copyright">
-      <div>
-        <p>版权所有</p>
-        <p>杭州意芙实业有限公司</p>
-        <p>© Copyright 2008 - 2013.EIFINI伊芙丽.</p>
-        <p>All Rights Reserved.</p>
-        <p>浙ICP备12014589号</p>
+    <div class="model" ref="model" @click="hiddenModel($event)">
+      <div class="call">
+        <p class="el-icon-phone-outline">&nbsp;&nbsp;0731-89600627</p>
+        <p>
+          <a href="tel:0731-89600627">呼叫</a>
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import navList from 'views/m-header/config.js'
 export default {
     data() {
-        return {
-            navList: navList
-        }
+        return {}
     },
-    components: {}
+    methods: {
+        handleClickPhone() {
+            this.$refs.model.style.display = 'block'
+            document.body.style.overflow = 'hidden'
+        },
+        hiddenModel(e) {
+            if (e.target.className !== 'model') {
+                return
+            }
+            this.$refs.model.style.display = 'none'
+            document.body.style.overflow = 'auto'
+        }
+    }
 }
 </script>
 
 <style scoped lang="less">
 .footer {
-    // height: 390px;
-    background: rgb(42, 42, 42);
-    .f-logo {
-        text-align: center;
-        padding-top: 60px;
-        margin: 0 auto;
-    }
-    .f-nav {
-        margin-top: 60px;
-        ul {
+    border-top: 1px solid rgba(197, 197, 197, 1);
+    .text-wrapper {
+        padding: 10px 15px;
+        font-size: 10px;
+        font-family: Microsoft YaHei;
+        line-height: 20px;
+        color: rgba(159, 159, 159, 1);
+        p {
+            width: 100%;
             display: flex;
-            justify-content: center;
-            li {
-                margin-right: 70px;
-                a {
-                    display: block;
-                    height: 19px;
-                    line-height: 19px;
-                    color: rgb(216, 216, 216);
-                    padding: 0 3px;
-                }
+            justify-content: flex-end;
+            span {
+                margin-left: 15px;
             }
         }
     }
-    .f-info {
-        height: 72px;
+    .phone-wrapper {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 30px;
-        color: rgb(119, 119, 119);
-        font-size: 12px;
-    }
-    .f-copyright {
-        margin-top: 50px;
-        border-top: 1px solid rgb(78, 78, 78);
-        & > div {
+        .phone,
+        .add {
+            flex: 1;
             display: flex;
-            justify-content: space-between;
-            width: 785px;
+            justify-content: center;
+            align-items: center;
+            height: 45px;
+            text-align: center;
+            line-height: 45px;
+            background: rgba(43, 43, 43, 1);
+            box-sizing: border-box;
+            font-size: 14px;
+            line-height: 24px;
+            color: rgba(255, 255, 255, 1);
+        }
+        .phone {
+            border-right: 1px solid #fff;
+        }
+    }
+    .model {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        .call {
+            z-index: 300;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            width: 80%;
             margin: 0 auto;
-            font-size: 12px;
-            color: #777777;
-            height: 28px;
-            line-height: 28px;
+            background: rgba(255, 255, 255, 1);
+            opacity: 1;
+            border-radius: 12px;
+            p::before {
+                font-size: 20px;
+            }
+            p {
+                width: 100%;
+                height: 55px;
+                line-height: 55px;
+                font-size: 16px;
+                color: #000;
+                font-family: Microsoft YaHei;
+            }
+            p:first-child {
+                border-bottom: 1px solid rgba(197, 197, 197, 1);
+                color: @theme-color;
+            }
         }
     }
 }

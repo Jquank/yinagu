@@ -4,6 +4,7 @@ import Home from './views/home/home.vue'
 Vue.use(Router)
 
 export default new Router({
+    linkActiveClass: 'router-active-class',
     routes: [
         {
             path: '/',
