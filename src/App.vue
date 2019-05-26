@@ -2,7 +2,7 @@
   <div id="app">
     <m-header></m-header>
     <div class="router-wrapper">
-      <keep-alive>
+      <keep-alive :exclude="['goodsDetail', 'newsDetail']">
         <router-view></router-view>
       </keep-alive>
     </div>

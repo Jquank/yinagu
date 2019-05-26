@@ -100,6 +100,7 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { addClass, removeClass } from 'common/js/dom/dom.js'
 export default {
+    name: 'goodsDetail',
     data() {
         return {
             price: 1100,

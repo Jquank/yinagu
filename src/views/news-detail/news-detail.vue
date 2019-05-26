@@ -23,6 +23,7 @@
 
 <script>
 export default {
+    name: 'newsDetail',
     data() {
         return {
             newsId: '',
