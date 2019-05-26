@@ -3,14 +3,16 @@
     <div class="img-wrapper">
       <img src="./store01.png" class="response-img">
       <div class="store-wrapper">
-        <p class="title">STORES</p>
-        <div class="sel-city">
-          <el-select v-model="province" placeholder="选择省份" @change="provinceChange">
-            <el-option v-for="p in provinceList" :key="p.id" :label="p.region_name" :value="p.id"></el-option>
-          </el-select>
-          <el-select class="ml-10" v-model="city" placeholder="选择城市" @change="cityChange">
-            <el-option v-for="p in cityList" :key="p.id" :label="p.region_name" :value="p.id"></el-option>
-          </el-select>
+        <div class="model">
+          <p class="title">STORES</p>
+          <div class="sel-city">
+            <el-select v-model="province" placeholder="选择省份" @change="provinceChange">
+              <el-option v-for="p in provinceList" :key="p.id" :label="p.region_name" :value="p.id"></el-option>
+            </el-select>
+            <el-select class="ml-10" v-model="city" placeholder="选择城市" @change="cityChange">
+              <el-option v-for="p in cityList" :key="p.id" :label="p.region_name" :value="p.id"></el-option>
+            </el-select>
+          </div>
         </div>
       </div>
     </div>
@@ -94,13 +96,21 @@ export default {
             width: 100%;
         }
         .store-wrapper {
+            width: 100%;
+            height: 100%;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-            width: 80%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.4);
+            .model {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                z-index: 10;
+                width: 80%;
+            }
             .title {
                 font-size: 36px;
                 color: #fff;

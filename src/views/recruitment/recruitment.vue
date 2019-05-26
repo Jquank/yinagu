@@ -2,7 +2,9 @@
   <div class="recruitment">
     <div class="img-wrapper">
       <img src="./r01.png" class="response-img">
-      <p class="r-title">RECRUIT</p>
+      <div class="title-wrapper">
+        <p class="r-title">RECRUIT</p>
+      </div>
     </div>
     <div class="r-wrapper">
       <div class="jobs">
@@ -93,14 +95,22 @@ export default {
         & > img {
             width: 100%;
         }
-        & > .r-title {
+        .title-wrapper {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
+            left: 0;
             width: 100%;
-            text-align: center;
-            font-size: 36px;
-            color: rgb(255, 255, 255);
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            & > .r-title {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 100%;
+                text-align: center;
+                font-size: 36px;
+                color: rgb(255, 255, 255);
+            }
         }
     }
     .r-wrapper {

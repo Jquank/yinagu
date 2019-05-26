@@ -48,7 +48,8 @@ export default {
     },
     methods: {
         routerlinkjump(to) {
-            console.log(this.$route)
+            console.log(to)
+            console.log(this.$route.path)
             // if(to === this.$route)
             this.count++
         },

@@ -92,6 +92,10 @@ export default {
         .phone {
             border-right: 1px solid #fff;
         }
+        .add {
+            width: 0;
+            display: none;
+        }
     }
     .model {
         display: none;
@@ -127,6 +131,11 @@ export default {
             p:first-child {
                 border-bottom: 1px solid rgba(197, 197, 197, 1);
                 color: @theme-color;
+            }
+            a {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
             }
         }
     }
