@@ -35,7 +35,7 @@
           <div v-if="showImgText" class="slide-img3">
             <div class="img-wrapper3">
               <div class="hidden-model">
-                <div></div>
+                <div @click="routerTo('/commodity')"></div>
               </div>
               <img class="response-image" :src="'http://'+slide.photo_path" @click="routerTo('/goodsDetail/123')">
             </div>
@@ -275,12 +275,14 @@ export default {
                     opacity: 0.2;
                     z-index: -1;
                     transition: all 0.9s;
+                    cursor: pointer;
                     & > div {
                         width: 300px;
                         height: 430px;
                         border: 2px solid #fff;
                         box-sizing: border-box;
                         margin: 10px;
+                        cursor: pointer;
                         background: url('./model-logo.png') no-repeat center center;
                     }
                 }

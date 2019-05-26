@@ -28,12 +28,12 @@
           </template>
           <template v-if="!cid">
             <div class="store-info1">
-              <p>{{storeList[0].title}}</p>
-              <p>{{storeList[0].address}}</p>
-              <p>{{storeList[0].phone}}</p>
+              <p>{{storeList[0]?storeList[0].title:''}}</p>
+              <p>{{storeList[0]?storeList[0].address:''}}</p>
+              <p>{{storeList[0]?storeList[0].phone:''}}</p>
             </div>
             <div class="store-img">
-              <img :src="'http://'+storeList[0].photo_path" class="response-img">
+              <img :src="'http://'+(storeList[0]?storeList[0].photo_path:'')" class="response-img">
             </div>
           </template>
         </div>
@@ -78,7 +78,6 @@ export default {
             ) {
                 if (err) return err
                 this.storeList = data.datas
-                console.log(data)
             })
         },
         _getProvince() {
@@ -119,7 +118,7 @@ export default {
         }
         .store-wrapper {
             position: absolute;
-            top: 165px;
+            top: 150px;
             left: 50%;
             transform: translateX(-50%);
             width: 520px;

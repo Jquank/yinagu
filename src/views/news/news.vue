@@ -92,7 +92,9 @@ export default {
             })
         },
         _getNewsList(dateTime, page, rulesType) {
-            dateTime = dateTime || ''
+            if (!dateTime || dateTime === ALLTIME) {
+                dateTime = ''
+            }
             page = page || 1
             rulesType = rulesType || 2
             this.$jsonp(
@@ -119,9 +121,10 @@ export default {
             this.sortSrc = require('./d-sort.png')
         },
         handleClickDate(index, item) {
+            this.dateTime = item
             let children = this.$refs.ulItem.children
             this._activeToggleClass(children, 'li-active', index)
-            this._getNewsList(item === ALLTIME ? '' : item)
+            this._getNewsList(item)
         },
         _activeToggleClass(children, className, activeIndex) {
             for (let i = 0; i < children.length; i++) {

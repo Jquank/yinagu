@@ -224,6 +224,7 @@ export default {
                 flex-wrap: wrap;
                 margin-left: -30px;
                 .categories-item-wrapper {
+                    cursor: pointer;
                     margin-left: 30px;
                     .categories-item {
                         border: 1px solid rgba(154, 134, 88, 1);
