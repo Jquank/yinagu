@@ -14,14 +14,22 @@
         <section-title title="新品上市" subtitle="NEW PRODUCTS">
           <div @click="routerTo('/commodity')" slot="more" class="more-text">more ></div>
         </section-title>
-        <m-swiper
-          class="swiper-slides3"
-          :key="skey3"
-          :showImgText="true"
-          :swiperSlides="swiperSlides3"
-          :swiperOption="swiperOption3"
-        ></m-swiper>
-        <section-title title="门店展示" subtitle="STORE SHOW"></section-title>
+        <div class="new-goods">
+          <m-swiper
+            class="swiper-slides3"
+            :key="skey3"
+            :showImgText="true"
+            :swiperSlides="swiperSlides3"
+            :swiperOption="swiperOption3"
+          ></m-swiper>
+          <div @click="routerTo('/commodity')" class="goods-list">
+            <img src="./list-icon.png">
+            <span>产品列表</span>
+          </div>
+        </div>
+        <section-title title="门店展示" subtitle="STORE SHOW">
+          <div @click="routerTo('/store')" slot="more" class="more-text">more ></div>
+        </section-title>
         <m-swiper
           class="swiper-slides4"
           :key="skey4"
@@ -43,6 +51,10 @@
               <p @click="routerTo(`newsDetail/${item.id}`)" class="title">{{item.title}}</p>
               <p class="subtitle">{{item.remark}}</p>
             </div>
+          </div>
+          <div @click="routerTo('/brandNews')" class="news-list">
+            <img src="./list-icon.png">
+            <span>新闻列表</span>
           </div>
         </div>
         <section-title title="品牌介绍" subtitle="BRAND INTRODUCTION"></section-title>
@@ -147,7 +159,6 @@ export default {
             ) {
                 if (err) return err
                 this.swiperSlides4 = data.datas
-                console.log(this.storeList)
             })
         },
         routerTo(value) {
@@ -169,6 +180,20 @@ export default {
     margin-top: -1px;
     .more-text {
         color: @theme-color;
+    }
+    .new-goods {
+        padding: 0 15px;
+        .goods-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(43, 43, 43, 1);
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(197, 197, 197, 1);
+            img {
+                margin-right: 10px;
+            }
+        }
     }
     .brand-intro {
         background-image: url('./brand.png');
@@ -210,8 +235,21 @@ export default {
         }
     }
     .home-news {
+        padding: 0 15px;
+        .news-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(43, 43, 43, 1);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(197, 197, 197, 1);
+            img {
+                margin-right: 10px;
+            }
+        }
         .news-wrapper {
-            padding: 0 15px;
+            border-top: 1px solid rgba(197, 197, 197, 1);
+            padding: 15px 0;
             .img-wrapper {
                 overflow: hidden;
                 img {
@@ -220,7 +258,7 @@ export default {
                 }
             }
             .text-wrapper {
-                padding: 15px 0;
+                margin-top: 15px;
                 .date {
                     font-size: 12px;
                     line-height: 17px;
@@ -282,7 +320,7 @@ export default {
 }
 .swiper-slides4 {
     overflow: hidden;
-    padding-bottom: 80px;
+    padding-bottom: 60px;
     .slide-img1,
     .slide-img1 img {
         width: 100%;
@@ -290,7 +328,8 @@ export default {
     }
 }
 .swiper-slides3 {
-    padding: 0 15px;
+    padding: 15px 0;
+    border-top: 1px solid rgba(197, 197, 197, 1);
     overflow: hidden;
     .slide-img img {
         width: 100%;

@@ -8,9 +8,9 @@
             <div class="img-wrapper1" @click="routerTo('/commodity')">
               <img class="response-img" :src="'http://'+slide.photo_path">
               <div v-if="showUpperText" class="upper-text">
-                <p>北辰时代广场伊那古专柜</p>
-                <p>长沙市开福区新河街道湘江北路北辰时代广场4楼</p>
-                <p>0731-89600627</p>
+                <p>{{slide.title}}</p>
+                <p>{{slide.address}}</p>
+                <p>{{slide.phone}}</p>
               </div>
             </div>
           </div>

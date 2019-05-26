@@ -16,7 +16,7 @@
           ref="liItem"
         >
           <router-link
-            @click.native="routerlinkjump"
+            @click.native="routerlinkjump(item.to)"
             tag="div"
             :to="item.to"
             class="router-tab"
@@ -47,7 +47,9 @@ export default {
         }
     },
     methods: {
-        routerlinkjump() {
+        routerlinkjump(to) {
+            console.log(this.$route)
+            // if(to === this.$route)
             this.count++
         },
         navShow() {

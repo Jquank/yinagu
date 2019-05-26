@@ -114,6 +114,7 @@ export default {
     }
     .store-list {
         background-color: #fff;
+        min-height: 300px;
         .store-info:not(:last-child) {
             border-bottom: 1px solid rgb(216, 216, 216);
         }
