@@ -14,14 +14,15 @@
           </li>
         </ul>
       </div>
+      <div class="separate-line"></div>
       <div class="news-content">
         <div class="title">
           <span class="all-text">全部（{{allCount}}条）</span>
-          <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
+          <div class="sort" @click="toggleSortDrop">
             <span>排序</span>
             <img :src="sortSrc">
           </div>
-          <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
+          <div v-if="sortShow" class="hover-wrapper">
             <p @click="sort(1)">最近一周</p>
             <p @click="sort(2)">最近一个月</p>
           </div>
@@ -67,7 +68,8 @@ export default {
             sortShow: false,
             allCount: 0,
             dateTime: '',
-            rulesType: 2
+            rulesType: 2,
+            count: 0
         }
     },
     created() {
@@ -75,12 +77,23 @@ export default {
         this._getNewsList()
     },
     methods: {
+        toggleSortDrop() {
+            this.count++
+            if (this.count % 2 === 1) {
+                this.sortShow = true
+                this.sortSrc = require('./sort.png')
+            } else {
+                this.sortShow = false
+                this.sortSrc = require('./d-sort.png')
+            }
+        },
         handleCurrentChange(val) {
             this._getNewsList(this.dateTime, val, this.rulesType)
         },
         sort(val) {
             this.rulesType = val
             this._getNewsList(this.dateTime, 1, val)
+            this.count++
             this.sortShow = false
             this.sortSrc = require('./d-sort.png')
         },
@@ -112,14 +125,6 @@ export default {
             this.$router.push({
                 path: `/newsDetail/${item.id}`
             })
-        },
-        sortMouseEnter() {
-            this.sortShow = true
-            this.sortSrc = require('./sort.png')
-        },
-        sortMouseLeave() {
-            this.sortShow = false
-            this.sortSrc = require('./d-sort.png')
         },
         handleClickDate(index, item) {
             this.dateTime = item
@@ -153,7 +158,7 @@ export default {
             ul {
                 display: flex;
                 flex-wrap: wrap;
-                padding: 15px;
+                padding: 10px 15px 20px;
             }
             li {
                 height: 36px;

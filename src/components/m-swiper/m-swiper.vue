@@ -6,7 +6,7 @@
           <!-- 大屏banner -->
           <div v-if="generalSwiper" class="slide-img1">
             <div class="img-wrapper1" @click="routerTo('/commodity')">
-              <img class="response-img" :src="'http://'+slide.photo_path">
+              <img class="response-img" :src="'http://'+slide.photo_path" @click="routerTo('/commodity')">
               <div v-if="showUpperText" class="upper-text">
                 <p>{{slide.title}}</p>
                 <p>{{slide.address}}</p>
@@ -22,6 +22,10 @@
           </div>
         </div>
       </swiper-slide>
+      <template v-if="showBtn1">
+        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+      </template>
       <div v-if="showPagination" class="swiper-pagination" slot="pagination"></div>
     </swiper>
 
@@ -38,6 +42,10 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
     props: {
+        showBtn1: {
+            type: Boolean,
+            default: false
+        },
         showBtn: {
             type: Boolean,
             default: false
@@ -113,23 +121,29 @@ export default {
                 position: relative;
                 .upper-text {
                     position: absolute;
-                    bottom: -52px;
+                    bottom: -72px;
                     left: 0;
                     right: 0;
                     margin: auto;
-                    width: 90%;
-                    height: 105px;
+                    width: 85%;
+                    height: 100px;
                     background: #fff;
                     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-                    text-align: center;
+                    text-align: start;
                     z-index: 101;
                     padding: 15px;
+                    box-sizing: content-box;
                     p:first-child {
                         font-size: 16px;
                         font-family: PingFang SC;
                         font-weight: bold;
                         line-height: 30px;
                         color: rgba(0, 0, 0, 1);
+                        margin-bottom: 8px;
+                    }
+                    p:not(:first-child) {
+                        line-height: 18px;
+                        color: rgba(159, 159, 159, 1);
                     }
                 }
             }
@@ -138,7 +152,8 @@ export default {
             .img-wrapper3 {
                 img {
                     cursor: pointer;
-                    height: 150px;
+                    // height: 150px;
+                    max-height: 155px;
                     width: 110px;
                 }
             }

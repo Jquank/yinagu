@@ -21,7 +21,7 @@
         <div v-if="!storeList.length" class="store-info">暂无相关门店</div>
         <div class="store-info" v-for="item in storeList" :key="item.id">
           <div class="img-wrapper">
-            <img :src="'http://'+item.photo_path" class="response-img">
+            <img :src="'http://'+item.photo_path">
           </div>
           <div class="text-wrapper">
             <p>{{item.title}}</p>
@@ -132,17 +132,19 @@ export default {
             padding: 20px 15px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             .img-wrapper {
                 overflow: hidden;
-                margin-right: 20px;
+                margin-right: 15px;
+                flex: 0 0 100px;
+                height: 80px;
                 img {
-                    width: 100px;
-                    height: 80px;
+                    width: 100%;
+                    // height: 80px;
                 }
             }
             .text-wrapper {
-                // flex: 1;
+                flex: 1;
                 text-align: left;
                 & > p:first-child {
                     font-size: 18px;

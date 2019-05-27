@@ -14,6 +14,13 @@
         <section-title title="新品上市" subtitle="NEW PRODUCTS">
           <div @click="routerTo('/commodity')" slot="more" class="more-text">more ></div>
         </section-title>
+        <!-- <div class="cate">
+          <ul>
+            <li :class="index===0?'li-active':''" v-for="(item,index) in categories" :key="item.id">
+              <a href="javascript:void(0)">{{item.name}}</a>
+            </li>
+          </ul>
+        </div>-->
         <div class="new-goods">
           <m-swiper
             class="swiper-slides3"
@@ -35,6 +42,7 @@
           :key="skey4"
           :generalSwiper="true"
           :showUpperText="true"
+          :showBtn1="true"
           :swiperSlides="swiperSlides4"
           :swiperOption="swiperOption4"
         ></m-swiper>
@@ -54,7 +62,7 @@
           </div>
           <div @click="routerTo('/brandNews')" class="news-list">
             <img src="./list-icon.png">
-            <span>新闻列表</span>
+            <span>动态列表</span>
           </div>
         </div>
         <section-title title="品牌介绍" subtitle="BRAND INTRODUCTION"></section-title>
@@ -122,16 +130,21 @@ export default {
             swiperOption4: {
                 loop: true,
                 speed: 800,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                },
                 autoplay: {
                     delay: 5000,
                     stopOnLastSlide: false,
                     disableOnInteraction: true
                 }
-            }
+            },
+            categories: []
         }
     },
     created() {
-        this.$jsonp('/home/index', function(err, data) {
+        this.$jsonp('/home/mobileindex', function(err, data) {
             if (err) return err
             this.swiperSlides1 = data.datas.rTopBanner
             this.swiperSlides3 = data.datas.rAllGoodsList
@@ -139,9 +152,24 @@ export default {
             this.newsList.length = 1
         })
         this._getStoreList()
+        // this._getAllCateList()
     },
     methods: {
+        _getAllCateList() {
+            return new Promise((resolve, reject) => {
+                this.$jsonp('/home/allCateList', function(err, data) {
+                    if (err) return err
+                    this.categories = data.datas
+                    this.categories.unshift({ id: '', name: '全部' })
+                    resolve(this.categories)
+                })
+            })
+        },
         onlineApply() {
+            if (!this.name || !this.phone) {
+                alert('请填写姓名或电话')
+                return
+            }
             this.$jsonp(`/home/submitContactUs?name=${this.name}&phone=${this.phone}&content=${this.content}`, function(
                 err,
                 data
@@ -188,7 +216,7 @@ export default {
             justify-content: center;
             align-items: center;
             color: rgba(43, 43, 43, 1);
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             border-bottom: 1px solid rgba(197, 197, 197, 1);
             img {
                 margin-right: 10px;
@@ -241,7 +269,7 @@ export default {
             justify-content: center;
             align-items: center;
             color: rgba(43, 43, 43, 1);
-            padding: 15px 0;
+            padding-bottom: 25px;
             border-bottom: 1px solid rgba(197, 197, 197, 1);
             img {
                 margin-right: 10px;
@@ -249,7 +277,7 @@ export default {
         }
         .news-wrapper {
             border-top: 1px solid rgba(197, 197, 197, 1);
-            padding: 15px 0;
+            padding: 30px 0;
             .img-wrapper {
                 overflow: hidden;
                 img {
@@ -320,15 +348,34 @@ export default {
 }
 .swiper-slides4 {
     overflow: hidden;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
     .slide-img1,
     .slide-img1 img {
         width: 100%;
         cursor: pointer;
     }
+    .swiper-button-prev,
+    .swiper-button-next {
+        outline: none;
+        font-size: 14px;
+        padding: 8px 5px;
+        width: 30px;
+        height: 50px;
+        margin-top: -25px;
+        cursor: pointer;
+        background-size: 20px 30px;
+        background-color: rgba(0, 0, 0, 0.4);
+        opacity: 0.8;
+    }
+    .swiper-button-prev {
+        left: 0;
+    }
+    .swiper-button-next {
+        right: 0;
+    }
 }
 .swiper-slides3 {
-    padding: 15px 0;
+    padding: 30px 0;
     border-top: 1px solid rgba(197, 197, 197, 1);
     overflow: hidden;
     .slide-img img {

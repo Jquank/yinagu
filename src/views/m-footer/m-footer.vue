@@ -63,6 +63,7 @@ export default {
         font-family: Microsoft YaHei;
         line-height: 20px;
         color: rgba(159, 159, 159, 1);
+        margin-bottom: 45px;
         p {
             width: 100%;
             display: flex;
@@ -74,6 +75,11 @@ export default {
     }
     .phone-wrapper {
         display: flex;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 100;
         .phone,
         .add {
             flex: 1;

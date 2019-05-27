@@ -14,14 +14,15 @@
           </li>
         </ul>
       </div>
+      <div class="separate-line"></div>
       <div class="commodity-content">
         <div class="title">
           <span class="all-text">{{'全部（'+allCount+'件）'}}</span>
-          <div class="sort" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave">
+          <div class="sort" @click="toggleSortDrop">
             <span>排序</span>
             <img :src="sortSrc">
           </div>
-          <div v-if="sortShow" @mouseenter="sortMouseEnter" @mouseleave="sortMouseLeave" class="hover-wrapper">
+          <div v-if="sortShow" class="hover-wrapper">
             <p @click="sort(1)">
               <i class="el-icon-sort-down"></i>
               价格从高到低
@@ -71,7 +72,8 @@ export default {
             sortSrc: require('./d-sort.png'),
             sortShow: false,
             goodsKind: '',
-            sortValue: ''
+            sortValue: '',
+            count: 0
         }
     },
     created() {
@@ -81,12 +83,23 @@ export default {
         })
     },
     methods: {
+        toggleSortDrop() {
+            this.count++
+            if (this.count % 2 === 1) {
+                this.sortShow = true
+                this.sortSrc = require('./sort.png')
+            } else {
+                this.sortShow = false
+                this.sortSrc = require('./d-sort.png')
+            }
+        },
         handleCurrentChange(val) {
             this._getGoodsList(this.goodsKind, this.sortValue, val)
         },
         sort(val) {
             this.sortValue = val
             this._getGoodsList(this.goodsKind, val)
+            this.count++
             this.sortShow = false
             this.sortSrc = require('./d-sort.png')
         },
@@ -118,15 +131,6 @@ export default {
             this.$router.push({
                 path: `/goodsDetail/${item.id}`
             })
-        },
-        sortMouseEnter() {
-            console.log(123)
-            this.sortShow = true
-            this.sortSrc = require('./sort.png')
-        },
-        sortMouseLeave() {
-            this.sortShow = false
-            this.sortSrc = require('./d-sort.png')
         },
         handleClickCategories(index, item) {
             this.goodsKind = item.id

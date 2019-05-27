@@ -33,7 +33,7 @@ export default {
 
 <style scoped lang="less">
 .more-title-wrapper {
-    margin: 30px 0 8px;
+    margin: 40px 0 15px;
     padding-left: 15px;
     .more-title-box {
         .title-wrapper {
@@ -42,6 +42,7 @@ export default {
                 line-height: 30px;
             }
             .title {
+                margin-top: 8px;
                 display: flex;
                 justify-content: space-between;
                 padding-right: 15px;
