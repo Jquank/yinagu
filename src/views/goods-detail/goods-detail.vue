@@ -1,7 +1,13 @@
 <template>
   <div class="goods-detail">
     <div class="bread-title">
-      <p>所有分类 > MAXRIENY 2019夏季新...</p>
+      <p>
+        <span>全部分类</span>
+        <span>&nbsp;>&nbsp;</span>
+        <span>{{goodsType}}</span>
+        <span>&nbsp;>&nbsp;</span>
+        <span>{{goodsName}}</span>
+      </p>
     </div>
     <div class="gallery">
       <div class="left">
@@ -20,7 +26,7 @@
           ref="smallImg"
           @mousemove="mousemove"
           @mouseleave="mouseleave"
-          class="response-img"
+          class="response-image"
           :src="'http://'+bigImgSrc"
         >
       </div>
@@ -48,32 +54,7 @@
           </div>
         </div>
         <div class="detail-info">
-          <div class="info-wrapper" v-for="p in goodsDetailData.content" :key="p" v-html="p">
-            <!-- <p>商品编号：41741408227</p>
-            <p>店铺： 诗萌旗舰店商品</p>
-            <p>毛重：1.0kg</p>
-            <p>货号：9181276</p>
-            <p>腰型：高腰组合</p>
-            <p>规格：单件</p>
-            <p>风格：休闲，文艺，通勤</p>
-            <p>主要材质：聚酯纤维</p>-->
-          </div>
-          <!-- <div class="info-wrapper">
-            <p>领型：圆领</p>
-            <p>流行元素：不规则</p>
-            <p>廓形：A型</p>
-            <p>面料：其它</p>
-            <p>袖长：长袖衣</p>
-            <p>门襟：套头</p>
-            <p>适用年龄：25-29周岁</p>
-          </div>
-          <div class="info-wrapper">
-            <p>图案：纯色</p>
-            <p>裙长：中长裙</p>
-            <p>裙型：百褶裙</p>
-            <p>袖型：常规</p>
-            <p>上市时间：2019春季</p>
-          </div>-->
+          <div class="info-wrapper" v-for="p in goodsDetailData.content" :key="p" v-html="p"></div>
         </div>
       </div>
     </div>
@@ -82,8 +63,10 @@
       <p class="r-subtitle">Maybe You Would Like</p>
       <div class="content">
         <div class="content-wrapper">
-          <div @click="routerTo" v-for="item in recommendList" :key="item.id" class="item-wrapper">
-            <img :src="'http://'+ item.photo_path" class="response-img">
+          <div @click="routerTo(item)" v-for="item in recommendList" :key="item.id" class="item-wrapper">
+            <div class="img-wrapper">
+              <img :src="'http://'+ item.photo_path" class="response-img">
+            </div>
             <p>
               <span>{{item.goods_name}}</span>
               <span>¥ {{item.price}}</span>
@@ -118,7 +101,9 @@ export default {
             },
             goodsId: '',
             goodsDetailData: {},
-            bigImgSrc: ''
+            bigImgSrc: '',
+            goodsType: '',
+            goodsName: ''
         }
     },
     created() {
@@ -135,6 +120,8 @@ export default {
         _getGoodsDetail() {
             this.$jsonp('/home/getGoodsDetails?goodsId=' + this.goodsId, function(err, data) {
                 if (err) return err
+                this.goodsType = data.datas.type
+                this.goodsName = data.datas.goodsName
                 this.goodsDetailData = data.datas
                 this.goodsDetailData.content = this.goodsDetailData.content.split('</p>').map(val => val + '</p>')
                 let arr = []
@@ -150,7 +137,7 @@ export default {
                             arr.push(str)
                             str = ''
                         }
-                        if (i === 15) {
+                        if (i === len - 1) {
                             arr.push(str)
                         }
                     } else if (len < 25) {
@@ -162,7 +149,7 @@ export default {
                             arr.push(str)
                             str = ''
                         }
-                        if (i === 23) {
+                        if (i === len - 1) {
                             arr.push(str)
                         }
                     }
@@ -175,9 +162,11 @@ export default {
                 console.log(this.goodsDetailData)
             })
         },
-        routerTo() {
+        routerTo(item) {
+            this.goodsId = item.id
+            this._getGoodsDetail()
             this.$router.push({
-                path: '/goodsDetail/456'
+                path: `/goodsDetail/${item.id}`
             })
         },
         mouseEnterThumbnail(index, item) {
@@ -254,6 +243,9 @@ export default {
             height: 540px;
             overflow: hidden;
             margin-right: 100px;
+            img {
+                width: 100%;
+            }
             img:hover {
                 cursor: move;
             }
@@ -369,9 +361,13 @@ export default {
             }
             .item-wrapper {
                 max-width: 320px;
-                // max-height: 450px;
                 overflow: hidden;
                 margin-left: 20px;
+                .img-wrapper {
+                    width: 320px;
+                    max-height: 450px;
+                    overflow: hidden;
+                }
                 & > p {
                     padding-top: 10px;
                     display: flex;

@@ -46,17 +46,17 @@
             </div>
           </div>
         </div>
+        <div class="pagination">
+          <el-pagination
+            background
+            :page-sizes="[20, 30, 50]"
+            :page-size="8"
+            layout="total, prev, pager, next, jumper"
+            :total="allCount"
+            @current-change="handleCurrentChange"
+          ></el-pagination>
+        </div>
       </div>
-    </div>
-    <div class="pagination">
-      <el-pagination
-        background
-        :page-sizes="[20, 30, 50]"
-        :page-size="8"
-        layout="total, prev, pager, next, jumper"
-        :total="allCount"
-        @current-change="handleCurrentChange"
-      ></el-pagination>
     </div>
   </div>
 </template>
@@ -263,11 +263,11 @@ export default {
                     }
                 }
             }
+            .pagination {
+                padding: 10px 0 50px;
+                text-align: center;
+            }
         }
-    }
-    .pagination {
-        padding: 10px 0 50px;
-        text-align: center;
     }
 }
 </style>
