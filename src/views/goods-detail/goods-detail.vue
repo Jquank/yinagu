@@ -141,9 +141,11 @@ export default {
             }
         }
         .center {
+            max-height: 350px;
+            overflow: hidden;
             img {
                 width: 100%;
-                max-height: 300px;
+                // max-height: 400px;
             }
         }
         .separate-line {

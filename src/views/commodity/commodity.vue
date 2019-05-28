@@ -187,6 +187,7 @@ export default {
         }
         .commodity-content {
             margin-top: 15px;
+            min-height: 150px;
             & > .title {
                 box-sizing: border-box;
                 padding: 0 15px;

@@ -96,7 +96,7 @@ export default {
             color: rgba(255, 255, 255, 1);
         }
         .phone {
-            border-right: 1px solid #fff;
+            // border-right: 1px solid #fff;
         }
         .add {
             width: 0;

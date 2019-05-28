@@ -121,7 +121,8 @@ export default {
             swiperSlides3: [],
             swiperOption3: {
                 slidesPerView: 3,
-                spaceBetween: 10
+                spaceBetween: 10,
+                freeMode: true
             },
             newsList: [],
             len: 0,
@@ -340,6 +341,7 @@ export default {
 </style>
 <style lang="less">
 .swiper-slides1 {
+    overflow: hidden;
     .slide-img1,
     .slide-img1 img {
         width: 100%;

@@ -101,6 +101,9 @@ export default {
             this.$jsonp('/home/allArticleTimeList', function(err, data) {
                 if (err) return err
                 this.timesList = data.datas
+                if (this.timesList.length > 3) {
+                    this.timesList.length = 3
+                }
                 this.timesList.unshift(ALLTIME)
                 this.dateTime = this.timesList[0]
             })
