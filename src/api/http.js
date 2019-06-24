@@ -1,5 +1,5 @@
 import jsonp from 'jsonp'
-const serverUrl = 'http://47.110.250.78/api'
+const serverUrl = 'admin.yinagu.com'
 
 export function $jsonp(url, param, fn) {
     // if (Object.prototype.toString.call(param) !== '[object Object]') {
